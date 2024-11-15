@@ -1,29 +1,35 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-auto">
-      <h1 class="text-center mb-5" style="font-size: 24px; font-weight: 300; ">ロ グ イ ン</h1>
+        <div class="d-flex justify-content-center align-items-center mb-5">
+            <h1 class="text-center" style="font-size: 24px; font-weight: 300; flex-grow: 1;">ロ グ イ ン</h1>
+            <%= link_to '新規登録はこちら', new_user_path, class: 'btn2 ml-auto' %>
+        </div>
       <%= form_with url: login_path do |f| %>
-        <div class="mb-4 row">
-          <div class="col-sm-4">
-          <%= f.label :email, "メールアドレス", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+        <div class="mb-4 row justify-content-center">
+          <div class="col-sm-2">
+            <%= f.label :email, "メールアドレス", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-7">
             <%= f.email_field :email, class: "form-control" %>
           </div>
         </div>
-        <div class="mb-4 row">
-          <div class="col-sm-4">
+        <div class="mb-4 row justify-content-center">
+          <div class="col-sm-2">
             <%= f.label :password, "パスワード", class: "form-label", style: "font-size: 17px; font-weight: 300;"%>
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-7">
             <%= f.password_field :password, class: "form-control" %>
           </div>
         </div>
-        <%= f.submit "ログイン", class: "btn btn-primary" %>
+        <div class="row mt-5">
+            <div class="col text-center mb-4">
+                <%= f.submit "ログイン", class: "btn btn-primary" %>
+            </div>
+        </div>
       <% end %>
       <div class="text-center">
-        <%= link_to '登録ページへ', new_user_path %>
-        <%= link_to 'パスワードをお忘れの方はこちら', '#' %>
+        <%= link_to 'パスワードをお忘れの方はこちら', '#', class: 'color-link' %>
       </div>
     </div>
   </div>
