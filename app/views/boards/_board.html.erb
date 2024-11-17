@@ -1,8 +1,13 @@
 <div class="col-sm-12 col-lg-4 mb-3">
   <div id="board-id-<%= board.id %>">
     <div class="card">
-      <%= image_tag board.board_image_url, class: "card-img-top", width: "300", height:"200" %>
-      ... 省略...
+      <% if board.board_image.attached? %>  <!-- 画像や動画がアップロードされている場合 -->
+        <%= image_tag board.board_image, class: "card-img-top", width: "300", height: "200" %>  <!-- 画像表示 -->
+      <% elsif board.board_video.attached? %>  <!-- 動画がアップロードされている場合 -->
+        <%= video_tag board.board_video, controls: true, width: "300", height: "200" %>  <!-- 動画表示 -->
+      <% else %>
+        <%= image_tag "board_placeholder.png", class: "card-img-top", width: "300", height: "200" %>  <!-- プレースホルダ画像 -->
+      <% end %>
     </div>
   </div>
 </div>

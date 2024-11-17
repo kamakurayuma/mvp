@@ -1,4 +1,9 @@
 class BoardsController < ApplicationController
+
+    def index
+        @boards = Board.includes(:user)
+    end
+
     def new
         @board = Board.new
       end
@@ -16,6 +21,6 @@ class BoardsController < ApplicationController
       private
     
       def board_params
-        params.require(:board).permit(:title, :body, :board_image, :board_image_cache)
+        params.require(:board).permit(:title, :body, :board_image, :camera_make, :camera_model)
       end
 end

@@ -1,7 +1,10 @@
 class Board < ApplicationRecord
     validates :title, presence: true, length: { maximum: 255 }
-    validates :body, presence: true, length: { maximum: 65_535 }
+    validates :camera_make, :camera_model, presence: true
     validate :board_image_size
+
+    has_one_attached :board_image   # 画像を添付する
+    has_one_attached :board_video   # 動画を添付する
   
     belongs_to :user
 

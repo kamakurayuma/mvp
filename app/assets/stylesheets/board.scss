@@ -29,4 +29,15 @@
     border: 1px solid #00000042;  
 }
 
+/* 必須 */
+.required-label {
+    color: red;
+    font-size: 14px;
+    margin-right: 10px; /* タイトルと適切な間隔をあける */
+    margin-top: -35px;  /* 必須ラベルを上に少し移動 */
+    margin-left: 20px;  /* 右に少し寄せる */
+}
+  
+  
+
   
