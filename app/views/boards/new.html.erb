@@ -5,19 +5,20 @@
 
       <%= form_with model: @board, class: "new_board" do |f| %>
         
-        <div class="mb-5 row justify-content-center">
+        <div class="mb-5 row justify-content-center position-relative">
             <div class="col-sm-2">
+            <span class="required-label">必須</span>
                 <%= f.label :title, "タ イ ト ル", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
             </div>
             <div class="col-sm-8">
             <%= f.text_field :title, class: "form-control" %>
             </div>
-            <span class="required-label">必須</span>
         </div>
         
 
-        <div class="mb-5 row justify-content-center">
+        <div class="mb-5 row justify-content-center position-relative">
         <div class="col-sm-2 col-md-2">
+          <span class="required-label">必須</span>
           <%= f.label :camera_details, "カメラの詳細", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
         </div>
         <div class="col-sm-8 col-md-8">
@@ -31,12 +32,12 @@
           </div>
           <div id="suggestions" style="border: 1px solid #ccc; max-height: 200px; overflow-y: auto; display: none;"></div>
         </div>
-        <span class="required-label">必須</span>
       </div>
 
            
-        <div class="mb-5 row justify-content-center">
+      <div class="mb-5 row justify-content-center position-relative">
         <div class="col-sm-2">
+          <span class="required-label">必須</span>
           <%= f.label :board_image, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
         </div>
         <div class="col-sm-8">
@@ -47,7 +48,6 @@
             <div class="text-danger"><%= @board.errors[:board_image].join(", ") %></div>
           <% end %>
         </div>
-        <span class="required-label">必須</span>
       </div>
       
 
