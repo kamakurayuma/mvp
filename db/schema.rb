@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_14_075612) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_18_041224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "boards", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "board_image"
+    t.string "camera_make"
+    t.string "camera_model"
+    t.string "image_url"
+    t.index ["user_id"], name: "index_boards_on_user_id"
+  end
+
+  create_table "cameras", force: :cascade do |t|
+    t.string "make"
+    t.string "model"
+    t.boolean "unknown"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
@@ -21,7 +49,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_14_075612) do
     t.string "user_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "avatar"
+    t.text "bio"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "boards", "users"
 end

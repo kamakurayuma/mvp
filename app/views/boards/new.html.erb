@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+    <h1 class="text-center" style="font-size: 24px; font-weight: 330; margin-bottom: 40px;">新 規 投 稿</h1> 
+
+      <%= form_with model: @board, class: "new_board" do |f| %>
+        
+        <div class="mb-5 row justify-content-center position-relative">
+            <div class="col-sm-2">
+            <span class="required-label">必須</span>
+                <%= f.label :title, "タ イ ト ル", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+            </div>
+            <div class="col-sm-8">
+            <%= f.text_field :title, class: "form-control" %>
+            </div>
+        </div>
+        
+
+        <div class="mb-5 row justify-content-center position-relative">
+        <div class="col-sm-2 col-md-2">
+          <span class="required-label">必須</span>
+          <%= f.label :camera_details, "カメラの詳細", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+        </div>
+        <div class="col-sm-8 col-md-8">
+          <div class="row">
+            <div class="col-sm-6">
+              <%= f.text_field :camera_make, class: "form-control", id: "camera_make_input", placeholder: "メーカー" %>
+            </div>
+            <div class="col-sm-6">
+              <%= f.text_field :camera_model, class: "form-control", id: "camera_model_input", placeholder: "機種" %>
+            </div>
+          </div>
+          <div id="suggestions" style="border: 1px solid #ccc; max-height: 200px; overflow-y: auto; display: none;"></div>
+        </div>
+      </div>
+
+           
+      <div class="mb-5 row justify-content-center position-relative">
+      <div class="col-sm-2">
+        <span class="required-label">必須</span>
+        <%= f.label :board_image, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+      </div>
+      <div class="col-sm-8">
+        <%= f.file_field :board_image, class: "form-control", accept: 'image/*,video/*', id: 'board_image_input' %>
+        <div id="error-message" style="color: red;"></div>
+        <% if @board.errors[:board_image].any? %>
+          <div class="text-danger"><%= @board.errors[:board_image].join(", ") %></div>
+        <% end %>
+      </div>
+    </div>
+      
+
+      <div id="preview" class="mt-3" style="margin-bottom: 50px;"></div>
+
+        <div class="mb-5 row justify-content-center">
+            <div class="col-sm-2">
+                <%= f.label :body, "感 想", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+            </div>
+            <div class="col-sm-8">
+                <%= f.text_area :body, class: "form-control", rows: "4" %>
+            </div>
+        </div>
+
+        
+        <div class="row mt-5">
+          <div class="col text-center mb-4">
+            <%= f.submit "投稿", class: "btn btn-primary toukou" %>
+          </div>
+        </div>
+        <% end %>      
+    </div>
+  </div>
+</div>

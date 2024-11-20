@@ -1,0 +1,38 @@
+<div class="container pt-3">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <!-- ユーザー情報 -->
+      <div class="user-info">
+        <div class="d-flex align-items-center">
+          <!-- アバター画像 -->
+          <%= image_tag current_user.avatar_url, class: 'rounded-circle', size: '120x120' %>
+          <!-- ユーザーネーム -->
+          <h1 class="user-name">
+            <%= current_user.user_name %>
+            <!-- 編集リンク -->
+            <%= link_to edit_profile_path do %>
+              <%= image_tag 'edit.png', alt: 'Edit', size: '20x20', class: 'ml-2' %>
+            <% end %>
+          </h1>
+        </div>
+        <!-- 自己紹介文 -->
+        <p class="user-bio mt-3 text-center">
+            <%= current_user.bio %>
+        </p>
+      </div>
+
+      <!-- ユーザーの投稿した画像を並べる -->
+      <div class="user-posts mt-5">
+        <h3>投稿した画像</h3>
+        <div class="row">
+          <% current_user.boards.each do |board| %>
+            <div class="col-md-4 mb-3">
+              <%= image_tag board.image_url, class: 'img-fluid' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

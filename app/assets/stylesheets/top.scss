@@ -19,3 +19,55 @@
       }
     }
   }
+
+
+  
+/* index-row: 画像を横並びに */
+.index-row {
+    display: flex;
+    flex-wrap: wrap; /* レスポンシブに折り返し */
+    gap: 0;  /* 画像間の余白をゼロに設定 */
+    margin: 0; /* 余白をゼロにする */
+    justify-content: space-between; /* アイテムを均等に配置 */
+  }
+  
+  /* index-item のスタイル */
+  .index-item {
+    flex: 1 1 calc(20% - 10px); /* 1行に5枚並べるための幅 */
+    margin: 0 5px; /* 画像間に少し余白をつける（調整可） */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+/* index-image-wrapper のスタイル */
+.index-image-wrapper {
+    width: 100%;  /* 横幅を親要素に合わせる */
+    height: 280px;  /* 高さを自動で調整 */
+    max-height: 300px;  /* 最大高さを指定して画像があまり大きくなりすぎないように */
+    overflow: hidden;  /* はみ出しを防ぐ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 画像の縦横比を保ちながら枠内に収める */
+  .index-image {
+    width: 100%;  /* 親要素に合わせて横幅を調整 */
+    height: auto;  /* 高さを自動で調整 */
+    object-fit: contain; /* 画像が縦横比を保持しつつ枠内に収まる */
+    margin: 0;  /* 画像の周りの余白をなくす */
+  }
+  
+  
+  
+
+
+  
+  
+  
+
+  
+  
+  
+  
