@@ -1,0 +1,53 @@
+.card {
+    border: none; /* カード全体の枠線を削除 */
+    box-shadow: none; /* 影も削除したい場合はこれを追加 */
+  }
+  
+  .post-info2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-weight: lighter; /* 文字を細く */
+    font-size: 16px; /* 文字サイズを調整（必要なら） */
+    margin-top: 50px; /* 少し下に配置 */
+  }
+
+  .camera-info p {
+    position: relative;
+    top: 22px; /* 10px下に移動 */
+  }
+
+  .camera-icon {
+    width: 20px; /* 画像のサイズを調整 */
+    margin-right: 5px; /* 画像とテキストの間に余白を追加 */
+    margin-top: 30px; /* 画像を少し下に移動 */
+  }
+  
+
+  .user-info p {
+    margin-bottom: 2px; /* 下の余白を少なくする */
+  }
+  
+  
+  .board-media {
+    text-align: center;
+  }
+
+
+  .back_button {
+    background-color: #6c757d; /* ボタンの背景色 */
+    color: #fff; /* 文字色 */
+    padding: 7px 20px; /* 上下5px、左右15pxで幅を狭く */
+    border-radius: 20px; /* 丸みを強くする */
+    font-size: 16px; /* フォントサイズを少し小さく */
+    border: none; /* 枠線を消す */
+    text-align: center; /* テキストを中央に揃える */
+    text-decoration: none; /* 下線をなくす */
+    margin-top: 30px; /* 上部余白を増やす */
+  }
+  
+  .back_button:hover {
+    background-color: #5a6268;
+    text-decoration: none;
+  }
+  

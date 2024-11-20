@@ -5,19 +5,21 @@
       <div class="user-info">
         <div class="d-flex align-items-center">
           <!-- アバター画像 -->
-          <%= image_tag current_user.avatar_url, class: 'rounded-circle', size: '120x120' %>
+          <%= image_tag @user.avatar_url, class: 'rounded-circle', size: '120x120' %>
           <!-- ユーザーネーム -->
           <h1 class="user-name">
-            <%= current_user.user_name %>
+            <%= @user.user_name %>
             <!-- 編集リンク -->
-            <%= link_to edit_profile_path do %>
-              <%= image_tag 'edit.png', alt: 'Edit', size: '20x20', class: 'ml-2' %>
+            <% if @user == current_user %>  
+              <%= link_to edit_profile_path do %>
+                <%= image_tag 'edit.png', alt: 'Edit', size: '20x20', class: 'ml-2' %>
+              <% end %>
             <% end %>
           </h1>
         </div>
         <!-- 自己紹介文 -->
         <p class="user-bio mt-3 text-center">
-            <%= current_user.bio %>
+          <%= @user.bio %>
         </p>
       </div>
 
@@ -25,7 +27,7 @@
       <div class="user-posts mt-5">
         <h3>投稿した画像</h3>
         <div class="row">
-          <% current_user.boards.order(created_at: :desc).each do |board| %> 
+          <% @user.boards.order(created_at: :desc).each do |board| %> 
             <div class="col-md-4 mb-3">
               <%= link_to board_path(board) do %>
                 <%= image_tag board.board_image.url, class: 'img-fluid' %>
@@ -37,4 +39,3 @@
     </div>
   </div>
 </div>
-
