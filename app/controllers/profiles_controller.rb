@@ -12,7 +12,9 @@ class ProfilesController < ApplicationController
       end
     end
   
-    def show; end
+    def show
+        @user = current_user
+    end
   
     private
   
@@ -21,6 +23,6 @@ class ProfilesController < ApplicationController
     end
   
     def user_params
-      params.require(:user).permit(:email, :user_name, :avatar, :avatar_cache)
+      params.require(:user).permit(:email, :user_name, :avatar, :avatar_cache, :bio)
     end
   end
