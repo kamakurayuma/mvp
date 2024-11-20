@@ -1,7 +1,6 @@
 class BoardsController < ApplicationController
 
     def index
-        @boards = Board.includes(:user)
     end
 
     def new
@@ -10,10 +9,11 @@ class BoardsController < ApplicationController
     
       def create
         @board = current_user.boards.build(board_params)
+        
         if @board.save
-          redirect_to boards_path, success: t('defaults.flash_message.created', item: Board.model_name.human)
+          redirect_to root_path, success: '投稿しました'
         else
-          flash.now[:danger] = t('defaults.flash_message.not_created', item: Board.model_name.human)
+          flash.now[:danger] = '投稿に失敗しました'
           render :new, status: :unprocessable_entity
         end
       end

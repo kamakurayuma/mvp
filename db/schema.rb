@@ -22,14 +22,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_18_041224) do
   end
 
   create_table "boards", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.text "body"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "board_image"
     t.string "camera_make"
     t.string "camera_model"
     t.string "image_url"
+    t.index ["user_id"], name: "index_boards_on_user_id"
   end
 
   create_table "cameras", force: :cascade do |t|
@@ -52,4 +54,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_18_041224) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "boards", "users"
 end
