@@ -27,7 +27,10 @@
           <div class="post-info2">
             <div class="camera-info d-flex align-items-center">
               <%= image_tag 'camera.png', alt: 'Camera', class: 'camera-icon' %>
-              <p><%= @board.camera_make %> / <%= @board.camera_model %></p>
+              <p>
+                <%= link_to @board.camera_make, by_camera_make_path(make: @board.camera_make) %> /
+                <%= link_to @board.camera_model, by_camera_model_path(model: @board.camera_model) %>
+              </p>
             </div>
             <div class="user-info">
               <p>投稿主: <%= link_to @board.user.user_name, user_path(@board.user) %></p>

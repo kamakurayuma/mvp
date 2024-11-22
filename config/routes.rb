@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
+  get 'camera_make/:make', to: 'boards#by_camera_make', as: :by_camera_make
+  get 'camera_model/:model', to: 'boards#by_camera_model', as: :by_camera_model
 end
