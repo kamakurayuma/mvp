@@ -5,6 +5,8 @@ class Board < ApplicationRecord
   
     belongs_to :user
 
+    paginates_per 30
+
     mount_uploader :board_image, BoardImageUploader
 
     private

@@ -45,13 +45,19 @@ class BoardsController < ApplicationController
     def by_camera_make
         @make = params[:make]
         @boards = Board.where(camera_make: @make)
+                       .order(created_at: :desc)  # 必要に応じて並べ替えを追加
+                       .page(params[:page])       # ページネーションを追加
+                       .per(30)   
     end
 
   # 機種ごとの投稿一覧
-    def by_camera_model
-        @model = params[:model]
-        @boards = Board.where(camera_model: @model)
-    end
+  def by_camera_model
+    @model = params[:model]
+    @boards = Board.where(camera_model: @model)
+                   .order(created_at: :desc)  # 必要に応じて並べ替えを追加
+                   .page(params[:page])       # ページネーションを追加
+                   .per(30)                   # 1ページあたりの表示数を30に設定
+  end
   
     private
   
