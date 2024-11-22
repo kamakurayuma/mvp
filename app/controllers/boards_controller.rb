@@ -40,7 +40,18 @@ class BoardsController < ApplicationController
         @board.destroy
         redirect_to root_path, success: '投稿が削除されました'
     end
-      
+    
+      # メーカーごとの投稿一覧
+    def by_camera_make
+        @make = params[:make]
+        @boards = Board.where(camera_make: @make)
+    end
+
+  # 機種ごとの投稿一覧
+    def by_camera_model
+        @model = params[:model]
+        @boards = Board.where(camera_model: @model)
+    end
   
     private
   

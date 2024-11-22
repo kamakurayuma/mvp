@@ -100,3 +100,18 @@
     color: white;  /* テキスト色は白 */
 }
 
+
+
+.image-container2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 最小150pxで自動で列を作成 */
+    gap: 3px; /* 画像同士の余白を3pxに設定 */
+    max-width: 1200px; /* 最大幅を設定 */
+    margin: 0 auto; /* 中央寄せ */
+}
+  .image-item2 img {
+    width: 100%; /* 幅を親要素に合わせる */
+    height: auto; /* 高さは自動調整 */
+    max-height: 200px; /* 最大高さを設定 */
+    object-fit: contain; /* 縦横比を保ちながら収める */
+  }
