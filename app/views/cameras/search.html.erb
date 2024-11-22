@@ -1,0 +1,12 @@
+<!-- app/views/cameras/search.html.erb -->
+<h2>検索結果</h2>
+
+<% if @results.any? %>
+  <ul>
+    <% @results.each do |camera| %>
+      <li><%= camera.make %> - <%= camera.model %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>検索結果はありませんでした。</p>
+<% end %>
