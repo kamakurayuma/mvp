@@ -29,7 +29,7 @@
           <%= "#{@user.user_name}さんの投稿一覧" %>
         </h2>
         <div class="image-container2 d-flex flex-wrap justify-content-center">
-          <% @user.boards.order(created_at: :desc).each do |board| %> 
+          <% @boards.each do |board| %>
             <div class="image-item2">
               <%= link_to board_path(board) do %>
                 <%= image_tag board.board_image.url, class: 'img-fluid' %>
@@ -37,6 +37,7 @@
             </div>
           <% end %>
         </div>
+        <%= paginate @boards %>
       </div>
     </div>
   </div>

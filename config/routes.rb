@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
   get 'camera_make/:make', to: 'boards#by_camera_make', as: :by_camera_make
   get 'camera_model/:model', to: 'boards#by_camera_model', as: :by_camera_model
+  get 'cameras/search', to: 'cameras#search', as: 'cameras_search'
+
 end

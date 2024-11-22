@@ -12,6 +12,11 @@ class CamerasController < ApplicationController
       @cameras = Camera.where("make LIKE ?", "%#{params[:make]}%")
       render json: @cameras
     end
+
+    def search
+        # クエリパラメータに基づいてカメラを検索
+        @results = Camera.where('make LIKE ? OR model LIKE ?', "%#{params[:query]}%", "%#{params[:query]}%")
+    end
   
     private
   
