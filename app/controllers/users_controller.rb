@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id]) 
+        @boards = @user.boards.page(params[:page]).per(30)
     end 
   
     private

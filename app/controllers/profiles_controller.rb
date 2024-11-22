@@ -14,7 +14,7 @@ class ProfilesController < ApplicationController
   
     def show
         @user = current_user
-        @boards = @user.boards.page(params[:page]).per(10)
+        @boards = @user.boards.page(params[:page]).per(30)
     end
   
     private
