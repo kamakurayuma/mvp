@@ -1,30 +1,21 @@
 class BoardsController < ApplicationController
     before_action :set_board, only: [:edit, :update, :show, :destroy] 
   
-    def index
-    end
-  
     def new
       @board = Board.new
     end
   
     def create
       @board = current_user.boards.build(board_params)
-  
+      camera = Camera.find_by(make: @board.camera_make, model: @board.camera_model)
+      @board.camera_id = camera.id if camera
+      
       if @board.save
         redirect_to root_path, success: '投稿しました'
       else
         flash.now[:danger] = '投稿に失敗しました'
         render :new, status: :unprocessable_entity
       end
-    end
-  
-    def show
-      # @board は set_board で設定されているので、ここでは何もする必要なし
-    end
-  
-    def edit
-      # @board は set_board で設定されているので、ここでは何もする必要なし
     end
   
     def update
@@ -40,6 +31,8 @@ class BoardsController < ApplicationController
         @board.destroy
         redirect_to root_path, success: '投稿が削除されました'
     end
+
+
     
       # メーカーごとの投稿一覧
     def by_camera_make
@@ -58,6 +51,15 @@ class BoardsController < ApplicationController
                    .page(params[:page])       # ページネーションを追加
                    .per(30)                   # 1ページあたりの表示数を30に設定
   end
+
+  def search
+    # params[:q]がnilでないことを確認し、デフォルト値を設定
+    query = params.dig(:q, :query_cont) || ""
+  
+    @q = Board.ransack(camera_make_or_camera_model_cont: query)
+    @boards = @q.result(distinct: true).includes(:user, :camera).order(created_at: :desc).page(params[:page]).per(30)
+  end
+  
   
     private
   

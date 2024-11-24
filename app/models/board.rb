@@ -1,15 +1,26 @@
 class Board < ApplicationRecord
     validates :title, presence: true, length: { maximum: 255 }
     validates :camera_make, :camera_model, presence: true
-    # validate :board_image_size
-  
+    
+    belongs_to :camera
     belongs_to :user
 
     paginates_per 30
 
     mount_uploader :board_image, BoardImageUploader
 
-    private
+    def self.ransackable_attributes(auth_object = nil)
+        [
+          "board_image", "body", "camera_id", "camera_make", "camera_model", 
+          "created_at", "id", "image_url", "title", "updated_at", "user_id"
+        ]
+      end
+    
+      def self.ransackable_associations(auth_object = nil)
+        ["camera", "user"]  # 検索可能な関連をここで定義
+      end
+
+    # private
 
 #   def board_image_size
 #     return unless board_image.present?

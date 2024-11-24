@@ -1,0 +1,23 @@
+<div class="user-posts mt-5">
+  <h2 style="line-height: 1; font-weight: 300; text-align: center; margin-bottom: 40px;">
+    <%= "#{params.dig(:q, :query_cont)} の検索結果" if params.dig(:q, :query_cont).present? %>
+    <%= "検索結果" unless params.dig(:q, :query_cont).present? %>
+  </h2>
+
+  <div class="image-container2 d-flex flex-wrap justify-content-center">
+    <% @boards.each do |board| %>
+      <div class="image-item2">
+        <%= link_to board_path(board) do %>
+          <%= image_tag board.board_image.url, class: 'img-fluid' %>
+        <% end %>
+      </div>
+    <% end %> <!-- これが正しい終了タグ -->
+  </div>
+  <%= paginate @boards %>
+
+  <% if @boards.blank? %> <!-- 投稿がない場合の処理 -->
+    <div class="text-center" style="margin-top: 100px;">
+      <p>該当する投稿はありません。</p>
+    </div>
+  <% end %>
+</div>
