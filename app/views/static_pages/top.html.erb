@@ -1,18 +1,8 @@
+<!-- 検索フォーム -->
 <div class="container pt-3">
   <div class="row">
     <div class="col-lg-10 offset-lg-1">
-      <!-- 検索フォーム -->
-      <%= form_with url: cameras_search_path, method: :get, class: "form-inline" do %>
-        <div style="width: 400px; margin: 0 auto;">
-          <div class="input-group mb-5">
-            <%= text_field_tag :query, params[:query], class: "form-control search-input", placeholder: "カメラのメーカーまたは機種を検索" %>
-            <div class="input-group-append">
-              <%= submit_tag "検索", class: "btn btn-primary", style: "min-width: 60px; white-space: nowrap;" %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      
+      <%= render 'search_form', q: @q, url: boards_search_path %> 
     </div>
   </div>
 </div>
@@ -23,17 +13,31 @@
   </div>
 </div>
 
-  <!-- 掲示板一覧 -->
-  <div class="row index-row">
-    <div class="col-12">
-      <div class="row">
-        <% if @boards.present? %>
-          <%= render @boards %>
-        <% else %>
-          <div class="mb-3">投稿がありません</div>
-        <% end %>
-         <%= paginate @boards %>
-      </div>
+<!-- 1つ目のビュー（画像表示） -->
+<% if @boards.present? %>
+  <div class="user-posts mt-5">
+    <div class="image-container2 d-flex flex-wrap justify-content-center">
+      <% @boards.each do |board| %>
+        <div class="image-item2">
+          <%= link_to board_path(board) do %>
+            <%= image_tag board.board_image.url, class: 'img-fluid' %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!-- 掲示板一覧 -->
+<div class="row index-row">
+  <div class="col-12">
+    <div class="row">
+      <% if @boards.present? %>
+        <%= render @boards %> <!-- 各boardを個別にレンダリング -->
+      <% else %>
+        <div class="mb-3">投稿がありません</div>
+      <% end %>
+      <%= paginate @boards %>
     </div>
   </div>
 </div>
