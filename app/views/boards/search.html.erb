@@ -4,7 +4,6 @@
     <%= "検索結果" unless params.dig(:q, :query_cont).present? %>
   </h2>
 
-  <!-- 検索結果の件数 -->
   <div class="text-center">
     <% if @boards.total_count > 0 %>
       <p>検索結果: <%= @boards.total_count %>件</p>
@@ -19,11 +18,11 @@
           <%= image_tag board.board_image.url, class: 'img-fluid' %>
         <% end %>
       </div>
-    <% end %> <!-- これが正しい終了タグ -->
+    <% end %>
   </div>
   <%= paginate @boards %>
 
-  <% if @boards.blank? %> <!-- 投稿がない場合の処理 -->
+  <% if @boards.blank? %> 
     <div class="text-center" style="margin-top: 100px;">
       <p>該当する投稿はありません。</p>
     </div>

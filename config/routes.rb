@@ -15,11 +15,10 @@ Rails.application.routes.draw do
   get 'camera_make/:make', to: 'boards#by_camera_make', as: :by_camera_make
   get 'camera_model/:model', to: 'boards#by_camera_model', as: :by_camera_model
   get 'cameras/search', to: 'cameras#search'
-
-  get 'boards/search', to: 'boards#search'
-
+  get 'boards/search', to: 'static_pages#top' 
 
   get 'top', to: 'static_pages#top', as: 'static_pages_top'
+
 
 
 end

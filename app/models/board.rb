@@ -18,7 +18,7 @@ class Board < ApplicationRecord
     
       def self.ransackable_associations(auth_object = nil)
         ["camera", "user"]  # 検索可能な関連をここで定義
-      end
+    end
 
     # private
 
