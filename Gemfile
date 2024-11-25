@@ -53,8 +53,6 @@ gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
 gem 'kaminari-bootstrap'
 
-gem "importmap-rails"
-
 gem 'ransack'
 
 group :development, :test do

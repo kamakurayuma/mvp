@@ -18,9 +18,18 @@ class Board < ApplicationRecord
     
       def self.ransackable_associations(auth_object = nil)
         ["camera", "user"]  # 検索可能な関連をここで定義
-    end
+      end
 
-    # private
+      before_validation :set_camera_id, on: [:create, :update]
+
+    private
+
+    def set_camera_id
+      return if camera_make.blank? || camera_model.blank?
+  
+      camera = Camera.find_or_create_by(make: camera_make, model: camera_model)
+      self.camera_id = camera.id
+    end
 
 #   def board_image_size
 #     return unless board_image.present?

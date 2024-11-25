@@ -71,3 +71,14 @@
     </div>
   </div>
 </div>
+
+<% if @board.errors.any? %>
+  <div class="error-messages">
+    <h2>投稿のエラー:</h2>
+    <ul>
+      <% @board.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

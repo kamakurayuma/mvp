@@ -6,9 +6,9 @@ class BoardsController < ApplicationController
     end
   
     def create
-      @board = current_user.boards.build(board_params)
-      camera = Camera.find_by(make: @board.camera_make, model: @board.camera_model)
-      @board.camera_id = camera.id if camera
+      @board = Board.new(board_params)
+      @board.user = current_user # ログイン中のユーザーを設定
+    
       
       if @board.save
         redirect_to root_path, success: '投稿しました'
@@ -19,7 +19,7 @@ class BoardsController < ApplicationController
     end
   
     def update
-      if @board.update(board_params)
+      if @board.update(board_params.except(:camera_make, :camera_model))
         redirect_to @board, success: '投稿を更新しました'
       else
         flash.now[:danger] = '更新に失敗しました'
