@@ -18,42 +18,29 @@
 
         <!-- カメラの詳細 -->
         <div class="mb-5 row justify-content-center position-relative">
-          <div class="col-sm-2 col-md-2">
-            <span class="required-label">必須</span>
-            <%= f.label :camera_details, "カメラの詳細", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
-          </div>
-          <div class="col-sm-8 col-md-8">
-            <div class="row">
-              <div class="col-sm-6">
-                <%= f.text_field :camera_make, class: "form-control", placeholder: "メーカー" %>
-              </div>
-              <div class="col-sm-6">
-                <%= f.text_field :camera_model, class: "form-control", placeholder: "機種" %>
-              </div>
-            </div>
-          </div>
+        <div class="col-sm-2">
+          <span class="required-label">必須</span>
+          <%= f.label :board_image, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
         </div>
-
-        <!-- 画像 -->
-        <div class="mb-5 row justify-content-center position-relative">
-          <div class="col-sm-2">
-            <span class="required-label">必須</span>
-            <%= f.label :board_image, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
-          </div>
-          <div class="col-sm-8">
-            <%= f.file_field :board_image, class: "form-control", accept: 'image/*,video/*' %>
-            <div id="error-message" style="color: red;"></div>
-            <% if @board.errors[:board_image].any? %>
-              <div class="text-danger"><%= @board.errors[:board_image].join(", ") %></div>
-            <% end %>
-
-            <!-- 既存の画像を表示 -->
+        <div class="col-sm-8">
+          <%= f.file_field :board_image, class: "form-control", accept: 'image/*,video/*', id: 'board_image_input' %>
+          <div id="error-message" style="color: red;"></div>
+          <% if @board.errors[:board_image].any? %>
+            <div class="text-danger"><%= @board.errors[:board_image].join(", ") %></div>
+          <% end %>
+      
+          <!-- 既存の画像を表示 -->
+          <div id="current-image" style="margin-top: 15px;">
             <% if @board.board_image.present? %>
               <p>現在の画像:</p>
-              <%= image_tag @board.board_image.url, class: 'img-fluid' %>
+              <%= image_tag @board.board_image.url, class: 'img-fluid', id: 'current-image-preview' %>
             <% end %>
           </div>
+      
+          <!-- プレビューエリア -->
+          <div id="preview" style="margin-top: 15px;"></div>
         </div>
+      </div>
 
         <!-- 感想 -->
         <div class="mb-5 row justify-content-center">
@@ -76,4 +63,55 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.getElementById("board_image_input");
+    const currentImageDiv = document.getElementById("current-image");
+    const previewDiv = document.getElementById("preview");
+
+    fileInput.addEventListener("change", function(event) {
+      const files = event.target.files;
+      
+      // プレビューエリアをリセット
+      previewDiv.innerHTML = "";
+
+      if (files && files[0]) {
+        const file = files[0];
+
+        // 画像ファイルかどうかを確認
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+
+          // ファイルが読み込まれた後の処理
+          reader.onload = function(e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.style.maxWidth = "100%";  // プレビュー画像の最大幅を指定
+            img.style.height = "auto";    // 高さは自動調整
+
+            // 現在の画像表示を非表示にする
+            if (currentImageDiv) {
+              currentImageDiv.style.display = "none";
+            }
+
+            // プレビューエリアに画像を追加
+            previewDiv.appendChild(img);
+          };
+
+          // 画像ファイルを読み込む
+          reader.readAsDataURL(file);
+        } else {
+          // 画像でない場合はエラーメッセージを表示
+          previewDiv.innerHTML = "<p>画像ファイルを選択してください。</p>";
+        }
+      }
+    });
+  });
+</script>
 

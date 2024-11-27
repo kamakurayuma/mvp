@@ -3,6 +3,7 @@ class BoardsController < ApplicationController
   
     def new
       @board = Board.new
+      @camera_makes = ['Canon', 'Nikon', 'Sony', 'Panasonic']  # カメラメーカーのリスト
     end
   
     def create
@@ -52,13 +53,69 @@ class BoardsController < ApplicationController
                    .per(30)                   # 1ページあたりの表示数を30に設定
   end
 
+  def edit
+    @board = Board.find(params[:id])
+    # カメラメーカーのリストを取得
+    @camera_makes = Camera.distinct.pluck(:make)  # または、カメラメーカーのデータを取得
+  end
+
   def search
     # params[:q]がnilでないことを確認し、デフォルト値を設定
     query = params.dig(:q, :query_cont) || ""
   
-    @q = Board.ransack(camera_make_or_camera_model_cont: query)
-    @boards = @q.result(distinct: true).includes(:user, :camera).order(created_at: :desc).page(params[:page]).per(30)
+    # JSONリクエストの場合は、検索結果をJSON形式で返す
+    if request.format.json?
+      @q = Board.ransack(camera_make_or_camera_model_cont: query)
+      @boards = @q.result(distinct: true).select(:id, :camera_make, :camera_model)
+
+      # 結果があればJSONで返す
+      render json: @boards.map { |item| { name: "#{item.camera_make} #{item.camera_model}" } }
+    else
+      # HTMLリクエストの場合、通常通りビューを返す
+      @q = Board.ransack(camera_make_or_camera_model_cont: query)
+      @boards = @q.result(distinct: true).includes(:user, :camera).order(created_at: :desc).page(params[:page]).per(30)
+    end
   end
+
+  def autocomplete
+    query = params[:query].downcase # 入力値を小文字に変換
+  
+    # 固定のカメラメーカーリスト（これを検索結果に追加）
+    fixed_makers = ['Canon', 'Nikon', 'Sony', 'Fujifilm', 'Panasonic', 'Olympus', 'Ricoh', 'Casio', 'Minolta', 'Leica', 'Pentax', 'Kodak', 'Samsung', 'Vivitar', 'Toshiba', 'Yashica', 'Konica', 'Agfa', 'Zenit', 'Voigtländer', 'Polaroid', 'Rollei', 'Minox']
+    
+    # カメラメーカーとモデルの検索結果を格納する配列
+    make_results = []
+    model_results = []
+  
+    # カメラメーカーの検索（部分一致）
+    make_results = Board.where('LOWER(camera_make) LIKE ? AND camera_make != ?', 
+                                "%#{query}%", "不明")
+                         .pluck(:camera_make)
+                         .uniq
+  
+    # カメラモデルの検索（部分一致）
+    model_results = Board.where('LOWER(camera_model) LIKE ? AND camera_make != ?', 
+                                 "%#{query}%", "不明")
+                          .pluck(:camera_model)
+                          .uniq
+  
+    # 結果を結合し、固定のメーカーも追加
+    results = make_results + model_results
+    results.concat(fixed_makers.select { |maker| maker.downcase.include?(query) })
+  
+    # 重複を削除
+    results.uniq!
+  
+    # JSONレスポンスとして返す
+    render json: results
+  end
+  
+  
+  
+  
+  
+  
+  
   
   
     private
