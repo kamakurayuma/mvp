@@ -94,170 +94,172 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // 画像プレビュー処理
-    const fileInput = document.getElementById("board_image_input");
-    const previewDiv = document.getElementById("preview");
+  // 写真・動画のプレビュー表示
+  document.getElementById('board_image_input').addEventListener('change', function(event) {
+    const preview = document.getElementById('preview');
+    preview.innerHTML = ''; // 既存のプレビューをクリア
+    const file = event.target.files[0];
 
-    fileInput.addEventListener("change", function(event) {
-      const files = event.target.files;
-
-      // プレビューエリアをリセット
-      previewDiv.innerHTML = "";
-
-      if (files && files[0]) {
-        const file = files[0];
-
-        // 画像ファイルかどうかを確認
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const fileUrl = e.target.result;
+        let previewElement;
+        
         if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-
-          // ファイルが読み込まれた後の処理
-          reader.onload = function(e) {
-            const img = document.createElement("img");
-            img.src = e.target.result;
-            img.style.maxWidth = "100%";  // プレビュー画像の最大幅を指定
-            img.style.height = "auto";    // 高さは自動調整
-
-            // プレビューエリアに画像を追加
-            previewDiv.appendChild(img);
-          };
-
-          // 画像ファイルを読み込む
-          reader.readAsDataURL(file);
-        } else {
-          // 画像でない場合はエラーメッセージを表示
-          previewDiv.innerHTML = "<p>画像ファイルを選択してください。</p>";
+          previewElement = document.createElement('img');
+          previewElement.src = fileUrl;
+          previewElement.classList.add('img-fluid');
+        } else if (file.type.startsWith('video/')) {
+          previewElement = document.createElement('video');
+          previewElement.src = fileUrl;
+          previewElement.classList.add('img-fluid');
+          previewElement.controls = true;
         }
-      }
-    });
 
-    // カメラメーカーのセレクトボックス処理
-    const cameraMakeSelect = document.getElementById("camera_make_select");
-    const customMakeInput = document.getElementById("custom_make_input");
-
-    // 初期状態で "その他" が選ばれている場合にフィールドを表示
-    if (cameraMakeSelect.value === "その他") {
-      customMakeInput.style.display = "block";
+        preview.innerHTML = ''; // 新しいプレビューに上書き
+        preview.appendChild(previewElement);
+      };
+      reader.readAsDataURL(file);
     }
+  });
 
-    // セレクトボックスの変更イベントを監視
-    cameraMakeSelect.addEventListener("change", function(event) {
-      if (event.target.value === "その他") {
-        customMakeInput.style.display = "block"; // "その他"が選ばれた場合、入力フィールドを表示
-      } else {
-        customMakeInput.style.display = "none";  // 他の選択肢が選ばれた場合、非表示
-      }
-    });
+  // メーカー選択で「その他」を選んだ場合に入力フィールド表示
+  document.getElementById('camera_make_select').addEventListener('change', function(event) {
+    const customMakeInput = document.getElementById('custom_make_input');
+    if (event.target.value === 'その他') {
+      customMakeInput.style.display = 'block';
+    } else {
+      customMakeInput.style.display = 'none';
+    }
+  });
 
-    // カメラモデルの候補リスト表示処理
-    const inputField = document.getElementById("camera_model_input");
-    const suggestionsList = document.getElementById("camera_model_suggestions");
+  // 投稿失敗時に「その他」の入力フィールドを維持
+  window.onload = function() {
+    const cameraMakeSelect = document.getElementById('camera_make_select');
+    const customMakeInput = document.getElementById('custom_make_input');
+    
+    // もし「その他」が選ばれていれば入力フィールドを表示
+    if (cameraMakeSelect.value === 'その他') {
+      customMakeInput.style.display = 'block';
+    }
+  };
 
-    // サーバーから渡された保存済みの機種リスト（Railsから渡されたデータ）
-    const cameraModels = <%= raw @saved_camera_models.to_json %>;
+  // オールドコンデジの機種（画素数1700万未満）
+  const cameraModels = [
+    'T4', 'DiMAGE X1', 'DiMAGE 7i',
+    'XA', 'GR1v', 'S95', 'P7000',
+    'DMC-LX100', 'Stylus 1', 'GR Digital IV',
+    'EX-ZR1000', 'A620', 'DiMAGE Xt', 'DSC-T10',
+    'A590 IS', 'DSC-W70', 'DiMAGE 5', 'SD700 IS',
+    'DSC-T50', '5900', 'G5', '5700',
+    'DiMAGE A1', 'S230', 'DiMAGE Z3', 'G6',
+    'DiMAGE Z1', 'SD400', 'DSC-T1', 'A520',
+    '8800', 'DiMAGE Z5', 'S3 IS', 'DSC-W50',
+    'A75', '7900', 'A550', 'DiMAGE 7',
+    'FinePix F30', 
+    'PowerShot G7', 
+    'Coolpix P500', 
+    'Cyber-shot DSC-H5'
+  ];
 
-    inputField.addEventListener("focus", () => {
-      suggestionsList.innerHTML = ""; // 最初に候補をクリア
+  // 五十音順に並べ替え
+  const sortedCameraModels = cameraModels.sort();
 
-      // 不明を候補に追加
-      const li = document.createElement("li");
-      li.textContent = "不明";
-      li.classList.add("suggestion-item");
-      li.addEventListener("click", () => {
-        inputField.value = "不明"; // "不明"を入力欄にセット
-        suggestionsList.innerHTML = ""; // 候補リストをクリア
-      });
-      suggestionsList.appendChild(li);
+  // 機種入力のオートコンプリート機能
+  document.getElementById('camera_model_input').addEventListener('input', function(event) {
+    const inputValue = event.target.value.toLowerCase();
+    const suggestionsList = document.getElementById('camera_model_suggestions');
+    suggestionsList.innerHTML = ''; // 前回の候補をクリア
 
-      // 保存されている機種を候補として表示
-      cameraModels.forEach(model => {
-        const li = document.createElement("li");
-        li.textContent = model;
-        li.classList.add("suggestion-item");
-        li.addEventListener("click", () => {
-          inputField.value = model; // 機種名を入力欄にセット
-          suggestionsList.innerHTML = ""; // 候補リストをクリア
+    if (inputValue) {
+      // 入力内容と一致する候補をフィルタリング
+      const filteredModels = sortedCameraModels.filter(model => model.toLowerCase().includes(inputValue));
+
+      // フィルタリングされた機種名をリストに追加
+      filteredModels.forEach(model => {
+        const listItem = document.createElement('li');
+        listItem.textContent = model;
+        listItem.classList.add('suggestion-item');
+        listItem.addEventListener('click', function() {
+          document.getElementById('camera_model_input').value = model;
+          suggestionsList.innerHTML = ''; // クリックで候補を消す
         });
-        suggestionsList.appendChild(li);
+        suggestionsList.appendChild(listItem);
       });
+      
+      // 「不明」の候補を一番下に追加
+      const unknownOption = document.createElement('li');
+      unknownOption.textContent = '不明';
+      unknownOption.classList.add('suggestion-item');
+      unknownOption.addEventListener('click', function() {
+        document.getElementById('camera_model_input').value = '不明';
+      });
+      suggestionsList.appendChild(unknownOption);
+    }
+  });
 
-      // 候補リストを表示
-      suggestionsList.style.visibility = "visible";
-      suggestionsList.style.opacity = 1;
-    });
-
-    // 入力時の候補リスト表示
-    inputField.addEventListener("input", () => {
-      const query = inputField.value.toLowerCase();
-      suggestionsList.innerHTML = ""; // リストをクリア
-
-      if (query) {
-        const matches = cameraModels.filter(model => model.toLowerCase().includes(query));
-        matches.forEach(match => {
-          const li = document.createElement("li");
-          li.textContent = match;
-          li.classList.add("suggestion-item");
-          li.addEventListener("click", () => {
-            inputField.value = match; // 値をセット
-            suggestionsList.innerHTML = ""; // リストをクリア
-          });
-          suggestionsList.appendChild(li);
-        });
-      }
-
-      // 候補リストを表示
-      suggestionsList.style.visibility = "visible";
-      suggestionsList.style.opacity = 1;
-    });
-
-    // フォーカス外れ時の処理
-    inputField.addEventListener("blur", () => {
-      setTimeout(() => {
-        suggestionsList.innerHTML = ""; // 少し遅れてクリア
-      }, 200);
-    });
+  // 機種入力がクリックされた場合に不明を一番下に表示
+  document.getElementById('camera_model_input').addEventListener('focus', function() {
+    const suggestionsList = document.getElementById('camera_model_suggestions');
+    const unknownOption = document.createElement('li');
+    unknownOption.textContent = '不明';
+    
+    // 既に不明の候補がある場合は追加しない
+    if (![...suggestionsList.children].some(child => child.textContent === '不明')) {
+      unknownOption.classList.add('suggestion-item');
+      unknownOption.addEventListener('click', function() {
+        document.getElementById('camera_model_input').value = '不明';
+      });
+      suggestionsList.appendChild(unknownOption);
+    }
   });
 </script>
 
 <style>
-.suggestions-list {
-  left: 0;
-  max-height: 150px;
-  overflow-y: auto;
-  list-style: none;
-  margin: 0;
+/* サジェストリストのスタイル */
+#camera_model_suggestions {
+  list-style-type: none;
   padding: 0;
-  background: white;
-  border: 1px solid #ccc; /* 枠線 */
-  visibility: hidden; /* 最初は非表示 */
-  opacity: 0; /* 見えない状態 */
-  transition: opacity 0.3s ease-in-out; /* フェードイン/フェードアウト効果 */
-  z-index: 10; /* 他の要素の前に表示 */
-  width: auto; /* 自動で幅を調整 */
-  max-width: 100%; /* 親要素に合わせる */
+  margin: 0;
+  max-height: 200px; /* 最大高さ */
+  overflow-y: auto; /* スクロール可能 */
+  border: none; /* 初期状態で枠線を消す */
+  background-color: #fff;
+  position: absolute;
+  z-index: 1000;
+  width: 34%; /* 横幅を60%に設定して狭める */
+  top: 100%; /* 入力フィールドの直下に配置 */
 }
 
+/* サジェストアイテムのスタイル */
+.suggestion-item {
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: #fff;
+  width: 100%; /* アイテムの横幅をリストと同じに */
+}
+
+/* アイテムホバー時のスタイル */
 .suggestion-item:hover {
-  background: #f0f0f0;
+  background-color: #f0f0f0;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,7 @@
 class BoardImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -48,4 +48,12 @@ class BoardImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  def validate_dimensions
+    image = MiniMagick::Image.open(file.file)
+    pixels = image[:width] * image[:height]
+    if pixels > 17000000
+      errors.add(:image, '画素数が大きすぎます。1700万画素以下の画像をアップロードしてください。')
+    end
+  end
 end
