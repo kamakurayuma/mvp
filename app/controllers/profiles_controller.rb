@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
     before_action :set_user, only: %i[edit update]
-  
+
     def edit; end
   
     def update
@@ -14,7 +14,7 @@ class ProfilesController < ApplicationController
   
     def show
         @user = current_user
-        @boards = @user.boards.page(params[:page]).per(30)
+        @boards = @user.boards.order(created_at: :desc).page(params[:page]).per(30)
     end
   
     private

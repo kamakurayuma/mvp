@@ -81,4 +81,14 @@
     display: inline-block;
   }
   
+  .suggestion-item {
+    padding: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #fff;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #f0f0f0;
+  }
   
