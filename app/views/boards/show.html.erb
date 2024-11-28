@@ -28,10 +28,15 @@
             <div class="camera-info d-flex align-items-center">
               <%= image_tag 'camera.png', alt: 'Camera', class: 'camera-icon' %>
               <p>
-                <%= link_to @board.camera_make, by_camera_make_path(make: @board.camera_make) %> /
+                <% if @board.camera_make == 'その他' %>
+                  <%= link_to @board.custom_camera_make, by_camera_make_path(make: @board.camera_make, custom_camera_make: @board.custom_camera_make) %> /
+                <% else %>
+                  <%= link_to @board.camera_make, by_camera_make_path(make: @board.camera_make) %> /
+                <% end %>
                 <%= link_to @board.camera_model, by_camera_model_path(model: @board.camera_model) %>
               </p>
             </div>
+
             <div class="user-info">
               <p>投稿主: <%= link_to @board.user.user_name, user_path(@board.user) %></p>
               <p>投稿日: <%= l @board.created_at, format: :short %></p>
@@ -52,7 +57,7 @@
           <% end %>
 
         <div class="button-container mt-5">
-          <%= link_to '戻る', root_path, class: "back_button" %>
+          <%= link_to '戻る', request.referer || root_path, class: "back_button" %>
         </div>
         
       </article>

@@ -81,4 +81,22 @@
     display: inline-block;
   }
   
+  .suggestions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    width: calc(100% - 2px);
+  }
+  .suggestion-item {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .suggestion-item:hover {
+    background: #f0f0f0;
+  }
   

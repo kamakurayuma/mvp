@@ -1,26 +1,31 @@
 class BoardsController < ApplicationController
     before_action :set_board, only: [:edit, :update, :show, :destroy] 
+
+    def index
+      @boards = @user.boards.order(created_at: :desc) # 新しい順番で並べる
+    end
   
     def new
       @board = Board.new
       @camera_makes = ['Canon', 'Nikon', 'Sony', 'Panasonic']  # カメラメーカーのリスト
+
     end
   
-    def create
-      @board = Board.new(board_params)
-      @board.user = current_user # ログイン中のユーザーを設定
-    
-      
-      if @board.save
-        redirect_to root_path, success: '投稿しました'
-      else
-        flash.now[:danger] = '投稿に失敗しました'
-        render :new, status: :unprocessable_entity
-      end
-    end
+def create
+  @board = Board.new(board_params)
+  @board.user = current_user # ログイン中のユーザーを設定
+
+  if @board.save
+    redirect_to root_path, success: '投稿しました'
+  else
+    flash.now[:danger] = '投稿に失敗しました'
+    render :new, status: :unprocessable_entity
+  end
+end
+
   
     def update
-      if @board.update(board_params.except(:camera_make, :camera_model))
+      if @board.update(board_params)
         redirect_to @board, success: '投稿を更新しました'
       else
         flash.now[:danger] = '更新に失敗しました'
@@ -35,18 +40,41 @@ class BoardsController < ApplicationController
 
 
     
-      # メーカーごとの投稿一覧
-    def by_camera_make
-        @make = params[:make]
-        @boards = Board.where(camera_make: @make)
-                       .order(created_at: :desc)  # 必要に応じて並べ替えを追加
-                       .page(params[:page])       # ページネーションを追加
-                       .per(30)   
-    end
+# メーカーごとの投稿一覧
+def by_camera_make
+  @make = params[:make]          # camera_make
+  @custom_make = params[:custom_camera_make]  # custom_camera_make
+
+  # 文字列を初期化
+  @page_title = if @make == 'その他' && @custom_make.present?
+                  @custom_make # "あ" などのカスタムメーカー名を表示
+                elsif @make == 'その他'
+                  'その他'     # "その他"の投稿一覧
+                else
+                  @make        # 通常のメーカー名を表示
+                end
+
+  # camera_make が "その他" の場合、custom_camera_make をさらに絞り込む
+  if @make == 'その他' && @custom_make.present?
+    @boards = Board.where('LOWER(camera_make) = ? AND LOWER(custom_camera_make) = ?', @make.downcase, @custom_make.downcase)
+                   .order(created_at: :desc)
+                   .page(params[:page])
+                   .per(30)
+  else
+    @boards = Board.where('LOWER(camera_make) = ?', @make.downcase)
+                   .order(created_at: :desc)
+                   .page(params[:page])
+                   .per(30)
+  end
+end
+   
+      
 
   # 機種ごとの投稿一覧
   def by_camera_model
     @model = params[:model]
+
+
     @boards = Board.where(camera_model: @model)
                    .order(created_at: :desc)  # 必要に応じて並べ替えを追加
                    .page(params[:page])       # ページネーションを追加
@@ -78,6 +106,7 @@ class BoardsController < ApplicationController
   end
 
   def autocomplete
+    type = params[:type]
     query = params[:query].downcase # 入力値を小文字に変換
   
     # 固定のカメラメーカーリスト（これを検索結果に追加）
@@ -109,15 +138,13 @@ class BoardsController < ApplicationController
     # JSONレスポンスとして返す
     render json: results
   end
+
+  def by_custom_camera_make
+    @custom_make = params[:custom_camera_make]  # URLからカスタムメーカー名を受け取る
+    @boards = Board.where(custom_camera_make: @custom_make)  # カスタムメーカーでフィルタリング
+  end
   
-  
-  
-  
-  
-  
-  
-  
-  
+
     private
   
     def set_board
@@ -125,7 +152,7 @@ class BoardsController < ApplicationController
     end
   
     def board_params
-      params.require(:board).permit(:title, :body, :board_image, :camera_make, :camera_model)
+      params.require(:board).permit(:title, :body, :board_image, :camera_make, :camera_model, :custom_camera_make)
     end
   end
   

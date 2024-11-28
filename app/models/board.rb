@@ -1,6 +1,9 @@
 class Board < ApplicationRecord
-    validates :title, presence: true, length: { maximum: 255 }
-    validates :camera_make, :camera_model, presence: true
+  validates :title, presence: true, length: { maximum: 255 }
+  validates :camera_make, :camera_model, presence: true
+  validates :custom_camera_make, presence: true, if: :other_camera_make?
+  validates :board_image, presence: true
+  
     
     belongs_to :camera
     belongs_to :user
@@ -30,6 +33,16 @@ class Board < ApplicationRecord
       camera = Camera.find_or_create_by(make: camera_make, model: camera_model)
       self.camera_id = camera.id
     end
+
+    def other_camera_make?
+      camera_make == "その他"
+    end
+
+      def custom_camera_make_if_other
+    if camera_make == 'その他' && custom_camera_make.blank?
+      errors.add(:custom_camera_make, 'カメラのメーカー名を入力してください')
+    end
+  end
 
 #   def board_image_size
 #     return unless board_image.present?

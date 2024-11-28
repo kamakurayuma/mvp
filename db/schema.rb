@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_22_074035) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_28_035002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,8 +32,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_22_074035) do
     t.string "camera_model"
     t.string "image_url"
     t.bigint "camera_id"
+    t.string "custom_camera_make"
+    t.bigint "camera_model_id"
     t.index ["camera_id"], name: "index_boards_on_camera_id"
+    t.index ["camera_model_id"], name: "index_boards_on_camera_model_id"
     t.index ["user_id"], name: "index_boards_on_user_id"
+  end
+
+  create_table "camera_models", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cameras", force: :cascade do |t|
@@ -56,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_22_074035) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "boards", "camera_models"
   add_foreign_key "boards", "cameras"
   add_foreign_key "boards", "users"
 end

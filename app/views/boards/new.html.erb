@@ -4,6 +4,8 @@
     <h1 class="text-center" style="font-size: 24px; font-weight: 330; margin-bottom: 40px;">新 規 投 稿</h1> 
 
       <%= form_with model: @board, class: "new_board" do |f| %>
+
+         <%= render 'shared/error_messages', object: f.object %>
         
         <div class="mb-5 row justify-content-center position-relative">
             <div class="col-sm-2">
@@ -19,20 +21,36 @@
         <div class="mb-5 row justify-content-center position-relative">
         <div class="col-sm-2 col-md-2">
           <span class="required-label">必須</span>
-          <%= f.label :camera_details, "カメラの詳細", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+          <%= f.label :camera_make, "カメラの詳細", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
         </div>
         <div class="col-sm-8 col-md-8">
           <div class="row">
+            <!-- メーカー選択 -->
             <div class="col-sm-6">
-              <%= f.text_field :camera_make, class: "form-control", id: "camera_make_input", placeholder: "メーカー" %>
-            </div>
+            <%= f.select :camera_make, 
+            [["Canon", "Canon"], ["Nikon", "Nikon"], ["Sony", "Sony"], ["Panasonic", "Panasonic"], 
+             ["Olympus", "Olympus"], ["Fujifilm", "Fujifilm"], ["Ricoh", "Ricoh"], ["Casio", "Casio"], 
+             ["Leica", "Leica"], ["Yashica", "Yashica"], ["Konica", "Konica"], ["Minolta", "Minolta"],
+             ["不明", "不明"], ["その他", "その他"]],
+            { prompt: "メーカーを選択してください" },
+            class: "form-control", id: "camera_make_select" %>
+          
+      
+              <!-- "その他"用の入力フィールド -->
+              <div id="custom_make_input" style="display: none; margin-top: 10px;">
+                <%= f.text_field :custom_camera_make, placeholder: "メーカー名を入力してください", class: "form-control", id: "custom_camera_make" %>
+              </div>
+          </div>
+      
+            <!-- 機種入力 -->
             <div class="col-sm-6">
-              <%= f.text_field :camera_model, class: "form-control", id: "camera_model_input", placeholder: "機種" %>
-              <div id="suggestions"></div>
+              <%= f.text_field :camera_model, class: "form-control", id: "camera_model_input", placeholder: "機種", autocomplete: "off" %>
+              <ul id="camera_model_suggestions" class="suggestions-list"></ul>
             </div>
           </div>
         </div>
       </div>
+      
 
            
       <div class="mb-5 row justify-content-center position-relative">
@@ -42,11 +60,12 @@
       </div>
       <div class="col-sm-8">
         <%= f.file_field :board_image, class: "form-control", accept: 'image/*,video/*', id: 'board_image_input' %>
-        <div id="error-message" style="color: red;"></div>
-        <% if @board.errors[:board_image].any? %>
-          <div class="text-danger"><%= @board.errors[:board_image].join(", ") %></div>
+        <% if @board.board_image.present? %>
+          <div class="mt-3">
+            <%= image_tag @board.board_image.url, class: 'img-fluid' %>
+          </div>
         <% end %>
-      </div>
+
     </div>
     
     <!-- ここに画像のプレビューを表示 -->
@@ -72,26 +91,33 @@
   </div>
 </div>
 
-<% if @board.errors.any? %>
-  <div class="error-messages">
-    <h2>投稿のエラー:</h2>
-    <ul>
-      <% @board.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+    // 画像プレビュー処理
     const fileInput = document.getElementById("board_image_input");
     const previewDiv = document.getElementById("preview");
 
     fileInput.addEventListener("change", function(event) {
       const files = event.target.files;
-      
+
       // プレビューエリアをリセット
       previewDiv.innerHTML = "";
 
@@ -121,5 +147,117 @@
         }
       }
     });
+
+    // カメラメーカーのセレクトボックス処理
+    const cameraMakeSelect = document.getElementById("camera_make_select");
+    const customMakeInput = document.getElementById("custom_make_input");
+
+    // 初期状態で "その他" が選ばれている場合にフィールドを表示
+    if (cameraMakeSelect.value === "その他") {
+      customMakeInput.style.display = "block";
+    }
+
+    // セレクトボックスの変更イベントを監視
+    cameraMakeSelect.addEventListener("change", function(event) {
+      if (event.target.value === "その他") {
+        customMakeInput.style.display = "block"; // "その他"が選ばれた場合、入力フィールドを表示
+      } else {
+        customMakeInput.style.display = "none";  // 他の選択肢が選ばれた場合、非表示
+      }
+    });
+
+    // カメラモデルの候補リスト表示処理
+    const inputField = document.getElementById("camera_model_input");
+    const suggestionsList = document.getElementById("camera_model_suggestions");
+
+    // サーバーから渡された保存済みの機種リスト（Railsから渡されたデータ）
+    const cameraModels = <%= raw @saved_camera_models.to_json %>;
+
+    inputField.addEventListener("focus", () => {
+      suggestionsList.innerHTML = ""; // 最初に候補をクリア
+
+      // 不明を候補に追加
+      const li = document.createElement("li");
+      li.textContent = "不明";
+      li.classList.add("suggestion-item");
+      li.addEventListener("click", () => {
+        inputField.value = "不明"; // "不明"を入力欄にセット
+        suggestionsList.innerHTML = ""; // 候補リストをクリア
+      });
+      suggestionsList.appendChild(li);
+
+      // 保存されている機種を候補として表示
+      cameraModels.forEach(model => {
+        const li = document.createElement("li");
+        li.textContent = model;
+        li.classList.add("suggestion-item");
+        li.addEventListener("click", () => {
+          inputField.value = model; // 機種名を入力欄にセット
+          suggestionsList.innerHTML = ""; // 候補リストをクリア
+        });
+        suggestionsList.appendChild(li);
+      });
+
+      // 候補リストを表示
+      suggestionsList.style.visibility = "visible";
+      suggestionsList.style.opacity = 1;
+    });
+
+    // 入力時の候補リスト表示
+    inputField.addEventListener("input", () => {
+      const query = inputField.value.toLowerCase();
+      suggestionsList.innerHTML = ""; // リストをクリア
+
+      if (query) {
+        const matches = cameraModels.filter(model => model.toLowerCase().includes(query));
+        matches.forEach(match => {
+          const li = document.createElement("li");
+          li.textContent = match;
+          li.classList.add("suggestion-item");
+          li.addEventListener("click", () => {
+            inputField.value = match; // 値をセット
+            suggestionsList.innerHTML = ""; // リストをクリア
+          });
+          suggestionsList.appendChild(li);
+        });
+      }
+
+      // 候補リストを表示
+      suggestionsList.style.visibility = "visible";
+      suggestionsList.style.opacity = 1;
+    });
+
+    // フォーカス外れ時の処理
+    inputField.addEventListener("blur", () => {
+      setTimeout(() => {
+        suggestionsList.innerHTML = ""; // 少し遅れてクリア
+      }, 200);
+    });
   });
 </script>
+
+<style>
+.suggestions-list {
+  left: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: white;
+  border: 1px solid #ccc; /* 枠線 */
+  visibility: hidden; /* 最初は非表示 */
+  opacity: 0; /* 見えない状態 */
+  transition: opacity 0.3s ease-in-out; /* フェードイン/フェードアウト効果 */
+  z-index: 10; /* 他の要素の前に表示 */
+  width: auto; /* 自動で幅を調整 */
+  max-width: 100%; /* 親要素に合わせる */
+}
+
+.suggestion-item:hover {
+  background: #f0f0f0;
+}
+</style>
+
+
+
