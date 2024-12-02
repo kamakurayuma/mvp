@@ -30,6 +30,9 @@ Rails.application.routes.draw do
   get 'cameras/search', to: 'cameras#search'
   get 'boards/search', to: 'boards#search'
   get 'autocomplete', to: 'boards#autocomplete'
+  get 'autocomplete', to: 'autocomplete#index'
+  post 'add_camera_model', to: 'boards#add_camera_model'
+
 
   # トップページのルーティング
   get 'top', to: 'static_pages#top', as: 'static_pages_top'

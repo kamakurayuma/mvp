@@ -45,8 +45,17 @@
 
           <!-- 画像や動画 -->
           <div class="board-media">
-            <%= image_tag @board.board_image.url, class: "img-fluid" if @board.board_image.present? %>
-          </div>
+          <% if @board.board_image.present? %>
+            <% if @board.board_image.content_type.starts_with?('image/') %>
+              <!-- 画像の場合 -->
+              <%= image_tag @board.board_image.url, class: "img-fluid" %>
+            <% elsif @board.board_image.content_type.starts_with?('video/') %>
+              <!-- 動画の場合 -->
+              <%= video_tag @board.board_image.url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
+            <% end %>
+          <% end %>
+        </div>
+        
 
           <!-- 感想 -->
           <% if @board.body.present? %>

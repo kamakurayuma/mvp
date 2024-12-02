@@ -13,13 +13,18 @@ class BoardsController < ApplicationController
   
 def create
   @board = Board.new(board_params)
-  @board.user = current_user # ログイン中のユーザーを設定
+  @board.user = current_user # ログイン中のユーザーを設定z
 
   if @board.save
     redirect_to root_path, success: '投稿しました'
   else
     flash.now[:danger] = '投稿に失敗しました'
     render :new, status: :unprocessable_entity
+  end
+
+  if params[:board][:camera_model] == "その他" && params[:board][:custom_camera_make].present?
+    # カスタム機種名をデータベースに保存（必要ならば検証等も追加）
+    CameraModel.create(name: params[:board][:custom_camera_make])
   end
 end
 
