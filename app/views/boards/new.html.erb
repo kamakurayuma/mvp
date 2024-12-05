@@ -96,7 +96,9 @@
   // 写真・動画のプレビュー表示と解像度チェック
   document.getElementById('board_image_input').addEventListener('change', function(event) {
     const preview = document.getElementById('preview');
-    preview.innerHTML = ''; // 既存のプレビューをクリア
+    while (preview.firstChild) {
+      preview.removeChild(preview.firstChild);
+    }
     const file = event.target.files[0];
     const maxResolution = 17000000; // 最大解像度 (1700万画素)
 

@@ -86,6 +86,12 @@ end
                    .per(30)                   # 1ページあたりの表示数を30に設定
   end
 
+  def by_custom_camera_make
+    @custom_make = params[:custom_camera_make]  # URLからカスタムメーカー名を受け取る
+    @boards = Board.where(custom_camera_make: @custom_make)  # カスタムメーカーでフィルタリング
+  end
+  
+
   def edit
     @board = Board.find(params[:id])
     # カメラメーカーのリストを取得
@@ -111,43 +117,44 @@ end
   end
 
   def autocomplete
-    type = params[:type]
     query = params[:query].downcase # 入力値を小文字に変換
-  
-    # 固定のカメラメーカーリスト（これを検索結果に追加）
+    
+    # 固定のカメラメーカーリスト（任意）
     fixed_makers = ['Canon', 'Nikon', 'Sony', 'Fujifilm', 'Panasonic', 'Olympus', 'Ricoh', 'Casio', 'Minolta', 'Leica', 'Pentax', 'Kodak', 'Samsung', 'Vivitar', 'Toshiba', 'Yashica', 'Konica', 'Agfa', 'Zenit', 'Voigtländer', 'Polaroid', 'Rollei', 'Minox']
     
     # カメラメーカーとモデルの検索結果を格納する配列
-    make_results = []
-    model_results = []
+    results = []
   
     # カメラメーカーの検索（部分一致）
-    make_results = Board.where('LOWER(camera_make) LIKE ? AND camera_make != ?', 
-                                "%#{query}%", "不明")
+    make_results = Board.where('LOWER(camera_make) LIKE ?', "%#{query}%")
                          .pluck(:camera_make)
                          .uniq
   
     # カメラモデルの検索（部分一致）
-    model_results = Board.where('LOWER(camera_model) LIKE ? AND camera_make != ?', 
-                                 "%#{query}%", "不明")
+    model_results = Board.where('LOWER(camera_model) LIKE ?', "%#{query}%")
                           .pluck(:camera_model)
                           .uniq
   
-    # 結果を結合し、固定のメーカーも追加
-    results = make_results + model_results
-    results.concat(fixed_makers.select { |maker| maker.downcase.include?(query) })
+    # カスタムカメラメーカーも検索結果に含める場合
+    custom_make_results = Board.where('LOWER(custom_camera_make) LIKE ?', "%#{query}%")
+                                .pluck(:custom_camera_make)
+                                .uniq
   
+    # 結果を結合
+    results.concat(make_results)
+    results.concat(model_results)
+    results.concat(custom_make_results)
+    results.concat(fixed_makers.select { |maker| maker.downcase.include?(query) })
+    
     # 重複を削除
     results.uniq!
   
     # JSONレスポンスとして返す
     render json: results
   end
+  
 
-  def by_custom_camera_make
-    @custom_make = params[:custom_camera_make]  # URLからカスタムメーカー名を受け取る
-    @boards = Board.where(custom_camera_make: @custom_make)  # カスタムメーカーでフィルタリング
-  end
+
   
 
     private

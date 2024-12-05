@@ -1,8 +1,8 @@
 <div class="user-posts mt-5">
-  <h2 style="line-height: 1; font-weight: 300; text-align: center; margin-bottom: 40px;">
-    <%= "#{params.dig(:q, :query_cont)} の検索結果" if params.dig(:q, :query_cont).present? %>
-    <%= "検索結果" unless params.dig(:q, :query_cont).present? %>
-  </h2>
+<h2 style="line-height: 1; font-weight: 300; text-align: center; margin-bottom: 40px;">
+  <%= "#{params.dig(:q, :query_cont)} の検索結果" if params.dig(:q, :query_cont).present? %>
+  <%= "検索結果" unless params.dig(:q, :query_cont).present? %>
+</h2>
 
   <div class="text-center">
     <% if @boards.total_count > 0 %>
@@ -22,7 +22,7 @@
       </div>
     <% end %>
   </div>
-  <%= paginate @boards %>
+<%= paginate @boards, params: { q: params[:q] } %>
 
   <% if @boards.blank? %> 
     <div class="text-center" style="margin-top: 100px;">

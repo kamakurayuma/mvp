@@ -5,12 +5,13 @@
   <% @boards.each do |board| %>
     <div class="image-item2">
       <%= link_to board_path(board) do %>
-        <%= image_tag board.board_image.url, class: 'img-fluid' %>
-      <% end %>
-      <p><strong>メーカー:</strong> <%= board.camera_make %></p>
-      <p><strong>カスタムメーカー:</strong> <%= board.custom_camera_make.presence || '指定なし' %></p>
-    </div>
-  <% end %>
+      <%= board.board_image.content_type.starts_with?('image/') ? 
+              image_tag(board.board_image.url, class: 'img-fluid') : 
+              video_tag(board.board_image.url, controls: true, class: 'img-fluid', style: 'height: 200px; width: auto; max-width: 100%; object-fit: contain; display: block; margin: 0; padding: 0;') %>
+    <% end %>
+  </div>
+<% end %>
 </div>
-
 <%= paginate @boards %>
+
+
