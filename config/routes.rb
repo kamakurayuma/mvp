@@ -1,14 +1,41 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root "static_pages#top"
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # ユーザー関連のルーティング
+  resources :users, only: %i[new create show]
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  # 投稿関連のルーティング
+  resources :boards, only: %i[index show new create edit update destroy] do
+    collection do
+      get 'search', to: 'boards#search'
+      get :autocomplete
+      get 'by_camera_make', to: 'boards#by_camera_make'  # カメラメーカーでフィルタリング
+    end
+  end
+  
+  # その他のリソース
+  resources :cameras, only: [:create]
+  resource :profile, only: %i[show edit update]
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # ログイン関連のルーティング
+  get 'login', to: 'user_sessions#new'
+  post 'login', to: 'user_sessions#create'
+  delete 'logout', to: 'user_sessions#destroy'
+
+  # カメラメーカーやモデルのルーティング
+  get 'camera_make/:make', to: 'boards#by_camera_make', as: :by_camera_make
+  get 'camera_model/:model', to: 'boards#by_camera_model', as: :by_camera_model
+
+  # その他の検索関連のルーティング
+  get 'cameras/search', to: 'cameras#search'
+  get 'boards/search', to: 'boards#search'
+  get 'autocomplete', to: 'boards#autocomplete'
+  get 'autocomplete', to: 'autocomplete#index'
+  post 'add_camera_model', to: 'boards#add_camera_model'
+
+
+  # トップページのルーティング
+  get 'top', to: 'static_pages#top', as: 'static_pages_top'
+
+  post 'save_camera_model', to: 'camera_models#save'
 end
