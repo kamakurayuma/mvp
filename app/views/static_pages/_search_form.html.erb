@@ -1,0 +1,57 @@
+<%= form_with model: q, url: boards_search_path, method: :get, local: true, class: "form-inline", data: { controller: "autocomplete" } do |f| %>
+  <div style="width: 400px; margin: 0 auto; position: relative;">
+    <div class="input-group mb-5">
+      <%= f.text_field :query_cont, id: 'autocomplete', class: "form-control",
+          placeholder: "カメラのメーカーまたは機種で検索", 
+          data: { action: "input->autocomplete#search", autocomplete_target: "input" } %>
+      <div class="input-group-append">
+        <%= f.submit "検索", class: "btn btn-primary", style: "min-width: 60px; white-space: nowrap;" %>
+      </div>
+    </div>
+    <div id="autocomplete-results" 
+         class="autocomplete-results" 
+         style="position: absolute; top: 100%; left: 0; width: 100%; z-index: 1000; background: #fff; border: 1px solid #ccc; display: none;"
+         data-autocomplete-target="results">
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+  (() => {
+    // Stimulusの機能を模倣する簡易実装
+    document.addEventListener("DOMContentLoaded", () => {
+      const input = document.querySelector('[data-autocomplete-target="input"]');
+      const results = document.querySelector('[data-autocomplete-target="results"]');
+
+      input.addEventListener("input", async (event) => {
+        const query = event.target.value;
+
+        if (query.length === 0) {
+          results.style.display = "none";
+          results.innerHTML = "";
+          return;
+        }
+
+        // Ajaxリクエストで候補を取得
+        const response = await fetch(`/autocomplete?query=${encodeURIComponent(query)}`);
+        const suggestions = await response.json();
+
+        // 結果の表示
+        results.innerHTML = suggestions
+          .map(item => `<div class="autocomplete-item">${item}</div>`)
+          .join("");
+
+        results.style.display = "block";
+      });
+
+      // 結果をクリックした場合の処理
+      results.addEventListener("click", (event) => {
+        if (event.target.classList.contains("autocomplete-item")) {
+          input.value = event.target.textContent;
+          results.style.display = "none";
+        }
+      });
+    });
+  })();
+</script>
