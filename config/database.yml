@@ -51,9 +51,12 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: myapp_production
-    username: myapp
-    password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+    url: <%= ENV['JAWSDB_URL'] %>
+    database: <%= URI.parse(ENV['JAWSDB_URL']).path[1..-1] %>
+    username: <%= URI.parse(ENV['JAWSDB_URL']).user %>
+    password: <%= URI.parse(ENV['JAWSDB_URL']).password %>
+    host: <%= URI.parse(ENV['JAWSDB_URL']).host %>
+    port: <%= URI.parse(ENV['JAWSDB_URL']).port %>
   cache:
     <<: *primary_production
     database: myapp_production_cache
