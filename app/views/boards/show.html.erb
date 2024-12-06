@@ -1,0 +1,75 @@
+<div class="container pt-5">
+  <div class="row mb-3">
+    <div class="col-lg-8 offset-lg-2">
+      <article class="card">
+        <!-- タイトル -->
+        <div class="card-body">
+          <h2 class="board-title"><%= @board.title %></h2>
+
+          <!-- 編集・削除アイコン（投稿主だけが表示） -->
+          <% if @board.user == current_user %>
+            <div class="action-icons">
+              <%= link_to edit_board_path(@board) do %>
+                <%= image_tag 'edit.png', alt: 'Edit', class: 'action-icon' %>
+              <% end %>
+
+              <%= form_with(model: @board, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'delete-form') do |form| %>
+                <button type="submit" class="btn btn-danger delete-button">
+                    <%= image_tag('destroy.png', alt: '削除', class: 'delete-icon') %>
+                    この投稿を削除する
+                </button>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+          <!-- 投稿情報 -->
+          <div class="post-info2">
+            <div class="camera-info d-flex align-items-center">
+              <%= image_tag 'camera.png', alt: 'Camera', class: 'camera-icon' %>
+              <p>
+                <% if @board.camera_make == 'その他' %>
+                  <%= link_to @board.custom_camera_make, by_camera_make_path(make: @board.camera_make, custom_camera_make: @board.custom_camera_make) %> /
+                <% else %>
+                  <%= link_to @board.camera_make, by_camera_make_path(make: @board.camera_make) %> /
+                <% end %>
+                <%= link_to @board.camera_model, by_camera_model_path(model: @board.camera_model) %>
+              </p>
+            </div>
+
+            <div class="user-info">
+              <p>投稿主: <%= link_to @board.user.user_name, user_path(@board.user) %></p>
+              <p>投稿日: <%= l @board.created_at, format: :short %></p>
+            </div>
+          </div>
+
+          <!-- 画像や動画 -->
+          <div class="board-media">
+          <% if @board.board_image.present? %>
+            <% if @board.board_image.content_type.starts_with?('image/') %>
+              <!-- 画像の場合 -->
+              <%= image_tag @board.board_image.url, class: "img-fluid" %>
+            <% elsif @board.board_image.content_type.starts_with?('video/') %>
+              <!-- 動画の場合 -->
+              <%= video_tag @board.board_image.url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
+            <% end %>
+          <% end %>
+        </div>
+        
+
+          <!-- 感想 -->
+          <% if @board.body.present? %>
+            <div class="board-body mt-4">
+              <h4>感想</h4>
+              <p><%= simple_format(@board.body) %></p>
+            </div>
+          <% end %>
+
+        <div class="button-container mt-5">
+          <%= link_to '戻る', request.referer || root_path, class: "back_button" %>
+        </div>
+        
+      </article>
+    </div>
+  </div>
+</div>

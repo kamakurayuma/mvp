@@ -1,0 +1,32 @@
+<div class="user-posts mt-5">
+  <h2 style="line-height: 1; font-weight: 300; text-align: center; margin-bottom: 40px;">
+    <%= "#{params.dig(:q, :query_cont)} の検索結果" if params.dig(:q, :query_cont).present? %>
+    <%= "検索結果" unless params.dig(:q, :query_cont).present? %>
+  </h2>
+
+  <div class="text-center">
+    <% if @boards.total_count > 0 %>
+      <p>検索結果: <%= @boards.total_count %>件</p>
+    <% end %>
+  </div>
+
+
+  <div class="image-container2 d-flex flex-wrap justify-content-center">
+    <% @boards.each do |board| %>
+      <div class="image-item2">
+        <%= link_to board_path(board) do %>
+          <%= board.board_image.content_type.starts_with?('image/') ? 
+              image_tag(board.board_image.url, class: 'img-fluid') : 
+              video_tag(board.board_image.url, controls: true, class: 'img-fluid', style: 'height: 200px; width: auto; max-width: 100%; object-fit: contain; display: block; margin: 0; padding: 0;') %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <%= paginate @boards %>
+
+  <% if @boards.blank? %> 
+    <div class="text-center" style="margin-top: 100px;">
+      <p>該当する投稿はありません。</p>
+    </div>
+  <% end %>
+</div>

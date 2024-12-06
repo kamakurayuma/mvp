@@ -1,0 +1,118 @@
+/* ユーザーネーム */
+.user-info .user-name {
+    margin-left: 50px; /* ここで間隔を調整 */
+    margin-top: -80px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    
+}
+  
+/* 自己紹介 */
+.user-bio {
+    font-size: 1.1rem;  /* 少し小さめに調整 */
+    font-weight: 300;   /* 細めのフォント */
+    color: #333;        /* ダークグレーにして視認性を良く */
+    line-height: 1.8;   /* 少し広めの行間 */
+    position: relative;
+    top: -80px;         /* さらに上に移動 */
+    margin-left: -330px; /* 左に寄せる */
+  }
+
+
+
+.edit-container {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;  /* 画面の高さを超えないように調整 */
+}
+
+  .edit-title {
+    text-align: center;   /* テキストを中央に寄せる */
+    font-weight: 300;     /* フォントを細くする */
+    font-size: 2rem;      /* フォントサイズを調整 */
+    margin-bottom: 50px;
+  }
+  
+.edit_avatar {
+    position: relative;
+    margin-left: -100px;
+}
+  
+
+
+  .edit-username {
+    position: relative;
+    top: -50px;  /* 少し上に移動 */
+    font-weight: 300;  /* 文字を細く */
+  }
+  
+  .edit-username .form-control {
+    width: 400px;
+    padding: 10px;  /* 入力欄のパディング */
+
+  }
+
+  .edit-bio {
+    position: relative;
+    top: -90px;  /* 少し上に移動 */
+    margin-top: 20px;  /* 自己紹介文の入力欄の間隔を開ける */
+    right: -80px; 
+    font-weight: 300;  /* 文字を細く */
+  }
+  
+  .edit-bio .form-control {
+    width: 400px;
+    padding: 10px;  /* 入力欄のパディング */
+  }
+
+  .edit-email {
+    position: relative;
+    top: -110px;  /* 少し上に移動 */
+    margin-top: 30px;  /* 自己紹介文の入力欄の間隔を開ける */
+    font-weight: 300;  /* 文字を細く */
+    margin-bottom: -50px; /* メールアドレスとボタンの間隔を調整 */
+  }
+
+  
+
+  
+  /* ボタンを配置するためのコンテナ */
+.button-container {
+    display: flex;
+}
+
+.button-container .btn {
+    width: 45%;  /* 各ボタンの幅を指定（親要素に対する割合） */
+    margin: 0 30px;  /* ボタンの間隔を調整 */
+}
+
+
+/* 更新するボタンの背景色を青色に */
+.update-btn {
+    background-color: #007bff;  /* 初期の青色 */
+    color: white;  /* テキストの色を白に */
+    border: none;  /* ボーダーなし */
+}
+
+/* ホバー時に青色を濃くする */
+.update-btn:hover {
+    background-color: #0056b3;  /* 濃い青色 */
+    color: white;  /* テキスト色は白 */
+}
+
+
+
+.image-container2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 最小150pxで自動で列を作成 */
+    gap: 3px; /* 画像同士の余白を3pxに設定 */
+    max-width: 1200px; /* 最大幅を設定 */
+    margin: 0 auto; /* 中央寄せ */
+}
+  .image-item2 img {
+    width: 100%; /* 幅を親要素に合わせる */
+    height: auto; /* 高さは自動調整 */
+    max-height: 200px; /* 最大高さを設定 */
+    object-fit: contain; /* 縦横比を保ちながら収める */
+  }
+

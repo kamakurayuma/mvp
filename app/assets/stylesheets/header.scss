@@ -1,0 +1,24 @@
+/* OldCam1700のロゴ */
+.navbar-brand img {
+    width: 200px;   
+    height: 70px;   
+}
+
+/* ログイン/新規登録のアイコン */
+.login-icon-class {
+    margin: 0 auto;      /* 中央揃え */
+    width: 30px;  /* アイコンの幅 */
+    height: 30px; /* アイコンの高さ */
+    display: block; /* ブロック要素として表示 */
+    margin-bottom: 5px; /* アイコンとテキストの間に余白を追加 */
+}
+  
+  /* ログイン/新規登録のアイコン下の文字 */
+.login-icon-text {
+    display: block; /* テキストをブロック要素にしてアイコンの下に配置 */
+    font-size: 0.6rem; /* フォントサイズを小さめに */
+    text-align: center; /* テキストを中央揃え */
+    color: #333; /* テキストの色を指定 */
+    margin-top: 2px; /* アイコンとテキストの間の余白を調整 */
+}
+  

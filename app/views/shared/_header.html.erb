@@ -1,0 +1,31 @@
+<header>
+  <nav class='navbar navbar-expand-lg navigation navbar-light bg-light'>
+    <%= link_to root_path, class: 'navbar-brand' do %>
+      <%= image_tag 'logo.jpg' %>
+    <% end %>
+    <button class='navbar-toggler' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'
+      aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+      <span class='navbar-toggler-icon'></span>
+    </button>
+
+    <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+      <ul class='navbar-nav ms-auto main-nav align-items-center'>
+        <li class='nav-item'>
+        <%= link_to '投稿する', new_board_path, class: 'nav-link' %>
+        </li>
+
+        <li class='nav-item dropdown dropdown-slide'>
+          <%= link_to '#', class: 'nav-link', data: { bs_toggle: 'dropdown' }, aria: { haspopup: 'true', expanded: 'false' }, id: 'header-profile' do %>
+            <%= image_tag current_user.avatar_url, class: 'rounded-circle mr15', width: '40', height: '40' %>
+          <% end %>
+          <div class='dropdown-menu dropdown-menu-end'>
+            <%= link_to 'マイページ', profile_path, class: 'dropdown-item' %>
+            <%= form_with url: logout_path, method: :delete, class: 'd-inline' do %>
+                <button type="submit" class="dropdown-item">ログアウト</button>
+            <% end %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

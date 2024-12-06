@@ -1,0 +1,48 @@
+/* ログインボタン */
+.btn {
+    width: 50%; /* 横幅を広げる */
+    background-color: rgba(169, 169, 169, 0.7); /* 背景色を薄いグレー */
+    border-color: rgba(169, 169, 169, 0.7); /* ボーダーも薄いグレー */
+}
+
+/* ログインボタンマウスオーバー時の設定 */
+.btn:hover {
+    background-color: rgba(169, 169, 169, 1); /* 背景色を濃く */
+    border-color: rgba(169, 169, 169, 1); /* ボーダーも濃く */
+}
+
+/* パスワードをお忘れの方はこちら */
+.color-link {
+    color: rgba(169, 169, 169, 0.7); /* グレー色 */
+    text-decoration: none; /* 下線を消す（必要に応じて） */
+}
+  
+  /* パスワードをお忘れの方はこちらのマウスオーバー時の設定 */
+.color-link:hover {
+    color: rgba(169, 169, 169, 1); /* 濃いグレー */
+}
+
+/* 新規登録はこちらリンクをボタン風に */
+.btn2 {
+    position: absolute;
+    right: 280px; /* 右端から10pxの距離 */
+    top: 100px; /* 縦の中央に配置 */
+    padding: 10px 20px;              /* ボタンの内側の余白 */
+    background-color: rgba(169, 169, 169, 0.7); /* 背景色を薄いグレー */
+    border: 1px solid rgba(169, 169, 169, 0.7); /* ボーダー */
+    color: white;                    /* 文字色を白に */
+    text-align: center;              /* 文字を中央揃え */
+    padding: 4px 18px; /* ボタンのサイズ */
+    font-size: 12px; /* 文字サイズ */
+    border-radius: 5px;              /* 角を丸くする */
+    text-decoration: none;           /* リンクの下線を消す */
+    transition: background-color 0.3s, border-color 0.3s; /* ホバー時に色が変わるアニメーション */
+}
+
+.btn2:hover {
+    background-color: rgba(169, 169, 169, 1); /* ホバー時に背景色を濃く */
+    border-color: rgba(169, 169, 169, 1);     /* ホバー時にボーダー色も濃く */
+}
+
+
+

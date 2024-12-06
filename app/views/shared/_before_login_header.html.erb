@@ -1,0 +1,23 @@
+<header>
+  <nav class="navbar navbar-expand-lg navigation navbar-light bg-light">
+
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "logo.jpg" %>
+    <% end %>
+
+    <button class='navbar-toggler' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto main-nav align-items-center">
+        <li class="nav-item">
+          <%= link_to login_path, class: "nav-link" do %>
+            <%= image_tag("login.png", class: "login-icon-class") %>
+            <span class="login-icon-text">ログイン/新規登録</span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
