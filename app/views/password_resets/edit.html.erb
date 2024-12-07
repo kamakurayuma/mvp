@@ -1,0 +1,43 @@
+<% content_for(:title, "パスワードのリセット") %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-auto">
+    <h1 class="text-center" style="font-size: 24px; font-weight: 300; margin-bottom: 30px;">パスワードのリセット</h1>
+
+
+      <%= form_with model: @user, url: password_reset_path(@token), method: :patch do |f| %>
+        
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <div class="mb-3" style="text-align: center;">
+      <%= f.label :メールアドレス, class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+      <div style="display: inline-block; font-size: 16px; font-weight: 300;">
+        <%= @user.email %>
+      </div>
+    </div>
+
+        <div class="mb-4 row justify-content-center" style="margin-top: 40px;">
+          <div class="col-sm-2">
+            <%= f.label :password, "パスワード", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+          </div>
+          <div class="col-sm-7">
+            <%= f.password_field :password, class: "form-control" %>
+          </div>
+        </div>
+        
+        <div class="mb-4 row justify-content-center" style="margin-top: 30px;">
+          <div class="col-sm-2">
+            <%= f.label :password_confirmation, "パスワードの確認", class: "form-label", style: "font-size: 15px; font-weight: 300;" %>
+          </div>
+          <div class="col-sm-7">
+            <%= f.password_field :password_confirmation, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="mb-4 row justify-content-center" style="margin-top: 80px;">
+            <%= f.submit "更新する", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

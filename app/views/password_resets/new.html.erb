@@ -1,0 +1,24 @@
+<% content_for(:title, "パスワードのリセット") %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-auto">
+    <h1 class="text-center" style="font-size: 24px; font-weight: 300;">パスワードのリセット</h1>
+
+      <%= form_with url: password_resets_path do |f| %>
+        <div class="mb-4 row justify-content-center" style="margin-top: 60px;">
+          <div class="col-sm-2">
+            <%= f.label :email, "メールアドレス", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+          </div>
+          <div class="col-sm-7">
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="mb-4 row justify-content-center" style="margin-top: 80px;">
+            <%= f.submit "送信", class: "btn btn-primary" %>
+        </div>
+      
+      <% end %>
+    </div>
+  </div>
+</div>

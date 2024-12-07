@@ -27,6 +27,7 @@ services:
       - node_modules:/myapp/node_modules
     environment:
       TZ: Asia/Tokyo
+      JAWSDB_URL: mysql://root:password@db:3306/my_database
     ports:
       - "3000:3000"
     depends_on:

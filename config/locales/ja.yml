@@ -1,5 +1,11 @@
 ja:
   activerecord:
+    attributes:
+      user:
+        user_name: "ユーザー名"
+        password: "パスワード"
+        password_confirmation: "パスワードの確認"
+        email: "メールアドレス"
     errors:
       models:
         board:
@@ -16,5 +22,14 @@ ja:
               blank: "写真か動画を選択してください"
         user:
           attributes:
-            user:
-              blank: "ユーザー情報を入力してください"
+            password:
+              blank: "パスワードを入力してください"
+              too_short: "パスワードは3文字以上で入力してください"
+              confirmation: "パスワードが一致しません"
+            password_confirmation:
+              blank: "パスワードの確認を入力してください"
+              mismatch: "パスワードが一致しません"
+            email:
+              blank: "メールアドレスを入力してください"
+              taken: "そのメールアドレスはすでに使用されています"
+

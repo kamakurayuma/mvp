@@ -108,7 +108,12 @@ GEM
       marcel (~> 1.0.0)
       mini_mime (>= 0.1.3)
       ssrf_filter (~> 1.0)
+    childprocess (5.1.0)
+      logger (~> 1.5)
     concurrent-ruby (1.3.4)
+    config (5.5.2)
+      deep_merge (~> 1.2, >= 1.2.1)
+      ostruct
     connection_pool (2.4.1)
     crass (1.0.6)
     cssbundling-rails (1.4.1)
@@ -117,6 +122,7 @@ GEM
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    deep_merge (1.2.2)
     dotenv (3.1.4)
     drb (2.2.1)
     ed25519 (1.3.0)
@@ -182,6 +188,16 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
+    launchy (3.0.1)
+      addressable (~> 2.8)
+      childprocess (~> 5.0)
+    letter_opener (1.10.0)
+      launchy (>= 2.2, < 4)
+    letter_opener_web (2.0.0)
+      actionmailer (>= 5.2)
+      letter_opener (~> 1.7)
+      railties (>= 5.2)
+      rexml
     logger (1.6.2)
     loofah (2.23.1)
       crass (~> 1.0.2)
@@ -427,12 +443,14 @@ DEPENDENCIES
   brakeman
   capybara
   carrierwave (= 2.2.2)
+  config
   cssbundling-rails
   debug
   jbuilder
   jsbundling-rails
   kamal
   kaminari
+  letter_opener_web (= 2.0.0)
   mini_magick
   mysql2 (~> 0.5)
   propshaft

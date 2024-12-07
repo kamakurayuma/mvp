@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_28_035002) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_07_070019) do
   create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -60,7 +60,12 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_035002) do
     t.datetime "updated_at", null: false
     t.string "avatar"
     t.text "bio"
+    t.string "reset_password_token"
+    t.datetime "reset_password_token_expires_at"
+    t.datetime "reset_password_email_sent_at"
+    t.integer "access_count_to_reset_password_page", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "boards", "camera_models"
