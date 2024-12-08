@@ -11,8 +11,11 @@ Rails.application.routes.draw do
       get 'search', to: 'boards#search'
       get :autocomplete
       get 'by_camera_make', to: 'boards#by_camera_make'  # カメラメーカーでフィルタリング
+      get :bookmarks
     end
   end
+
+  resources :bookmarks, only: %i[create destroy]
   
   # その他のリソース
   resources :cameras, only: [:create]

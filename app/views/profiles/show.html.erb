@@ -24,8 +24,9 @@
       <!-- ユーザーの投稿した画像を並べる -->
       <div class="user-posts mt-5">
         <h2 style="line-height: 1; font-weight: 300; text-align: center; margin-bottom: 40px;">
-          <%= "#{current_user.user_name}さんの投稿一覧" %>
+          <%= "#{@user.user_name}さんの投稿一覧" %>
         </h2>
+        <% if @boards.any? %>
         <div class="image-container2 d-flex flex-wrap justify-content-center">
           <% @boards.each do |board| %>
             <div class="image-item2">
@@ -37,9 +38,11 @@
             </div>
           <% end %>
         </div>
+        <% else %>
+          <p style="text-align: center; color: #888; font-size: 18px; margin-top: 100px;">まだ投稿はありません</p>
+        <% end %>
+        <%= paginate @boards %>
       </div>
-      <%= paginate @boards %>
     </div>
   </div>
 </div>
-

@@ -8,7 +8,10 @@ class BoardsController < ApplicationController
     def new
       @board = Board.new
       @camera_makes = ['Canon', 'Nikon', 'Sony', 'Panasonic']  # カメラメーカーのリスト
+    end
 
+    def show
+      @board = Board.find(params[:id])
     end
   
 def create
@@ -41,6 +44,14 @@ end
     def destroy
         @board.destroy
         redirect_to root_path, success: '投稿が削除されました'
+    end
+
+    def bookmarks
+      @bookmark_boards = current_user.bookmark_boards
+                                     .includes(:user)
+                                     .order('bookmarks.created_at DESC')
+                                     .page(params[:page])
+                                     .per(30)
     end
 
 

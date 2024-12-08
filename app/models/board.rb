@@ -8,6 +8,8 @@ class Board < ApplicationRecord
     belongs_to :camera
     belongs_to :user
 
+    has_many :bookmarks, dependent: :destroy
+
     paginates_per 30
 
     mount_uploader :board_image, BoardImageUploader

@@ -56,6 +56,11 @@
           <% end %>
         </div>
         
+        <% if current_user && !current_user.own?(@board) %>
+          <!-- ブックマークボタンを表示 -->
+          <%= render 'bookmark_buttons', { board: @board } %>
+        <% end %>
+
 
           <!-- 感想 -->
           <% if @board.body.present? %>
