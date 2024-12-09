@@ -54,6 +54,17 @@ end
                                      .per(30)
     end
 
+    def like
+      @board = Board.find(params[:id])
+      @board.increment!(:likes_count) # likes_count を安全にインクリメント
+    
+      respond_to do |format|
+        format.html { redirect_to @board }
+        format.json { render json: { board_id: @board.id, likes_count: @board.likes_count.to_i } } # 型を保証
+      end
+    end
+    
+
 
     
 # メーカーごとの投稿一覧

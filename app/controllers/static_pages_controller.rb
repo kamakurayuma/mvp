@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-    skip_before_action :require_login, only: %i[top]
+    skip_before_action :require_login, only: %i[top terms_of_service privacy_policy]
   
     def top
       search_params = params[:q] || {}
@@ -23,6 +23,12 @@ class StaticPagesController < ApplicationController
   
       # ページネーション用のデータを取得
       @boards = @q.result(distinct: true).includes(:user, :camera).order(created_at: :desc).page(params[:page]).per(30)
+    end
+
+    def terms_of_service
+    end
+  
+    def privacy_policy
     end
   end
   
