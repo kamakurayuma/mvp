@@ -5,7 +5,7 @@ class User < ApplicationRecord
   attr_accessor :password_confirmation
 
   # ユーザー名は新規登録時に必須
-  validates :user_name, presence: true, length: { maximum: 255 }
+  validates :user_name, presence: { message: 'ユーザー名を入力してください' }
 
   # パスワードのバリデーション
   validates :password, length: { minimum: 3, message: I18n.t('activerecord.errors.models.user.attributes.password.too_short') }, if: -> { new_record? || changes[:crypted_password] }

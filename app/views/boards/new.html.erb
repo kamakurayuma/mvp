@@ -10,7 +10,7 @@
         <div class="mb-5 row justify-content-center position-relative">
             <div class="col-sm-2">
             <span class="required-label">必須</span>
-                <%= f.label :title, "タ イ ト ル", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+                <%= f.label :title, "タ イ ト ル", class: "migi", style: "font-size: 17px; font-weight: 300;" %>
             </div>
             <div class="col-sm-8">
             <%= f.text_field :title, class: "form-control" %>
@@ -21,7 +21,7 @@
         <div class="mb-5 row justify-content-center position-relative">
         <div class="col-sm-2 col-md-2">
           <span class="required-label">必須</span>
-          <%= f.label :camera_make, "カメラの詳細", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+          <%= f.label :camera_make, "カメラの詳細", class: "migi", style: "font-size: 17px; font-weight: 300;" %>
         </div>
         <div class="col-sm-8 col-md-8">
           <div class="row">
@@ -56,7 +56,7 @@
       <div class="mb-5 row justify-content-center position-relative">
       <div class="col-sm-2">
         <span class="required-label">必須</span>
-        <%= f.label :board_image, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+        <%= f.label :board_image, "写 真 ・ 動 画", class: "migi", style: "font-size: 17px; font-weight: 300;" %>
       </div>
       <div class="col-sm-8">
         <%= f.file_field :board_image, class: "form-control", accept: 'image/*,video/*', id: 'board_image_input' %>

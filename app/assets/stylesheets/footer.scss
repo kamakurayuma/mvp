@@ -1,0 +1,67 @@
+.terms-and-privacy {
+    font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    font-size: 12px;
+    overflow-x: hidden; /* 横スクロールを強制的に非表示 */
+}
+#content {
+    background-color: white; /* コンテンツ背景色を白に */
+    line-height: 1.5;
+    width: 800px;
+    padding: 20px;
+    margin: 50px auto 0; /* センター寄せ */
+    border: 1px solid #ddd; /* ボーダーで少し枠線を加える */
+    border-radius: 8px; /* 角を丸く */
+}
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center; /* 見出しの中央揃え */
+    margin-bottom: 20px;
+}
+h2 {
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #333;
+}
+h3 {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+p, ul {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+ul {
+    padding-left: 20px;
+}
+li {
+    margin-bottom: 5px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    body {
+        font-size: 10px; /* 全体の文字サイズを縮小 */
+    }
+    #content {
+        padding: 15px; /* パディングを小さく */
+        margin: 10px auto; /* 上下の余白を縮小 */
+        width: 95%; /* より幅広い調整 */
+    }
+    h1 {
+        font-size: 20px; /* 見出しの文字サイズを縮小 */
+    }
+    h2 {
+        font-size: 16px; /* サブ見出しの文字サイズを縮小 */
+    }
+    h3 {
+        font-size: 14px;
+    }
+    p, ul {
+        font-size: 12px; /* 残りの文字サイズも調整 */
+    }
+}

@@ -92,3 +92,16 @@
     background-color: #f0f0f0;
   }
   
+
+
+  @media (max-width: 768px) {
+
+    .required-label {
+      margin-left: -15px;
+    }
+
+    .migi {
+      display: inline; // インラインで表示
+      margin-left: 35px; // 左側にマージンを追加して右寄りにする
+    }
+  }

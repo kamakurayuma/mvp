@@ -72,14 +72,31 @@
   
   footer.footer .copyright {
     text-align: right; /* 右寄せにする */
-    font-size: 13px;                  /* 文字サイズを少し小さく */
+    font-size: 1px;                  /* 文字サイズを少し小さく */
     color: #6c757d;                   /* グレーの色を指定 */
   }
   
   
   
   
-  
+  /* レスポンシブ対応 */
+@media (max-width: 768px) {
+  footer.footer {
+    flex-direction: column;       /* フレックス方向を縦に変更 */
+    align-items: center;          /* 中央揃え */
+    text-align: center;           /* 中央揃え */
+  }
+
+  footer.footer .links {
+    margin-bottom: 10px;          /* 下部に余白を追加 */
+    justify-content: center;      /* リンクを中央揃え */
+  }
+
+  footer.footer .copyright {
+    text-align: center;           /* コピーライトも中央揃え */
+    font-size: 10px;              /* モバイル用にフォントサイズを調整 */
+  }
+}
 
   
 

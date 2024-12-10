@@ -1,3 +1,8 @@
+/* 全体の横スクロール防止 */
+body {
+  overflow-x: hidden;
+}
+
 /* ユーザーネーム */
 .user-info .user-name {
     margin-left: 50px; /* ここで間隔を調整 */
@@ -16,6 +21,9 @@
     position: relative;
     top: -80px;         /* さらに上に移動 */
     margin-left: -330px; /* 左に寄せる */
+
+    // border: 1px solid #a41717; /* 1pxの太さのグレーの枠 */
+    // border-radius: 5px; /* 角を丸くする */
   }
 
 
@@ -116,3 +124,144 @@
     object-fit: contain; /* 縦横比を保ちながら収める */
   }
 
+/* 小さな画面（スマートフォン）用のレスポンシブ対応 */
+@media (max-width: 768px) {
+  /* ユーザーネーム */
+  .user-info .user-name {
+    margin-left: 0;  /* 左の余白をなくす */
+    margin-top: 0;   /* 上の余白をなくす */
+    font-size: 1.2rem; /* フォントサイズを小さく */
+  }
+
+  /* 自己紹介 */
+  .user-bio {
+    font-size: 1rem; /* フォントサイズを小さく */
+    line-height: 1.6; /* 行間を少し縮める */
+    margin-left: 0;   /* 左の余白をなくす */
+    top: 0;           /* 上の移動を解除 */
+  }
+
+  /* 編集フォーム全体 */
+  .edit-container {
+    flex-direction: column; /* 横並びから縦並びに変更 */
+    padding: 20px;
+  }
+
+  .edit-title {
+    font-size: 1.5rem; /* タイトルのフォントサイズを小さく */
+    margin-bottom: 30px; /* 下の余白を縮める */
+  }
+
+  .edit_avatar {
+    margin-left: 0; /* プロフィール画像の左余白を解除 */
+    text-align: center; /* 画像を中央揃え */
+  }
+
+  /* ユーザーネーム */
+  .edit-username {
+    top: 0; /* 上の移動を解除 */
+    font-size: 1.2rem; /* フォントサイズを小さく */
+  }
+
+  .edit-username .form-control {
+    width: 100%;  /* 入力欄の幅を100%に変更 */
+    padding: 10px;
+  }
+
+  /* 自己紹介文 */
+  .edit-bio {
+    top: 0; /* 上の移動を解除 */
+    margin-top: 10px;
+  }
+
+  .edit-bio .form-control {
+    width: 100%; /* 入力欄の幅を100%に変更 */
+    padding: 10px;
+  }
+
+  /* メールアドレス */
+  .edit-email {
+    top: 0;  /* 上の移動を解除 */
+    margin-top: 20px; /* 少しスペースを開ける */
+    margin-bottom: 20px;
+  }
+
+  /* ボタンコンテナ */
+  .button-container {
+    flex-direction: column; /* ボタンを縦に並べる */
+    align-items: center;
+  }
+
+  .button-container .btn {
+    width: 100%; /* ボタンの幅を100%に変更 */
+    margin: 10px 0; /* ボタンの間に余白を加える */
+  }
+
+  .update-btn {
+    width: 100%; /* 更新ボタンの幅を100%に変更 */
+  }
+}
+
+/* 小さな画面（スマートフォン）用のレスポンシブ対応 */
+@media (max-width: 768px) {
+  .user-info .user-name {
+    font-size: 1.2rem;
+  }
+
+  .user-bio {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-left: 0;
+    top: 40px;
+    text-align: center; /* 自己紹介を中央揃え */
+  }
+
+  .edit-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .edit-avatar {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .edit-username,
+  .edit-bio,
+  .edit-email {
+    font-size: 1rem;
+  }
+
+  .edit-username .form-control,
+  .edit-bio .form-control {
+    width: 100%;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .edit-bio {
+    margin: 20px 0 0 -80px;
+    width: 100%;
+  }
+
+  .user-info .user-name {
+    margin-left: 20px; /* アバター画像との間隔を20pxにする */
+  }
+
+  .user-info .user-bio {
+    margin: -20px 0 90px 0 !important;
+  }
+
+  
+
+  .avatar_size {
+    width: 80px;  // お好きなサイズに変更
+    height: 80px; // お好きなサイズに変更
+  }
+
+}
