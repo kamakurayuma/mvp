@@ -72,7 +72,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'letter_opener_web', '2.0.0'
+  gem 'letter_opener_web', '3.0.0'
 end
 
 group :development do
