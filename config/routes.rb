@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "images/ogp"
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   root "static_pages#top"
   get '/terms_of_service', to: 'static_pages#terms_of_service', as: 'terms_of_service'
@@ -47,4 +48,5 @@ Rails.application.routes.draw do
   get 'top', to: 'static_pages#top', as: 'static_pages_top'
 
   post 'save_camera_model', to: 'camera_models#save'
+  
 end

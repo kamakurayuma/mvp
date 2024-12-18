@@ -1,3 +1,5 @@
+<% show_meta_tags(@board) %>
+
 <div class="container pt-5">
   <div class="row mb-3">
     <div class="col-lg-8 offset-lg-2">
@@ -60,6 +62,16 @@
           <!-- ブックマークボタンを表示 -->
           <%= render 'bookmark_buttons', { board: @board } %>
         <% end %>
+
+        <div class="share-buttons">
+          <!-- Twitterシェアボタン -->
+          <a href="https://twitter.com/share?url=<%= request.original_url %>&text=<%= @board.title %>" target="_blank" class="twitter-share-button">Tweet</a>
+        </div>
+
+        <!-- Twitterのシェアボタンを機能させるためのJavaScriptを追加 -->
+        <%= javascript_include_tag "https://platform.twitter.com/widgets.js" %>
+
+
 
 
           <!-- 感想 -->

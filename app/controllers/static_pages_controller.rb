@@ -2,6 +2,7 @@ class StaticPagesController < ApplicationController
     skip_before_action :require_login, only: %i[top terms_of_service privacy_policy]
   
     def top
+      @board = Board.first
       search_params = params[:q] || {}
       query_cont = search_params[:query_cont]
   

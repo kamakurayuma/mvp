@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
     before_action :set_board, only: [:edit, :update, :show, :destroy] 
 
+
     def index
       @boards = @user.boards.order(created_at: :desc) # 新しい順番で並べる
     end
@@ -12,6 +13,7 @@ class BoardsController < ApplicationController
 
     def show
       @board = Board.find(params[:id])
+
     end
   
 def create
@@ -175,11 +177,13 @@ end
     private
   
     def set_board
-      @board = Board.find(params[:id])
+      @board = Board.find_by(id: params[:id])
     end
   
     def board_params
       params.require(:board).permit(:title, :body, :board_image, :camera_make, :camera_model, :custom_camera_make)
     end
+
+
   end
   

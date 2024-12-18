@@ -14,6 +14,9 @@ class Board < ApplicationRecord
 
     mount_uploader :board_image, BoardImageUploader
 
+    has_one_attached :image
+    has_one_attached :video
+
     def self.ransackable_attributes(auth_object = nil)
         [
           "board_image", "body", "camera_id", "camera_make", "camera_model", 

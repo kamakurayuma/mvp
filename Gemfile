@@ -47,7 +47,11 @@ gem 'sorcery', '0.16.3'
 
 gem 'carrierwave', '2.2.2'
 
+gem 'fog-aws'
+
 gem 'mini_magick'
+
+gem 'meta-tags'
 
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
@@ -59,8 +63,6 @@ gem 'romkan'
 gem 'rails-i18n'
 
 gem 'config'
-
-gem 'turbo-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
