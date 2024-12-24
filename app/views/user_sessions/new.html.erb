@@ -5,7 +5,8 @@
             <h1 class="text-center" style="font-size: 24px; font-weight: 300; flex-grow: 1;">ロ グ イ ン</h1>
             <%= link_to '新規登録はこちら', new_user_path, class: 'btn2 ml-auto' %>
         </div>
-      <%= form_with url: login_path, data: { turbo: false } do |f| %>
+
+      <%= form_with(url: user_sessions_path, method: :post) do |f| %>
 
          <%= render 'shared/error_messages', object: @user %>
 
@@ -25,6 +26,16 @@
             <%= f.password_field :password, class: "form-control" %>
           </div>
         </div>
+
+        <div class="mb-3 row justify-content-center">
+          <div class="col-auto">
+            <%= f.label :remember_me do %>
+              <%= f.check_box :remember_me, {}, '1', '0' %>
+                <span style="font-weight: 300;">ログイン情報を保存する</span>
+            <% end %>
+          </div>
+        </div>
+
         <div class="row mt-5">
             <div class="col text-center mb-4">
                 <%= f.submit "ログイン", class: "btn btn-primary" %>
