@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   # ユーザー関連のルーティング
   resources :users, only: %i[new create show]
+  resource :user_sessions, only: [:new, :create, :destroy]
 
   # 投稿関連のルーティング
   resources :boards, only: %i[index show new create edit update destroy] do
