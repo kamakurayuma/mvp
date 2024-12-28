@@ -12,6 +12,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto main-nav align-items-center">
         <li class="nav-item">
+          <a class="modal-btn nav-link text-center" href="#modal" style="font-size: 0.8rem; line-height: 1.2;">
+            <%= image_tag("note.png", class: "note-icon-class", style: "width: 30px; height: 30px; margin-bottom: -2px;") %>
+            <span class="note-icon-text" style="font-size: 0.7rem;">使い方</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <%= link_to login_path, class: "nav-link" do %>
             <%= image_tag("login.png", class: "login-icon-class") %>
             <span class="login-icon-text">ログイン/新規登録</span>

@@ -21,4 +21,26 @@
     color: #333; /* テキストの色を指定 */
     margin-top: 2px; /* アイコンとテキストの間の余白を調整 */
 }
-  
+
+/* 使い方のアイコン */
+.note-icon-class {
+    margin: 0 auto; /* 中央揃え */
+    width: 20px;    /* アイコンの幅 */
+    height: 20px;   /* アイコンの高さ */
+    display: block; /* ブロック要素として表示 */
+    margin-bottom: 5px; /* アイコンと文字の間に余白を追加 */
+}
+
+/* 使い方のアイコン下の文字 */
+.note-icon-text {
+    display: block;        /* ブロック要素にしてアイコンの下に配置 */
+    font-size: 0.8rem;     /* フォントサイズを小さく */
+    text-align: center;    /* テキストを中央揃え */
+    color: #333;           /* テキストの色 */
+    margin-top: 2px;       /* アイコンと文字の間の余白 */
+}
+
+/* アイコン全体を少し下に移動 */
+.modal-btn {
+    margin-top: 15px; /* 全体を下に移動するマージン */
+}

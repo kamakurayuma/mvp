@@ -1,0 +1,113 @@
+<section role="dialog" aria-labelledby="modal-title" class="modal" id="modal">
+<a class="modal-overlay" href="#" tabindex="-1"></a>
+
+<div class="modal-content">
+  <a title="Close modal" aria-label="Close modal" href="#" class="modal-close">&times; </a>
+  <h1 id="modal-title"> OldCam1700へようこそ! </h1>
+  <p>
+    オールドコンデジで撮ったお気に入りの写真や動画を簡単に投稿できるサービスです。<br>
+    写真や動画は1700万画素以下で投稿できます。オールドコンデジならではの独特の味わいを楽しんでください！<br>
+    また、カメラの機種やメーカーで写真を検索し、気になるカメラの写りを比較することができます。<br>
+  </p>
+
+  <h2>OldCam1700の使い方</h2>
+  <p><strong>1. アカウント作成</strong></p>
+  <p>
+    アプリを利用するには、まずアカウントを作成しましょう<br>
+    画面右上の「新規登録」ボタンよりアカウントの作成が可能です。<br>
+  </p>
+
+  <p><strong>2. ログイン</strong></p>
+  <p>
+    すでにアカウントをお持ちの方は、ログインページからメールアドレスとパスワードを入力してログインできます。<br>
+    Googleアカウントでのログインも可能です。<br>
+  </p>
+
+  <p><strong>3. 投稿する</strong></p>
+  <p>
+    ログイン後、右上の「投稿する」ボタンから、あなたの投稿を作成できます。<br>
+    あなたが撮ったお気に入りの写真や動画を投稿しましょう。<br>
+  </p>
+
+  <p><strong>4. 他の投稿を見る</strong></p>
+  <p>
+    他のユーザーの投稿をチェックするには、ホーム画面をスクロールするだけ。<br>
+    素敵な投稿には「いいね！」をすることもできます。<br>
+  </p>
+
+  <p><strong>5. 検索する</strong></p>
+  <p>
+    気になるカメラや投稿を検索するには、画面上部の検索バーを使いましょう。<br>
+    カメラの機種やメーカー名を入力することで、関連する写真や動画を簡単に見つけることができます。<br>
+  </p>
+
+  <p><strong>6. マイページ</strong></p>
+  <p>
+    自分の投稿やプロフィールを管理したい場合は、画面右上の「マイページ」からアクセスできます。<br>
+    プロフィール画像やユーザーネーム、自己紹介、登録したメールアドレスの変更が可能です。<br>
+  </p>
+
+  <p><strong>7. ログアウト</strong></p>
+  <p>
+    右上の「ログアウト」ボタンでアカウントからログアウトできます。<br>
+  </p>
+
+  <p>
+    <span style="font-size: 10px; display: inline-block; margin-top: 30px;">
+      説明を閉じるには、トップ右上の×ボタンをクリックしてください。
+    </span><br>
+  </p>
+</div>
+</section>
+
+
+<style>
+/* モーダルの背景 */
+.modal {
+  display: none; /* 初期状態は非表示 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明の背景 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* モーダルがリンククリック時に表示される */
+.modal:target {
+  display: flex; /* ターゲットが指定されると表示 */
+}
+
+/* モーダル内のコンテンツ */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  width: 80%;
+  max-width: 700px;
+  max-height: 80vh; /* モーダルの高さを最大80%に制限 */
+  overflow-y: auto; /* 内容が多ければスクロール */
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #000;
+  text-decoration: none;
+}
+
+.modal-btn {
+  color: black;         /* 文字色を黒に設定 */
+  text-decoration: none; /* 下線を削除 */
+  position: relative;    /* 少し位置を調整するために必要 */
+  top: -2px;             /* 上に少し表示させる（数値を調整して好みに合わせてください） */
+  font-weight: 325;
+}
+
+</style>
