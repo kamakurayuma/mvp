@@ -9,6 +9,11 @@
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
+    <link rel="preload" href="<%= asset_path('application.css') %>" as="style">
+    <link rel="preload" href="<%= asset_path('application.js') %>" as="script">
+
+    <link rel="icon" href="<%= asset_path 'favicon.ico' %>" type="image/x-icon">
+
     <%= show_meta_tags(@board) %>
 
   </head>

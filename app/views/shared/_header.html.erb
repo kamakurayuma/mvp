@@ -12,7 +12,12 @@
       <ul class='navbar-nav ms-auto main-nav align-items-center'>
 
     
-      <a class="modal-btn" href="#modal">使い方</a>
+      <li class="nav-item">
+        <a class="modal-btn nav-link text-center" href="#modal" style="font-size: 0.8rem; line-height: 1.2;">
+          <%= image_tag("note.png", class: "note-icon-class", style: "width: 30px; height: 30px; margin-bottom: -2px;") %>
+          <span class="note-icon-text" style="font-size: 0.7rem;">使い方</span>
+        </a>
+      </li>
 
         <li class='nav-item'>
         <%= link_to '投稿する', new_board_path, class: 'nav-link' %>
