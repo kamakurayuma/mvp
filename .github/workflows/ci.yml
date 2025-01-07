@@ -40,15 +40,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-        - name: Set up CI database configuration
-          run: cp config/database.yml.ci config/database.yml
-
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3.6'
           bundler-cache: true
+
+      - name: Set up CI database configuration
+        run: cp config/database.yml.ci config/database.yml
 
       - name: Run tests
         env:
@@ -63,3 +62,4 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+git 
