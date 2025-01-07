@@ -75,7 +75,11 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+<<<<<<< HEAD
   gem "brakeman"
+=======
+  gem 'brakeman', '7.0.0'
+>>>>>>> 1aa8a34771c884666c1ae84751037543ab06bbd5
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
@@ -95,4 +99,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
