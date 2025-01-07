@@ -40,6 +40,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+        - name: Set up CI database configuration
+          run: cp config/database.yml.ci config/database.yml
+
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -49,7 +53,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: mysql2://127.0.0.1:3306
+          DATABASE_URL: mysql2://root:password@127.0.0.1:3306/ci_test
         run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
