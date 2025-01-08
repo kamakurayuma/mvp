@@ -2,7 +2,7 @@
   "name": "app",
   "private": true,
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "esbuild": "^0.24.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
@@ -21,7 +21,7 @@
     "nodemon": "^3.1.7",
     "postcss": "^8.4.49",
     "postcss-cli": "^11.0.0",
-    "sass": "^1.82.0",
+    "sass": "^1.83.1",
     "stimulus": "^3.2.2"
   },
   "browserslist": [

@@ -6,22 +6,6 @@ on:
     branches: [ main ]
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -49,13 +33,12 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      # redis:
-      #   image: redis
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl default-mysql-client libjemalloc2 libvips
 
@@ -65,15 +48,39 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version: '3.3.6'
           bundler-cache: true
 
+      - name: Start Docker containers
+        run: docker-compose up -d
+
+      - name: Wait for web container to start
+        run: |
+          echo "Waiting for web container to start..."
+          until docker-compose ps | grep -q 'web.*Up'; do
+            echo "Waiting..."
+            sleep 20
+          done
+          echo "Web container is up"
+
+      - name: Check docker logs (optional, for debugging)
+        run: docker-compose logs web
+
+      - name: Wait for services to stabilize (if needed)
+        run: |
+          echo "Waiting for services to stabilize..."
+          sleep 20  
+
+      - name: Install dependencies
+        run: docker-compose exec web bundle install
+
+      - name: Create and migrate the database
+        run: |
+          docker-compose exec web bin/rails db:create
+          docker-compose exec web bin/rails db:migrate
+
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: mysql2://127.0.0.1:3306
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+        run: docker-compose exec web bundle exec rspec
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4

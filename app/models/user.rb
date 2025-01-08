@@ -39,12 +39,12 @@ class User < ApplicationRecord
   end
   
   # ランダムなトークンを返す
-  def self.new_token #User.new_tokenと同じ意味
+  def self.new_token # User.new_tokenと同じ意味
     SecureRandom.urlsafe_base64
   end
 
   # 与えられた文字列のハッシュ値を返す
-  def self.digest(string) #User.digest(string)を同じ意味
+  def self.digest(string) # User.digest(string)を同じ意味
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
@@ -66,5 +66,4 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
-
 end

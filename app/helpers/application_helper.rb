@@ -34,7 +34,7 @@ module ApplicationHelper
         image = if board.present? && board.image.attached?
                   url_for(board.image) # 投稿画像を使用
                 else
-                  image_url('default-og-image.png') # デフォルト画像を使用
+                  image_url('default-og-image.jpg') # デフォルト画像を使用
                 end
       
         {

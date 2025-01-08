@@ -35,7 +35,7 @@
   <div class="col-12 d-flex justify-content-center align-items-center">
     <div class="row">
       <% if @boards.present? %>
-        <%= render @boards %> <!-- 各boardを個別にレンダリング -->
+        <%= render @boards %>
       <% else %>
         <div class="mb-3">投稿がありません</div>
       <% end %>
@@ -43,5 +43,3 @@
     </div>
   </div>
 </div>
-
-
