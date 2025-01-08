@@ -55,8 +55,14 @@ jobs:
           ruby-version: '3.3.6'
           bundler-cache: true
 
+      - name: Bring down containers if they exist
+        run: docker-compose down
+  
+      - name: Install Yarn dependencies
+        run: docker-compose run --rm web yarn install
+  
       - name: Start Docker containers
-        run: docker compose up 
+        run: docker-compose up -d
 
       - name: Wait for web container to start
         run: |
