@@ -17,6 +17,9 @@ jobs:
           --env MYSQL_USER=user
           --env MYSQL_PASSWORD=password
 
+    env: # 環境変数を設定
+      JAWSDB_URL: mysql2://user:password@127.0.0.1:3306/test
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
