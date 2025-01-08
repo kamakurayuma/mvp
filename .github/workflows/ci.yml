@@ -54,6 +54,14 @@ jobs:
       - name: Start Docker containers
         run: docker-compose up -d
 
+      - name: Wait for web container to start
+        run: |
+          until docker-compose ps | grep -q 'web.*Up'; do
+            echo "Waiting for web container to start..."
+            sleep 5
+          done
+          echo "Web container is up"
+
       - name: Install dependencies
         run: docker-compose exec web bundle install
 
