@@ -57,6 +57,11 @@ jobs:
       - name: Install dependencies
         run: docker-compose exec web bundle install
 
+      - name: Create and migrate the database
+        run: |
+          docker-compose exec web bin/rails db:create
+          docker-compose exec web bin/rails db:migrate
+
       - name: Run tests
         run: docker-compose exec web bundle exec rspec
 
