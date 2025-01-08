@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ RSpec_CItest ]
+    branches: [ main ]
 
 jobs:
   lint:
@@ -59,9 +59,18 @@ jobs:
           echo "Waiting for web container to start..."
           until docker-compose ps | grep -q 'web.*Up'; do
             echo "Waiting..."
-            sleep 20
+            sleep 30  # 増やした待機時間
           done
           echo "Web container is up"
+
+      - name: Wait for mysql container to be healthy
+        run: |
+          echo "Waiting for MySQL to be healthy..."
+          until docker-compose exec mysql mysqladmin --user=root --password="" --host=mysql ping --silent; do
+            echo "Waiting for MySQL..."
+            sleep 10
+          done
+          echo "MySQL is up"
 
       - name: Check docker logs (optional, for debugging)
         run: docker-compose logs web
@@ -69,7 +78,7 @@ jobs:
       - name: Wait for services to stabilize (if needed)
         run: |
           echo "Waiting for services to stabilize..."
-          sleep 20  
+          sleep 20  # 追加の安定化待機時間
 
       - name: Install dependencies
         run: docker-compose exec web bundle install
