@@ -63,15 +63,6 @@ jobs:
           done
           echo "Web container is up"
 
-      - name: Wait for mysql container to be healthy
-        run: |
-          echo "Waiting for MySQL to be healthy..."
-          until docker-compose exec mysql mysqladmin --user=root --password="" --host=mysql ping --silent; do
-            echo "Waiting for MySQL..."
-            sleep 10
-          done
-          echo "MySQL is up"
-
       - name: Check docker logs (optional, for debugging)
         run: docker-compose logs web
 
