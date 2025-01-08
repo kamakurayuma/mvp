@@ -56,7 +56,7 @@ jobs:
           bundler-cache: true
 
       - name: Start Docker containers
-        run: docker-compose up -d
+        run: docker compose up 
 
       - name: Wait for web container to start
         run: |
@@ -70,13 +70,13 @@ jobs:
       - name: Check docker logs (optional, for debugging)
         run: docker-compose logs web
 
-      - name: Wait for services to stabilize (if needed)
-        run: |
-          echo "Waiting for services to stabilize..."
-          sleep 20 
-
       - name: Install dependencies
         run: docker-compose exec web bundle install
+
+      - name: Create and migrate the database
+        run: |
+          docker-compose exec web bin/rails db:create
+          docker-compose exec web bin/rails db:migrate
 
       - name: Run tests
         run: docker-compose exec web bundle exec rspec
