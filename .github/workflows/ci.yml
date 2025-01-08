@@ -34,9 +34,6 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - name: Clear Docker Cache
-        run: docker system prune -f
-
       - name: Install Docker Compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -54,12 +51,6 @@ jobs:
           ruby-version: '3.3.6'
           bundler-cache: true
 
-      - name: Bring down containers if they exist
-        run: docker-compose down
-  
-      - name: Install Yarn dependencies
-        run: docker-compose run --rm web yarn install
-  
       - name: Start Docker containers
         run: docker-compose up -d
 
@@ -68,12 +59,17 @@ jobs:
           echo "Waiting for web container to start..."
           until docker-compose ps | grep -q 'web.*Up'; do
             echo "Waiting..."
-            sleep 30  
+            sleep 20
           done
           echo "Web container is up"
 
       - name: Check docker logs (optional, for debugging)
         run: docker-compose logs web
+
+      - name: Wait for services to stabilize (if needed)
+        run: |
+          echo "Waiting for services to stabilize..."
+          sleep 20  
 
       - name: Install dependencies
         run: docker-compose exec web bundle install
