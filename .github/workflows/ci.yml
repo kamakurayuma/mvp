@@ -51,6 +51,9 @@ jobs:
           ruby-version: '3.3.6'
           bundler-cache: true
 
+      - name: Install dependencies
+        run: docker-compose exec web bundle install
+
       - name: Run tests
         run: |
           docker-compose up -d
