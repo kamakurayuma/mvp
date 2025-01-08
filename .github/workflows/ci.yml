@@ -59,12 +59,17 @@ jobs:
           echo "Waiting for web container to start..."
           until docker-compose ps | grep -q 'web.*Up'; do
             echo "Waiting..."
-            sleep 5
+            sleep 10
           done
           echo "Web container is up"
 
       - name: Check docker logs (optional, for debugging)
         run: docker-compose logs web
+
+      - name: Wait for services to stabilize (if needed)
+        run: |
+          echo "Waiting for services to stabilize..."
+          sleep 20  # Optional extra wait time to let all services initialize
 
       - name: Install dependencies
         run: docker-compose exec web bundle install
