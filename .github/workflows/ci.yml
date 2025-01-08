@@ -1,63 +1,70 @@
-name: CI
+name: Continuous Integration
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
 
 jobs:
-  lint:
+  rspec:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
-
-  test:
-    runs-on: ubuntu-latest
-
     services:
       mysql:
-        image: mysql
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+        image: mysql:8.0
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --env MYSQL_ROOT_PASSWORD=password
+          --env MYSQL_DATABASE=test
+          --env MYSQL_USER=user
+          --env MYSQL_PASSWORD=password
 
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl default-mysql-client libjemalloc2 libvips
-
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3.6'
+          ruby-version: 3.3.6
           bundler-cache: true
 
-      - name: Set up CI database configuration
-        run: cp config/database.yml.ci config/database.yml
-
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-        run: bin/rails db:test:prepare test test:system
-
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
+      - name: Cache node modules
+        uses: actions/cache@v3
         with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+
+      - name: Database create and migrate
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
+
+      - name: Run rspec
+        run: bundle exec rspec
+
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.6
+          bundler-cache: true
+
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+
+      - name: Run rubocop
+        run: bundle exec rubocop
