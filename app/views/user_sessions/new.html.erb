@@ -42,7 +42,38 @@
             </div>
         </div>
       <% end %>
-      <div class="text-center">
+
+      <div class="mb-4 row justify-content-center d-flex mt-1 mb-3">
+        <div class="col-12 d-flex justify-content-center">
+          
+          <!-- クライアントライブラリの読み込み -->
+          <script src="https://accounts.google.com/gsi/client" async defer></script>
+          
+          <% if notice.present? %>
+            <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice">
+              <%= notice %>
+            </p>
+          <% end %>
+          
+          <!-- Googleログインボタンの表示 -->
+          <div id="g_id_onload"
+               data-client_id="561585853461-5h5kubhcidtgtnaebovacqd5i948vavf.apps.googleusercontent.com"
+               data-login_uri="http://localhost:3000/google_login_api/callback"
+               data-auto_prompt="false">
+          </div>
+          
+          <div class="g_id_signin"
+               data-type="standard"
+               data-size="large"
+               data-theme="outline"
+               data-text="signin_with_google"
+               data-shape="rectangular"
+               data-logo_alignment="left">
+          </div>         
+        </div>
+      </div>
+
+      <div class="text-center mb-3">
         <%= link_to 'パスワードをお忘れの方はこちら', new_password_reset_path, class: 'color-link' %>
       </div>
     </div>

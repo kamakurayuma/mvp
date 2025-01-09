@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "google_login_api/callback"
   get "images/ogp"
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   root "static_pages#top"
@@ -49,5 +50,7 @@ Rails.application.routes.draw do
   get 'top', to: 'static_pages#top', as: 'static_pages_top'
 
   post 'save_camera_model', to: 'camera_models#save'
+
+  post '/google_login_api/callback', to: 'google_login_api#callback'
   
 end
