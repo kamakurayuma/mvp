@@ -29,7 +29,7 @@
           <div class="post-info2">
             <div class="camera-info d-flex align-items-center">
               <%= image_tag 'camera.png', alt: 'Camera', class: 'camera-icon' %>
-              <p>
+              <p style="margin-top: -5px;">
                 <% if @board.camera_make == 'その他' %>
                   <%= link_to @board.custom_camera_make, by_camera_make_path(make: @board.camera_make, custom_camera_make: @board.custom_camera_make) %> /
                 <% else %>
@@ -58,21 +58,21 @@
           <% end %>
         </div>
         
-        <% if current_user && !current_user.own?(@board) %>
-          <!-- ブックマークボタンを表示 -->
-          <%= render 'bookmark_buttons', { board: @board } %>
-        <% end %>
 
-        <div class="share-buttons">
-          <!-- Twitterシェアボタン -->
-          <a href="https://twitter.com/share?url=<%= request.original_url %>&text=<%= @board.title %>" target="_blank" class="twitter-share-button">Tweet</a>
+        <div class="button-container" style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="share-buttons" style="<%= 'margin-top: 5px;' if current_user.own?(@board) %>">
+            <!-- Twitterシェアボタン -->
+            <a href="https://twitter.com/share?url=<%= request.original_url %>&text=<%= @board.title %>" target="_blank" class="twitter-share-button">Tweet</a>
+          </div>
+      
+          <!-- Twitterのシェアボタンを機能させるためのJavaScriptを追加 -->
+          <%= javascript_include_tag "https://platform.twitter.com/widgets.js" %>
+      
+           <% unless current_user.own?(@board) %>
+              <!-- 投稿した本人以外にブックマークボタンを表示 -->
+              <%= render 'bookmark_buttons', { board: @board } %>
+            <% end %>
         </div>
-
-        <!-- Twitterのシェアボタンを機能させるためのJavaScriptを追加 -->
-        <%= javascript_include_tag "https://platform.twitter.com/widgets.js" %>
-
-
-
 
           <!-- 感想 -->
           <% if @board.body.present? %>
