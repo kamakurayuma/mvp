@@ -32,5 +32,9 @@ class OauthsController < ApplicationController
       reset_session
       auto_login(@user)
     end
+
+    def login_at(provider)
+      redirect_to "/auth/#{provider}"
+    end
 end
   

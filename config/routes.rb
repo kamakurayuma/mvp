@@ -49,5 +49,8 @@ Rails.application.routes.draw do
   get 'top', to: 'static_pages#top', as: 'static_pages_top'
 
   post 'save_camera_model', to: 'camera_models#save'
-  
+
+  post "oauth/callback" => "oauths#callback"
+  get "oauth/callback" => "oauths#callback" 
+  get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
 end

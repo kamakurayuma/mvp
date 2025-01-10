@@ -36,6 +36,8 @@
           </div>
         </div>
 
+        <%= link_to 'Login with Google', auth_at_provider_path(provider: :google) %>
+
         <div class="row mt-5">
             <div class="col text-center mb-4">
                 <%= f.submit "ログイン", class: "btn btn-primary" %>
