@@ -18,6 +18,9 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :reset_password_token, uniqueness: true, allow_nil: true
 
+  # 自己紹介文
+  validates :bio, length: { maximum: 160, message: '自己紹介文は160文字以内で入力してください' }
+
   has_many :boards, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :bookmark_boards, through: :bookmarks, source: :board
