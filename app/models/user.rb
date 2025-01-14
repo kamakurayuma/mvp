@@ -72,4 +72,28 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+
+  def self.from_omniauth(id_token)
+    # GoogleのIDトークンを使ってユーザー情報を取得
+    user_info = get_google_user_info(id_token)
+
+    # 既存のユーザーがいるか確認
+    user = User.find_by(email: user_info[:email])
+    return user if user
+
+    # ユーザーがいなければ新しく作成
+    User.create(
+      email: user_info[:email],
+      name: user_info[:name],
+      password: SecureRandom.hex(10) # 乱数でパスワードを作成
+    )
+  end
+
+  private
+
+  def self.get_google_user_info(id_token)
+    # GoogleのIDトークンを検証してユーザー情報を取得
+    response = RestClient.get("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=#{id_token}")
+    JSON.parse(response.body).symbolize_keys
+  end
 end

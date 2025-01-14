@@ -50,7 +50,9 @@ Rails.application.routes.draw do
 
   post 'save_camera_model', to: 'camera_models#save'
 
-  post "oauth/callback" => "oauths#callback"
-  get "oauth/callback" => "oauths#callback" 
-  get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
+  post '/oauth/google', to: 'oauths#oauth'
+  post 'oauth/google', to: 'oauths#google'
+  get '/oauth/google', to: 'oauths#oauth', as: 'google_oauth'
+  get '/oauth/callback', to: 'oauths#callback', as: 'google_oauth_callback'
+  get '/oauth/callback', to: 'oauths#callback'
 end
