@@ -124,6 +124,7 @@ GEM
       reline (>= 0.3.8)
     deep_merge (1.2.2)
     diff-lcs (1.5.1)
+    domain_name (0.6.20240107)
     dotenv (3.1.7)
     dotenv-rails (3.1.7)
       dotenv (= 3.1.7)
@@ -176,6 +177,9 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
+    http-accept (1.7.0)
+    http-cookie (1.0.8)
+      domain_name (~> 0.5)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     image_processing (1.13.0)
@@ -268,6 +272,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     net-ssh (7.3.0)
+    netrc (0.11.0)
     nio4r (2.7.4)
     nokogiri (1.18.1-aarch64-linux-gnu)
       racc (~> 1.4)
@@ -379,6 +384,11 @@ GEM
     regexp_parser (2.10.0)
     reline (0.6.0)
       io-console (~> 0.5)
+    rest-client (2.1.0)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rexml (3.4.0)
     romkan (0.4.0)
     rspec-core (3.13.2)
@@ -527,6 +537,7 @@ DEPENDENCIES
   fog-aws
   jbuilder
   jsbundling-rails
+  jwt
   kamal
   kaminari
   letter_opener_web (= 2.0.0)
@@ -540,6 +551,7 @@ DEPENDENCIES
   rails (~> 8.0.0)
   rails-i18n
   ransack
+  rest-client
   romkan
   rspec-rails
   rubocop

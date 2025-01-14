@@ -49,5 +49,10 @@ Rails.application.routes.draw do
   get 'top', to: 'static_pages#top', as: 'static_pages_top'
 
   post 'save_camera_model', to: 'camera_models#save'
-  
+
+  post '/oauth/google', to: 'oauths#oauth'
+  post 'oauth/google', to: 'oauths#google'
+  get '/oauth/google', to: 'oauths#oauth', as: 'google_oauth'
+  get '/oauth/callback', to: 'oauths#callback', as: 'google_oauth_callback'
+  get '/oauth/callback', to: 'oauths#callback'
 end

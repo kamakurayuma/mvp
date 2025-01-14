@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <meta name="google-signin-client_id" content="561585853461-5h5kubhcidtgtnaebovacqd5i948vavf.apps.googleusercontent.com">
+  </head>
+  <body>
+    <div id="my-signin2"></div>
+    <script>
+      function onSuccess(googleUser) {
+        var id_token = googleUser.credential;
+
+        // id_tokenをサーバーに送信
+        fetch('/oauth/google', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id_token: id_token,
+          }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // フラッシュメッセージをアラートで表示
+            alert(data.message);
+            
+            // リダイレクト処理
+            window.location.href = data.redirect_url;
+          } else {
+            // エラーメッセージを表示
+            console.error('Login failed:', data.message);
+            alert(data.message); // エラー表示
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+
+      function onFailure(error) {
+        console.log(error);
+      }
+
+      function renderButton() {
+        google.accounts.id.initialize({
+          client_id: '561585853461-5h5kubhcidtgtnaebovacqd5i948vavf.apps.googleusercontent.com',
+          callback: onSuccess,
+        });
+
+        google.accounts.id.renderButton(
+          document.getElementById('my-signin2'),
+          { theme: 'outline', size: 'large' }
+        );
+
+        google.accounts.id.prompt();
+      }
+
+      window.onload = renderButton;
+    </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </body>
+</html>
