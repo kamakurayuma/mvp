@@ -10,7 +10,8 @@ class OauthsController < ApplicationController
     # ユーザーを認証
     user = User.from_omniauth(token)
   
-    if user.persisted?
+    # ユーザーがnilでないかを確認
+    if user && user.persisted?
       # ログインしてユーザーをセッションに保存
       session[:user_id] = user.id
       Rails.logger.debug("Session User ID: #{session[:user_id]}") # デバッグメッセージを追加
@@ -21,7 +22,8 @@ class OauthsController < ApplicationController
       # ユーザー作成失敗した場合の処理
       render json: { success: false, message: "ログインに失敗しました", redirect_url: root_path }, status: :unprocessable_entity
     end
-  end  
+  end
+  
 
   # OAuth コールバック処理
   def callback

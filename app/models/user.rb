@@ -74,20 +74,31 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(id_token)
-    # GoogleのIDトークンを使ってユーザー情報を取得
     user_info = get_google_user_info(id_token)
-
+  
     # 既存のユーザーがいるか確認
     user = User.find_by(email: user_info[:email])
     return user if user
-
+  
     # ユーザーがいなければ新しく作成
-    User.create(
+    password = SecureRandom.hex(10) # 乱数でパスワードを作成
+    new_user = User.new(
       email: user_info[:email],
-      name: user_info[:name],
-      password: SecureRandom.hex(10) # 乱数でパスワードを作成
+      user_name: user_info[:name],
+      password: password,
+      password_confirmation: password # パスワード確認も同じ値に設定
     )
+  
+    if new_user.save
+      return new_user
+    else
+      Rails.logger.error("User creation failed: #{new_user.errors.full_messages.join(', ')}")
+      return nil
+    end
   end
+  
+  
+  
 
   private
 
