@@ -55,6 +55,4 @@ Rails.application.routes.draw do
   get '/oauth/google', to: 'oauths#oauth', as: 'google_oauth'
   get '/oauth/callback', to: 'oauths#callback', as: 'google_oauth_callback'
   get '/oauth/callback', to: 'oauths#callback'
-
-  get '/uploads/user/avatar/:id', to: 'uploads#show', as: 'user_avatar'
 end
