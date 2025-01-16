@@ -47,15 +47,15 @@
 
           <!-- 画像や動画 -->
           <div class="board-media">
-            <% if @board.board_image.present? %>
-              <% if @board.board_image.content_type.starts_with?('image/') %>
-                <!-- 画像の場合 -->
-                <%= image_tag request.base_url + @board.board_image.url, class: "img-fluid" %>
-              <% elsif @board.board_image.content_type.starts_with?('video/') %>
-                <!-- 動画の場合 -->
-                <%= video_tag request.base_url + @board.board_image.url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
-              <% end %>
-            <% end %>        
+          <% if @board.board_image.present? %>
+            <% if @board.board_image.content_type.starts_with?('image/') %>
+              <!-- 画像の場合 -->
+              <%= image_tag @board.board_image.url, class: "img-fluid" %>
+            <% elsif @board.board_image.content_type.starts_with?('video/') %>
+              <!-- 動画の場合 -->
+              <%= video_tag @board.board_image.url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
+            <% end %>
+          <% end %>
 
             <!-- URL確認用 -->
             <p>画像URL: <%= @board.board_image.url %></p>
