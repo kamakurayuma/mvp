@@ -268,7 +268,7 @@ body {
 
 @media (max-width: 767px) {
   .image-container2 {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* スマホサイズでの最小幅を100pxに設定 */
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* スマホサイズでの最小幅を100pxに設定 */
   }
   
   .image-item2 img {
