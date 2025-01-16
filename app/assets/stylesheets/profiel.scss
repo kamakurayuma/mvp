@@ -265,12 +265,3 @@ body {
   }
 
 }
-
-@media (max-width: 767px) {
-  .image-container2 {
-    grid-template-columns: repeat(3, 1fr); /* スマホでも横3列に設定 */
-  }
-  .image-item2 img {
-    max-height: 120px; /* スマホではさらに画像を小さく表示 */
-  }
-}
