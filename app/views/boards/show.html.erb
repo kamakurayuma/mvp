@@ -55,8 +55,7 @@
                 <!-- 動画の場合 -->
                 <%= video_tag request.base_url + @board.board_image.url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
               <% end %>
-            <% end %>
-          </div>          
+            <% end %>        
 
             <!-- URL確認用 -->
             <p>画像URL: <%= @board.board_image.url %></p>
