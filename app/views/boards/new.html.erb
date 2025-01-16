@@ -45,7 +45,7 @@
             <!-- 機種入力 -->
             <div class="col-sm-6">
               <%= f.text_field :camera_model, class: "form-control", id: "camera_model_input", placeholder: "機種", autocomplete: "off" %>
-              <ul id="camera_model_suggestions" class="suggestions-list"></ul>
+              <ul id="camera_model_suggestions" class="camera_model_suggestions"></ul>
             </div>
           </div>
         </div>
@@ -93,23 +93,41 @@
 
 
 <script>
-  // 写真・動画のプレビュー表示と解像度チェック
-  document.getElementById('board_image_input').addEventListener('change', function(event) {
-    const preview = document.getElementById('preview');
-    preview.innerHTML = ''; // 既存のプレビューをクリア
-    const file = event.target.files[0];
-    const maxResolution = 17000000; // 最大解像度 (1700万画素)
+document.addEventListener("DOMContentLoaded", function () {
+  // ファイル入力とプレビュー要素の取得
+  const fileInput = document.getElementById("board_image_input");
+  const previewContainer = document.getElementById("preview");
+  const existingPreview = document.getElementById("existing-preview");
+  const maxResolution = 17000000; // 最大解像度 (1700万画素)
 
-    if (file) {
+  if (!fileInput || !previewContainer) {
+    console.error("ファイル入力またはプレビューコンテナが見つかりません。");
+    return;
+  }
+
+  // 画像・動画プレビューのクリアと更新
+  fileInput.addEventListener("change", function (event) {
+    const files = event.target.files;
+
+    // 既存プレビューをクリア
+    if (existingPreview) {
+      existingPreview.remove();
+    }
+
+    // 新しいプレビューをクリア
+    previewContainer.innerHTML = "";
+
+    if (files.length > 0) {
+      const file = files[0];
       const reader = new FileReader();
       reader.onload = function(e) {
         const fileUrl = e.target.result;
         let previewElement;
 
-        if (file.type.startsWith('image/')) {
-          previewElement = document.createElement('img');
+        if (file.type.startsWith("image/")) {
+          previewElement = document.createElement("img");
           previewElement.src = fileUrl;
-          previewElement.classList.add('img-fluid');
+          previewElement.classList.add("img-fluid");
 
           // 画像の解像度チェック
           const img = new Image();
@@ -117,34 +135,40 @@
             const resolution = img.width * img.height;
             if (resolution > maxResolution) {
               alert("画像の解像度が1700万画素を超えています。別の画像を選択してください。");
-              preview.innerHTML = ''; // 画像プレビューを削除
-              document.getElementById('board_image_input').value = ''; // ファイル入力をリセット
+              previewContainer.innerHTML = ''; // 画像プレビューを削除
+              fileInput.value = ''; // ファイル入力をリセット
             } else {
-              preview.appendChild(previewElement); // プレビューを表示
+              previewContainer.appendChild(previewElement); // プレビューを表示
             }
           };
           img.src = fileUrl;
-        } else if (file.type.startsWith('video/')) {
-          previewElement = document.createElement('video');
+        } else if (file.type.startsWith("video/")) {
+          previewElement = document.createElement("video");
           previewElement.src = fileUrl;
-          previewElement.classList.add('img-fluid');
+          previewElement.classList.add("img-fluid");
           previewElement.controls = true;
 
           // 動画の解像度チェック
-          const video = document.createElement('video');
+          const video = document.createElement("video");
           video.onloadedmetadata = function() {
             const width = video.videoWidth;
             const height = video.videoHeight;
             const resolution = width * height;
             if (resolution > maxResolution) {
               alert("動画の解像度が1700万画素を超えています。別の動画を選択してください。");
-              preview.innerHTML = ''; // 動画プレビューを削除
-              document.getElementById('board_image_input').value = ''; // ファイル入力をリセット
+              previewContainer.innerHTML = ''; // 動画プレビューを削除
+              fileInput.value = ''; // ファイル入力をリセット
             } else {
-              preview.appendChild(previewElement); // プレビューを表示
+              previewContainer.appendChild(previewElement); // プレビューを表示
             }
           };
           video.src = fileUrl;
+        } else {
+          // サポートされないファイル形式
+          const errorMsg = document.createElement("p");
+          errorMsg.style.color = "red";
+          errorMsg.textContent = "画像または動画のみアップロードできます。";
+          previewContainer.appendChild(errorMsg);
         }
       };
       reader.readAsDataURL(file);
@@ -154,48 +178,43 @@
   // メーカー選択で「その他」を選んだ場合に入力フィールド表示
   document.getElementById('camera_make_select').addEventListener('change', function(event) {
     const customMakeInput = document.getElementById('custom_make_input');
-    customMakeInput.style.display = event.target.value === 'その他' ? 'block' : 'none';
+    if (event.target.value === 'その他') {
+      customMakeInput.style.display = 'block';
+    } else {
+      customMakeInput.style.display = 'none';
+    }
   });
 
   // 投稿失敗時に「その他」の入力フィールドを維持
-  window.onload = function() {
-    const cameraMakeSelect = document.getElementById('camera_make_select');
-    const customMakeInput = document.getElementById('custom_make_input');
-    if (cameraMakeSelect.value === 'その他') {
-      customMakeInput.style.display = 'block';
-    }
-  };
+  const cameraMakeSelect = document.getElementById('camera_make_select');
+  const customMakeInput = document.getElementById('custom_make_input');
+  if (cameraMakeSelect.value === 'その他') {
+    customMakeInput.style.display = 'block';
+  }
 
-  // カメラモデルのリスト
+  // オールドコンデジの機種（画素数1700万未満）
   const cameraModels = [
-    'T4', 'DiMAGE X1', 'DiMAGE 7i', 'XA', 'GR1v', 'S95', 'P7000', 'DMC-LX100',
-    'Stylus 1', 'GR Digital IV', 'EX-ZR1000', 'A620', 'DiMAGE Xt', 'DSC-T10',
-    'A590 IS', 'DSC-W70', 'DiMAGE 5', 'SD700 IS', 'DSC-T50', '5900', 'G5', '5700',
-    'DiMAGE A1', 'S230', 'DiMAGE Z3', 'G6', 'DiMAGE Z1', 'SD400', 'DSC-T1', 'A520',
-    '8800', 'DiMAGE Z5', 'S3 IS', 'DSC-W50', 'A75', '7900', 'A550', 'DiMAGE 7',
-    'FinePix F30', 'PowerShot G7', 'Coolpix P500', 'Cyber-shot DSC-H5'
+    'T4', 'DiMAGE X1', 'DiMAGE 7i', 'XA', 'GR1v', 'S95', 'P7000', 'DMC-LX100', 'Stylus 1', 'GR Digital IV',
+    'EX-ZR1000', 'A620', 'DiMAGE Xt', 'DSC-T10', 'A590 IS', 'DSC-W70', 'DiMAGE 5', 'SD700 IS', 'DSC-T50',
+    '5900', 'G5', '5700', 'DiMAGE A1', 'S230', 'DiMAGE Z3', 'G6', 'DiMAGE Z1', 'SD400', 'DSC-T1', 'A520',
+    '8800', 'DiMAGE Z5', 'S3 IS', 'DSC-W50', 'A75', '7900', 'A550', 'DiMAGE 7', 'FinePix F30', 'PowerShot G7',
+    'Coolpix P500', 'Cyber-shot DSC-H5'
   ];
 
   // 五十音順に並べ替え
   const sortedCameraModels = cameraModels.sort();
 
-  // 新しい機種を候補に追加する関数
-  function addNewCameraModel(newModel) {
-    if (!cameraModels.includes(newModel)) {
-      cameraModels.push(newModel);
-      cameraModels.sort(); // 新しい機種を追加後、リストを再ソート
-    }
-    console.log(cameraModels); // 追加された後のカメラリストを確認
-  }
-
-  // オートコンプリートリストを更新する関数
-  function updateCameraModelSuggestions() {
-    const inputValue = document.getElementById('camera_model_input').value.toLowerCase();
+  // 機種入力のオートコンプリート機能
+  document.getElementById('camera_model_input').addEventListener('input', function(event) {
+    const inputValue = event.target.value.toLowerCase();
     const suggestionsList = document.getElementById('camera_model_suggestions');
     suggestionsList.innerHTML = ''; // 前回の候補をクリア
 
     if (inputValue) {
-      const filteredModels = cameraModels.filter(model => model.toLowerCase().includes(inputValue));
+      // 入力内容と一致する候補をフィルタリング
+      const filteredModels = sortedCameraModels.filter(model => model.toLowerCase().includes(inputValue));
+
+      // フィルタリングされた機種名をリストに追加
       filteredModels.forEach(model => {
         const listItem = document.createElement('li');
         listItem.textContent = model;
@@ -216,54 +235,23 @@
       });
       suggestionsList.appendChild(unknownOption);
     }
-  }
-
-  // 機種入力のオートコンプリート機能
-  document.getElementById('camera_model_input').addEventListener('input', function(event) {
-    updateCameraModelSuggestions();
   });
 
-  // 新しい機種を追加するボタンをクリックしたときの処理
-  const addButton = document.getElementById('addCameraModelButton');
-  addButton.addEventListener('click', () => {
-    const newModel = document.getElementById('newModelInput').value;
-    addNewCameraModel(newModel);  // 新しい機種を追加
-    updateCameraModelSuggestions(); // 新しい機種を追加後、候補リストを更新
+  // 機種入力がクリックされた場合に不明を一番下に表示
+  document.getElementById('camera_model_input').addEventListener('focus', function() {
+    const suggestionsList = document.getElementById('camera_model_suggestions');
+    const unknownOption = document.createElement('li');
+    unknownOption.textContent = '不明';
+
+    // 既に不明の候補がある場合は追加しない
+    if (![...suggestionsList.children].some(child => child.textContent === '不明')) {
+      unknownOption.classList.add('suggestion-item');
+      unknownOption.addEventListener('click', function() {
+        document.getElementById('camera_model_input').value = '不明';
+      });
+      suggestionsList.appendChild(unknownOption);
+    }
   });
+});
 </script>
 
-
-
-
-
-
-
-<style>
-/* サジェストリストのスタイル */
-#camera_model_suggestions {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  max-height: 200px; /* 最大高さ */
-  overflow-y: auto; /* スクロール可能 */
-  border: none; /* 初期状態で枠線を消す */
-  background-color: #fff;
-  position: absolute;
-  z-index: 1000;
-  width: 34%; /* 横幅を60%に設定して狭める */
-}
-
-/* サジェストアイテムのスタイル */
-.suggestion-item {
-  padding: 8px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background-color: #fff;
-  width: 100%; /* アイテムの横幅をリストと同じに */
-}
-
-/* アイテムホバー時のスタイル */
-.suggestion-item:hover {
-  background-color: #f0f0f0;
-}
-</style>

@@ -105,3 +105,31 @@
       margin-left: 35px; // 左側にマージンを追加して右寄りにする
     }
   }
+
+
+/* サジェストリストのスタイル */
+.camera_model_suggestions {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* 最大高さ */
+  overflow-y: auto; /* スクロール可能 */
+  border: none; /* 初期状態で枠線を消す */
+  background-color: #fff;
+  position: absolute;
+  z-index: 1000;
+  width: 34%; /* 横幅を60%に設定して狭める */
+
+  .suggestion-item {
+    padding: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #fff;
+    width: 100%; /* アイテムの横幅をリストと同じに */
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
