@@ -265,3 +265,9 @@ body {
   }
 
 }
+
+@media (max-width: 767px) {
+  .image-item2 img {
+    max-height: 150px; /* スマホでは画像を小さく表示 */
+  }
+}
