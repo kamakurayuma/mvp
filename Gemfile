@@ -49,6 +49,8 @@ gem 'carrierwave', '2.2.2'
 
 gem 'fog-aws'
 
+gem 'aws-sdk-s3'
+
 gem 'mini_magick'
 
 gem 'meta-tags'
