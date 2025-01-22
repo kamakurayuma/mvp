@@ -20,6 +20,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
       'sample.png'
     end
   
+    
     # Process files as they are uploaded:
     # process scale: [200, 300]
     #
