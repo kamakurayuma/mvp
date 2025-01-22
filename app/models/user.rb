@@ -99,8 +99,6 @@ class User < ApplicationRecord
     end
   end
   
-  
-  
 
   private
 
