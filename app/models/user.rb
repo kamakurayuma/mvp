@@ -107,4 +107,20 @@ class User < ApplicationRecord
     response = RestClient.get("https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=#{id_token}")
     JSON.parse(response.body).symbolize_keys
   end
+
+
+  def upload_avatar_to_s3
+    return unless avatar.attached?
+
+    # S3のバケットにアップロード
+    s3 = Aws::S3::Resource.new(region: 'us-east-1')
+    obj = s3.bucket(ENV['AWS_BUCKET_NAME']).object("avatars/#{self.id}/#{avatar.filename.to_s}")
+    
+    # アップロードしたファイルをS3に保存
+    obj.upload_file(avatar.path)
+    
+    # 必要に応じてアップロード後の処理（例えば、DBにURLを保存）を行う
+    self.avatar_url = obj.public_url
+    self.save!
+  end
 end

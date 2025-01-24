@@ -47,8 +47,6 @@ gem 'sorcery', '0.16.3'
 
 gem 'carrierwave', '2.2.2'
 
-gem 'cloudinary'
-
 gem 'fog-aws'
 
 gem 'aws-sdk-s3'
