@@ -5,7 +5,7 @@
       <div class="user-info">
         <div class="d-flex align-items-center">
           <!-- アバター画像 -->
-          <<%= image_tag @user.avatar, alt: 'アバター画像' %>
+          <%= image_tag @user.avatar.url, alt: 'アバター画像' %>
           <!-- ユーザーネーム -->
           <h1 class="user-name">
             <%= current_user.user_name %>
