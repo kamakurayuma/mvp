@@ -45,7 +45,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 gem 'sorcery', '0.16.3'
 
-gem 'carrierwave', '2.2.2'
+gem 'carrierwave', '3.1.1'
 
 gem 'fog-aws'
 
