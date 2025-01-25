@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
-  mount_uploader :avatar, AvatarUploader
+
 
   attr_accessor :password_confirmation
   attr_accessor :remember_token
