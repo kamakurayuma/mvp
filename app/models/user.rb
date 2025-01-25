@@ -100,9 +100,8 @@ class User < ApplicationRecord
   end
 
   def avatar_url
-    avatar.attached? ? avatar.url : '/path/to/default/avatar.png'
+    avatar.attached? ? avatar_url : '/path/to/default/avatar.png'
   end
-  
   
   private
 
