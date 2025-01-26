@@ -16,22 +16,29 @@ class BoardsController < ApplicationController
 
     end
   
-def create
-  @board = Board.new(board_params)
-  @board.user = current_user # ログイン中のユーザーを設定
-
-  if @board.save
-    redirect_to root_path, success: '投稿しました'
-  else
-    flash.now[:danger] = '投稿に失敗しました'
-    render :new, status: :unprocessable_entity
-  end
-
-  if params[:board][:camera_model] == "その他" && params[:board][:custom_camera_make].present?
-    # カスタム機種名をデータベースに保存（必要ならば検証等も追加）
-    CameraModel.create(name: params[:board][:custom_camera_make])
-  end
-end
+    def create
+      @board = Board.new(board_params)
+      @board.user = current_user # ログイン中のユーザーを設定
+    
+      # 画像がアップロードされた場合、board_image_urlを設定
+      if @board.board_image.present?
+        @board.board_image_url = @board.board_image.url # 画像URLをboard_image_urlに設定
+      end
+    
+      if @board.save
+        # カスタムカメラ機種の処理
+        if params[:board][:camera_model] == "その他" && params[:board][:custom_camera_make].present?
+          # カスタム機種名をデータベースに保存（必要ならば検証等も追加）
+          CameraModel.create(name: params[:board][:custom_camera_make])
+        end
+    
+        redirect_to root_path, success: '投稿しました'
+      else
+        flash.now[:danger] = '投稿に失敗しました'
+        render :new, status: :unprocessable_entity
+      end
+    end
+    
 
   
     def update
@@ -181,7 +188,7 @@ end
     end
   
     def board_params
-      params.require(:board).permit(:title, :body, :board_image, :camera_make, :camera_model, :custom_camera_make)
+      params.require(:board).permit(:title, :body, :board_image_url, :camera_make, :camera_model, :custom_camera_make)
     end
 
 

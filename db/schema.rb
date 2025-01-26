@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_24_060935) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_26_025358) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -69,6 +69,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_060935) do
     t.string "custom_camera_make"
     t.bigint "camera_model_id"
     t.string "description"
+    t.string "board_image_url"
     t.index ["camera_id"], name: "index_boards_on_camera_id"
     t.index ["camera_model_id"], name: "index_boards_on_camera_model_id"
     t.index ["user_id"], name: "index_boards_on_user_id"

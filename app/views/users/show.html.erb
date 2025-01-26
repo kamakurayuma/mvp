@@ -33,9 +33,8 @@
           <% @boards.each do |board| %>
             <div class="image-item2">
               <%= link_to board_path(board) do %>
-                <%= board.board_image.content_type.starts_with?('image/') ? 
-              image_tag(board.board_image.url, class: 'img-fluid') : 
-              video_tag(board.board_image.url, controls: true, class: 'img-fluid', style: 'height: 200px; width: auto; max-width: 100%; object-fit: contain; display: block; margin: 0; padding: 0;') %>
+                <!-- 画像URLを直接表示する -->
+                <img src="<%= board.board_image_url %>" class="img-fluid">
               <% end %>
             </div>
           <% end %>

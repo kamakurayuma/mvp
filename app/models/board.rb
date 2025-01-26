@@ -2,7 +2,7 @@ class Board < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
   validates :camera_make, :camera_model, presence: true
   validates :custom_camera_make, presence: true, if: :other_camera_make?
-  validates :board_image, presence: true
+  validates :board_image_url, presence: true
   
     
     belongs_to :camera
@@ -12,10 +12,11 @@ class Board < ApplicationRecord
 
     paginates_per 30
 
-    mount_uploader :board_image, BoardImageUploader
+ 
 
     has_one_attached :image
     has_one_attached :video
+    has_one_attached :board_image
 
     def self.ransackable_attributes(auth_object = nil)
         [
@@ -48,4 +49,5 @@ class Board < ApplicationRecord
       errors.add(:custom_camera_make, 'カメラのメーカー名を入力してください')
     end
   end
+  
 end

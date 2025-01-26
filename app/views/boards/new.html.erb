@@ -56,15 +56,16 @@
       <div class="mb-5 row justify-content-center position-relative">
       <div class="col-sm-2">
         <span class="required-label">必須</span>
-        <%= f.label :board_image, "写 真 ・ 動 画", class: "migi", style: "font-size: 17px; font-weight: 300;" %>
+        <%= f.label :board_image_url, "写 真 ・ 動 画", class: "migi", style: "font-size: 17px; font-weight: 300;" %>
       </div>
       <div class="col-sm-8">
-        <%= f.file_field :board_image, class: "form-control", accept: 'image/*,video/*', id: 'board_image_input' %>
-        <% if @board.board_image.present? %>
-          <div class="mt-3">
-            <%= image_tag @board.board_image.url, class: 'img-fluid' %>
-          </div>
-        <% end %>
+        <!-- ファイルアップロードフィールド -->
+        <%= f.file_field :board_image_url, class: "form-control", accept: 'image/*,video/*', id: 'board_image_input' %>
+    
+    
+        <!-- SimpleFileUploadでアップロードした画像のURLをhiddenフィールドにセット -->
+
+        <input type="hidden" id="board_image_url" name="board[board_image_url]" class="simple-file-upload">
 
     </div>
     
