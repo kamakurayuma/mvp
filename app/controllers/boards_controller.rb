@@ -18,7 +18,7 @@ class BoardsController < ApplicationController
   
 def create
   @board = Board.new(board_params)
-  @board.user = current_user # ログイン中のユーザーを設定z
+  @board.user = current_user # ログイン中のユーザーを設定
 
   if @board.save
     redirect_to root_path, success: '投稿しました'
