@@ -55,30 +55,32 @@
         <div class="mb-5 row justify-content-center position-relative">
         <div class="col-sm-2">
           <span class="required-label">必須</span>
-          <%= f.label :board_image, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+          <%= f.label :board_image_url, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
         </div>
         <div class="col-sm-8">
-          <%= f.file_field :board_image, class: "form-control", accept: 'image/*,video/*', id: "board_image_input" %>
+        <%= f.file_field :board_image_url, class: "form-control", accept: 'image/*,video/*', id: "board_image_url_input" %>
+
           <div id="error-message" style="color: red;"></div>
-          <% if @board.errors[:board_image].any? %>
-            <div class="text-danger"><%= @board.errors[:board_image].join(", ") %></div>
-          <% end %>
+          <% if @board.errors[:board_image_url].any? %>
+          <div class="text-danger"><%= @board.errors[:board_image_url].join(", ") %></div>
+        <% end %>
+        
       
-          <!-- 既存の画像を表示 -->
-          <% if @board.board_image.present? %>
-            <div id="existing-preview">
-              <p>現在の画像:</p>
-              
-              <% if @board.board_image.content_type.starts_with?('image/') %>
-              <!-- 画像の場合 -->
-              <%= image_tag @board.board_image.url, class: 'img-fluid' %>
-            <% elsif @board.board_image.content_type.starts_with?('video/') %>
-              <!-- 動画の場合 -->
-              <%= video_tag @board.board_image.url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
-            <% end %>
-            
-            </div>
-          <% end %>
+<!-- 既存の画像を表示 -->
+<% if @board.board_image_url.present? %>
+  <div id="existing-preview">
+    <p>現在の画像:</p>
+
+    <% if @board.board_image_url.ends_with?('.jpg', '.jpeg', '.png', '.gif') %>
+      <!-- 画像の場合 -->
+      <%= image_tag @board.board_image_url, class: 'img-fluid' %>
+    <% elsif @board.board_image_url.ends_with?('.mp4', '.webm', '.mov') %>
+      <!-- 動画の場合 -->
+      <%= video_tag @board.board_image_url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
+    <% end %>
+  </div>
+<% end %>
+
       
           <!-- 画像・動画のプレビュー表示 -->
           <div id="preview"></div>
