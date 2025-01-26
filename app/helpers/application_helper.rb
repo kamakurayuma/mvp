@@ -12,7 +12,7 @@ module ApplicationHelper
       
         # boardが存在し、画像がある場合の処理
         if board.present? && board.respond_to?(:board_image) && board.board_image.present?
-          options[:image] = board.board_image.url
+          options[:image] = board.board_image_url
         end
       
         # Twitterカード用のメタタグを設定

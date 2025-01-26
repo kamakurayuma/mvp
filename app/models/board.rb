@@ -12,7 +12,6 @@ class Board < ApplicationRecord
 
     paginates_per 30
 
- 
 
     has_one_attached :image
     has_one_attached :video
