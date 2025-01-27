@@ -64,11 +64,13 @@
       
           <!-- Twitterのシェアボタンを機能させるためのJavaScriptを追加 -->
           <%= javascript_include_tag "https://platform.twitter.com/widgets.js" %>
+
+          <%# <!-- ブックマークボタンをコメントアウト --> %>
       
-           <% unless current_user.own?(@board) %>
-              <!-- 投稿した本人以外にブックマークボタンを表示 -->
-              <%= render 'bookmark_buttons', { board: @board } %>
-            <% end %>
+          <%# unless current_user.own?(@board) %>
+            <%# <!-- 投稿した本人以外にブックマークボタンを表示 --> %>
+            <%# <%= render 'bookmark_buttons', { board: @board } %> 
+          <%# end %>
         </div>
 
           <!-- 感想 -->

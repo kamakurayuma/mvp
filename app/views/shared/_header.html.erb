@@ -29,7 +29,7 @@
           <% end %>
           <div class='dropdown-menu dropdown-menu-end'>
             <%= link_to 'マイページ', profile_path, class: 'dropdown-item' %>
-            <%= link_to 'いいねした投稿', bookmarks_boards_path, class: 'dropdown-item' %>
+            <%# = link_to 'いいねした投稿', bookmarks_boards_path, class: 'dropdown-item' #%>
             <%= form_with url: logout_path, method: :delete, class: 'd-inline' do %>
                 <button type="submit" class="dropdown-item">ログアウト</button>
             <% end %>
