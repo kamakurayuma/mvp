@@ -47,10 +47,15 @@
 
           <!-- 画像や動画 -->
           <div class="board-media">
-            <img src="<%= @board.board_image_url %>" style="max-width: 100%; height: auto;">
-          </div>
+          <% if @board.board_image_url.present? %>
+            <% if @board.board_image_url.ends_with?('.jpg', '.jpeg', '.png', '.gif') %>
+              <img src="<%= @board.board_image_url %>" style="max-width: 100%; height: auto;">
+            <% elsif @board.board_image_url.ends_with?('.mp4', '.webm', '.ogg') %>
+              <%= video_tag(@board.board_image_url, controls: true, class: 'video-fluid', style: 'max-width: 100%; height: auto; object-fit: contain; display: block; margin: 0 auto;') %>
+            <% end %>
+          <% end %>
+        </div>
         
-
         <div class="button-container" style="display: flex; justify-content: space-between; align-items: center;">
           <div class="share-buttons" style="<%= 'margin-top: 5px;' if current_user.own?(@board) %>">
             <!-- Twitterシェアボタン -->

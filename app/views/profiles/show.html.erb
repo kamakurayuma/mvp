@@ -32,7 +32,13 @@
               <div class="image-item2">
                 <%= link_to board_path(board) do %>
                   <!-- 画像URLを直接表示する -->
-                  <img src="<%= board.board_image_url %>" class="img-fluid">
+                  <% if board.board_image_url.present? %>
+                    <% if board.board_image_url.ends_with?('.jpg', '.jpeg', '.png', '.gif') %>
+                      <%= image_tag(board.board_image_url, class: 'img-fluid') %>
+                    <% elsif board.board_image_url.ends_with?('.mp4', '.webm', '.ogg') %>
+                      <%= video_tag(board.board_image_url, controls: true, class: 'img-fluid', style: 'height: 200px; width: auto; max-width: 100%; object-fit: contain; display: block; margin: 0; padding: 0;') %>
+                    <% end %>
+                  <% end %>
                 <% end %>
               </div>
             <% end %>
