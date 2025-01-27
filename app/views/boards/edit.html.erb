@@ -4,7 +4,7 @@
       <h1 class="text-center" style="font-size: 24px; font-weight: 330; margin-bottom: 40px;">投稿の編集</h1>
 
       <%= form_with model: @board, class: "edit_board" do |f| %>
-
+        
         <%= render 'shared/error_messages', object: f.object %>
         
         <!-- タイトル -->
@@ -22,70 +22,66 @@
         <div class="mb-5 row justify-content-center position-relative">
           <div class="col-sm-2 col-md-2">
             <span class="required-label">必須</span>
-            <%= f.label :camera_make, "カメラの詳細", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+            <%= f.label :camera_make, "カメラの詳細", class: "migi", style: "font-size: 17px; font-weight: 300;" %>
           </div>
           <div class="col-sm-8 col-md-8">
             <div class="row">
-              <!-- メーカー選択 -->
+              <!-- メーカー選択と機種入力を横並びに配置 -->
               <div class="col-sm-6">
                 <%= f.select :camera_make, 
-                [["Canon", "Canon"], ["Nikon", "Nikon"], ["Sony", "Sony"], ["Panasonic", "Panasonic"], 
-                ["Olympus", "Olympus"], ["Fujifilm", "Fujifilm"], ["Ricoh", "Ricoh"], ["Casio", "Casio"], 
-                ["Leica", "Leica"], ["Yashica", "Yashica"], ["Konica", "Konica"], ["Minolta", "Minolta"],
-                ["不明", "不明"], ["その他", "その他"]], 
-                { prompt: "メーカーを選択してください", selected: @board.camera_make },
-                class: "form-control", id: "camera_make_select" %>
-
-                <!-- "その他"用の入力フィールド -->
-                <div id="custom_make_input" style="display: none; margin-top: 10px;">
-                  <%= f.text_field :custom_camera_make, placeholder: "メーカー名を入力してください", class: "form-control" %>
-                </div>
+                  [["Canon", "Canon"], ["Nikon", "Nikon"], ["Sony", "Sony"], ["Panasonic", "Panasonic"], 
+                   ["Olympus", "Olympus"], ["Fujifilm", "Fujifilm"], ["Ricoh", "Ricoh"], ["Casio", "Casio"], 
+                   ["Leica", "Leica"], ["Yashica", "Yashica"], ["Konica", "Konica"], ["Minolta", "Minolta"],
+                   ["不明", "不明"], ["その他", "その他"]],
+                  { prompt: "メーカーを選択してください", selected: @board.camera_make }, 
+                  class: "form-control", id: "camera_make_select" %>
               </div>
-    
+              
               <!-- 機種入力 -->
               <div class="col-sm-6">
-                <%= f.text_field :camera_model, class: "form-control", id: "camera_model_input", placeholder: "機種", autocomplete: "off" %>
+                <%= f.text_field :camera_model, class: "form-control", id: "camera_model_input", placeholder: "機種", autocomplete: "off", value: @board.camera_model %>
                 <ul id="camera_model_suggestions" class="camera_model_suggestions"></ul>
               </div>
             </div>
+
+            <!-- "その他" を選んだ場合の入力フィールド -->
+            <div id="custom_make_input" class="col-sm-6" style="display: <%= @board.camera_make == 'その他' ? 'block' : 'none' %>; margin-top: 10px;">
+              <%= f.text_field :custom_camera_make, placeholder: "メーカー名を入力してください", class: "form-control", id: "custom_camera_make", value: @board.custom_camera_make %>
+            </div>
           </div>
         </div>
-        
+
         <!-- 画像 -->
         <div class="mb-5 row justify-content-center position-relative">
-        <div class="col-sm-2">
-          <span class="required-label">必須</span>
-          <%= f.label :board_image_url, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+          <div class="col-sm-2">
+            <span class="required-label">必須</span>
+            <%= f.label :board_image_url, "写 真 ・ 動 画", class: "form-label", style: "font-size: 17px; font-weight: 300;" %>
+          </div>
+          <div class="col-sm-8">
+            <%= f.file_field :board_image_url, class: "form-control", accept: 'image/*,video/*', id: "board_image_url_input" %>
+            <div id="error-message" style="color: red;"></div>
+            <% if @board.errors[:board_image_url].any? %>
+              <div class="text-danger"><%= @board.errors[:board_image_url].join(", ") %></div>
+            <% end %>
+
+            <!-- 既存の画像を表示 -->
+            <% if @board.board_image_url.present? %>
+              <div id="existing-preview">
+                <p>現在の画像:</p>
+                <% if @board.board_image_url.ends_with?('.jpg', '.jpeg', '.png', '.gif') %>
+                  <!-- 画像の場合 -->
+                  <%= image_tag @board.board_image_url, class: 'img-fluid' %>
+                <% elsif @board.board_image_url.ends_with?('.mp4', '.webm', '.mov') %>
+                  <!-- 動画の場合 -->
+                  <%= video_tag @board.board_image_url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <!-- 画像・動画のプレビュー表示 -->
+            <div id="preview"></div>
+          </div>
         </div>
-        <div class="col-sm-8">
-        <%= f.file_field :board_image_url, class: "form-control", accept: 'image/*,video/*', id: "board_image_url_input" %>
-
-          <div id="error-message" style="color: red;"></div>
-          <% if @board.errors[:board_image_url].any? %>
-          <div class="text-danger"><%= @board.errors[:board_image_url].join(", ") %></div>
-        <% end %>
-        
-      
-<!-- 既存の画像を表示 -->
-<% if @board.board_image_url.present? %>
-  <div id="existing-preview">
-    <p>現在の画像:</p>
-
-    <% if @board.board_image_url.ends_with?('.jpg', '.jpeg', '.png', '.gif') %>
-      <!-- 画像の場合 -->
-      <%= image_tag @board.board_image_url, class: 'img-fluid' %>
-    <% elsif @board.board_image_url.ends_with?('.mp4', '.webm', '.mov') %>
-      <!-- 動画の場合 -->
-      <%= video_tag @board.board_image_url, controls: true, class: 'img-fluid', style: 'max-width: 100%; height: auto;' %>
-    <% end %>
-  </div>
-<% end %>
-
-      
-          <!-- 画像・動画のプレビュー表示 -->
-          <div id="preview"></div>
-        </div>
-      </div>
 
         <!-- 感想 -->
         <div class="mb-5 row justify-content-center">
@@ -111,105 +107,61 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  // ファイル入力とプレビュー要素の取得
-  const fileInput = document.getElementById("board_image_input");
-  const previewContainer = document.getElementById("preview");
-  const existingPreview = document.getElementById("existing-preview");
-  const maxResolution = 17000000; // 最大解像度 (1700万画素)
-
-  if (!fileInput || !previewContainer) {
-    console.error("ファイル入力またはプレビューコンテナが見つかりません。");
-    return;
-  }
-
-  // 画像・動画プレビューのクリアと更新
-  fileInput.addEventListener("change", function (event) {
-    const files = event.target.files;
-
-    // 既存プレビューをクリア
-    if (existingPreview) {
-      existingPreview.remove();
-    }
-
-    // 新しいプレビューをクリア
-    previewContainer.innerHTML = "";
-
-    if (files.length > 0) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const fileUrl = e.target.result;
-        let previewElement;
-
-        if (file.type.startsWith("image/")) {
-          previewElement = document.createElement("img");
-          previewElement.src = fileUrl;
-          previewElement.classList.add("img-fluid");
-
-          // 画像の解像度チェック
-          const img = new Image();
-          img.onload = function() {
-            const resolution = img.width * img.height;
-            if (resolution > maxResolution) {
-              alert("画像の解像度が1700万画素を超えています。別の画像を選択してください。");
-              previewContainer.innerHTML = ''; // 画像プレビューを削除
-              fileInput.value = ''; // ファイル入力をリセット
-            } else {
-              previewContainer.appendChild(previewElement); // プレビューを表示
-            }
-          };
-          img.src = fileUrl;
-        } else if (file.type.startsWith("video/")) {
-          previewElement = document.createElement("video");
-          previewElement.src = fileUrl;
-          previewElement.classList.add("img-fluid");
-          previewElement.controls = true;
-
-          // 動画の解像度チェック
-          const video = document.createElement("video");
-          video.onloadedmetadata = function() {
-            const width = video.videoWidth;
-            const height = video.videoHeight;
-            const resolution = width * height;
-            if (resolution > maxResolution) {
-              alert("動画の解像度が1700万画素を超えています。別の動画を選択してください。");
-              previewContainer.innerHTML = ''; // 動画プレビューを削除
-              fileInput.value = ''; // ファイル入力をリセット
-            } else {
-              previewContainer.appendChild(previewElement); // プレビューを表示
-            }
-          };
-          video.src = fileUrl;
-        } else {
-          // サポートされないファイル形式
-          const errorMsg = document.createElement("p");
-          errorMsg.style.color = "red";
-          errorMsg.textContent = "画像または動画のみアップロードできます。";
-          previewContainer.appendChild(errorMsg);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-  // メーカー選択で「その他」を選んだ場合に入力フィールド表示
-  document.getElementById('camera_make_select').addEventListener('change', function(event) {
-    const customMakeInput = document.getElementById('custom_make_input');
-    if (event.target.value === 'その他') {
-      customMakeInput.style.display = 'block';
-    } else {
-      customMakeInput.style.display = 'none';
-    }
-  });
-
-  // 投稿失敗時に「その他」の入力フィールドを維持
   const cameraMakeSelect = document.getElementById('camera_make_select');
   const customMakeInput = document.getElementById('custom_make_input');
+
+  // "その他"が選択された場合に入力フィールドを表示
+  cameraMakeSelect.addEventListener('change', function() {
+    customMakeInput.style.display = cameraMakeSelect.value === 'その他' ? 'block' : 'none';
+  });
+
+  // 初期状態をチェック (編集時に既存の値があれば、それに基づいて表示/非表示を切り替え)
   if (cameraMakeSelect.value === 'その他') {
     customMakeInput.style.display = 'block';
   }
 
-  // オールドコンデジの機種（画素数1700万未満）
+  // ファイル入力とプレビュー要素の取得
+  const fileInput = document.getElementById("board_image_url");
+  const previewContainer = document.getElementById("preview");
+  const maxResolution = 17000000; // 最大解像度 (1700万画素)
+
+  fileInput.addEventListener("change", function (event) {
+    const files = event.target.files;
+    previewContainer.innerHTML = ""; // 既存のプレビューをクリア
+
+    if (files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function (e) {
+        const fileUrl = e.target.result;
+        const img = new Image();
+
+        img.onload = function () {
+          const resolution = img.width * img.height;
+          
+          // 解像度が基準を超えているか確認
+          if (resolution > maxResolution) {
+            alert("画像の解像度が1700万画素を超えています。別の画像を選択してください。");
+            fileInput.value = ""; // ファイル入力をリセット
+            previewContainer.innerHTML = ""; // プレビューを削除
+          } else {
+            // 解像度が問題なければプレビューを表示
+            const previewElement = document.createElement("img");
+            previewElement.src = fileUrl;
+            previewElement.classList.add("img-fluid");
+            previewContainer.appendChild(previewElement); // プレビューを表示
+          }
+        };
+
+        img.src = fileUrl;
+      };
+
+      reader.readAsDataURL(file); // 画像を読み込む
+    }
+  });
+
+  // 機種入力のオートコンプリート処理
   const cameraModels = [
     'T4', 'DiMAGE X1', 'DiMAGE 7i', 'XA', 'GR1v', 'S95', 'P7000', 'DMC-LX100', 'Stylus 1', 'GR Digital IV',
     'EX-ZR1000', 'A620', 'DiMAGE Xt', 'DSC-T10', 'A590 IS', 'DSC-W70', 'DiMAGE 5', 'SD700 IS', 'DSC-T50',
@@ -270,4 +222,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
 </script>
