@@ -1,4 +1,3 @@
-/* ページネーション全体のデザイン */
 .pagination {
     display: flex;
     justify-content: center;
@@ -9,103 +8,89 @@
     margin-top: 50px;
     margin-bottom: 30px;
   }
-  
-  /* 各ページ番号のデザイン */
+
   .pagination>li>a {
     display: inline-block;
-    width: 35px;           /* 幅 */
-    height: 35px;          /* 高さ */
-    line-height: 35px;     /* テキストを縦方向に中央に */
-    text-align: center;    /* テキストを横方向に中央に */
-    border-radius: 50%;    /* 円形にする */
-    border: 2px solid #696969; /* 枠線 */
-    color: #696969;        /* 文字色 */
-    text-decoration: none; /* 下線を消す */
-    transition: all 0.3s;  /* 変化を滑らかに */
+    width: 35px;    
+    height: 35px;    
+    line-height: 35px;    
+    text-align: center; 
+    border-radius: 50%;  
+    border: 2px solid #696969; 
+    color: #696969;   
+    text-decoration: none; 
+    transition: all 0.3s;  
   }
-  
-  /* 現在のページのデザイン（背景色と文字色） */
+
   .pagination>.active>a {
-    background: #343434;   /* 背景色 */
-    color: white;           /* 文字色 */
-    border-color: #000000;  /* 枠線の色 */
+    background: #343434;   
+    color: white;     
+    border-color: #000000;  
   }
-  
-  /* ホバー時のデザイン */
+
   .pagination>li>a:hover {
-    background: #343434;   /* 背景色 */
-    color: white;           /* 文字色 */
-    border-color: #000000;  /* 枠線の色 */
+    background: #343434;   
+    color: white;      
+    border-color: #000000; 
   }
-  
-  /* 前後の矢印ボタン（枠線を削除） */
+
   .pagination .page-item.disabled .page-link {
-    color: #ccc;           /* 矢印ボタンの色 */
-    background: transparent; /* 背景を透明に */
-    border: none;          /* 枠線を削除 */
+    color: #ccc;    
+    background: transparent; 
+    border: none;     
   }
-  
-  /* ページ番号の背景を円形にして、現在のページに色をつける */
+
   .pagination .page-item.active .page-link {
-    background-color: #343434; /* 現在のページの色 */
-    color: white;               /* 現在のページの文字色 */
+    background-color: #343434; 
+    color: white;    
   }
-  
-  /* 数字が選択されていない場合は円の枠のみ表示 */
+
   .pagination .page-item:not(.active) .page-link {
-    border-radius: 50%;  /* 丸くする */
-    color: #696969;      /* 数字の色 */
+    border-radius: 50%; 
+    color: #696969;  
   }
-  
-  /* 目立たない（無効な）ページのデザイン（枠線なし） */
+
   .pagination .page-item.disabled .page-link {
-    color: #ccc;         /* 無効ページの色 */
-    background: transparent; /* 背景を透明に */
-    border: none;        /* 枠線なし */
+    color: #ccc;    
+    background: transparent; 
+    border: none;    
   }
-  
-  /* ページネーションのアイテム間に余白を追加 */
+
 .pagination>li {
-    margin-right: 10px;  /* 各アイテムの右側に10pxの余白を追加 */
+    margin-right: 10px;  
   }
-  
-  /* 最後のアイテムには余白を追加しない */
+
   .pagination>li:last-child {
     margin-right: 0;
   }
-  
-  /* 前のページ（＜）と次のページ（＞）にも余白を追加 */
+
   .pagination>li.page-item {
-    margin-left: 10px;   /* 左側に余白を追加 */
+    margin-left: 10px;  
   }
 
-  /* 前後の矢印（＜＞）に〇を付けない */
 .pagination .page-item.page-item-prev a,
 .pagination .page-item.page-item-next a {
-  border-radius: 0; /* 〇を取り除く */
+  border-radius: 0;
 }
-  
-  /* ページ番号の〇を中央に配置 */
+
 .pagination>li.page-item>a {
-    display: flex;             /* flexbox を使用して中央寄せ */
-    justify-content: center;   /* 横方向に中央揃え */
-    align-items: center;       /* 縦方向に中央揃え */
-    width: 35px;               /* 〇の幅を設定 */
-    height: 35px;              /* 〇の高さを設定 */
-    border-radius: 50%;        /* 〇の形にする */
-    text-align: center;        /* 数字の文字が中央に来るように */
+    display: flex;            
+    justify-content: center;  
+    align-items: center;      
+    width: 35px;             
+    height: 35px;             
+    border-radius: 50%;       
+    text-align: center;       
   }
-  
-  /* ページ番号の数字が上下中央に配置されるように調整 */
+
   .pagination>li.page-item.active>a {
-    background: #93c9ff;       /* 背景色 */
-    border-radius: 50%;        /* 〇の形にする */
-    color: #fff;               /* 数字の色 */
+    background: #93c9ff; 
+    border-radius: 50%;      
+    color: #fff;           
   }
-  
-  /* ページ番号（数字）に対するフォント調整 */
+
   .pagination>li.page-item>a {
-    font-size: 16px;           /* フォントサイズ */
-    font-weight: bold;         /* 太字 */
+    font-size: 16px;           
+    font-weight: bold; 
   }
   

@@ -20,81 +20,76 @@
     }
   }
 
-  /* フッター */
   html, body {
-    height: 100%; /* ページ全体の高さを100%に設定 */
-    margin: 0;    /* デフォルトの余白を削除 */
+    height: 100%; 
+    margin: 0;    
   }
   
   body {
-    display: flex;           /* フレックスボックスでレイアウト */
-    flex-direction: column;  /* 要素を縦に並べる */
-    min-height: 100vh;       /* ビューポートの高さ（画面全体）の100%を最小の高さに設定 */
+    display: flex;          
+    flex-direction: column;  
+    min-height: 100vh;       
   }
   
   .main-content {
-    flex-grow: 1; /* メインコンテンツが空いているスペースを占める */
+    flex-grow: 1; 
   }
   
   footer.footer {
-    display: flex;                    /* フレックスボックスでレイアウト */
-    margin-top: auto;                 /* フッターをページの一番下に押し込む */
-    background-color: #f8f9fa;        /* 背景色 */
-    padding: 10px 0;                  /* 上下のパディングを10pxにして余白を狭く */
-    justify-content: space-between;   /* 左右のコンテンツを端に寄せる */
-    border-top: 1px solid #e0e0e0;    /* 上部に薄いグレーの線 */
+    display: flex;                   
+    margin-top: auto;               
+    background-color: #f8f9fa;        
+    padding: 10px 0;              
+    justify-content: space-between;   
+    border-top: 1px solid #e0e0e0;   
   }
   
   footer.footer .links {
-    display: flex;                    /* リンクを並べる */
-    align-items: center;              /* 縦方向で中央揃え */
+    display: flex;         
+    align-items: center;  
   }
   
   footer.footer .links a {
-    color: #6c757d;                   /* グレーの色を指定 */
-    text-decoration: none;            /* 下線を削除 */
-    font-size: 14px;                  /* 文字サイズを小さくする */
-    margin-left: 10px;                /* リンク間に少し余白を加える */
+    color: #6c757d;      
+    text-decoration: none;  
+    font-size: 14px;    
+    margin-left: 10px;  
   }
   
   footer.footer .links a:hover {
-    color: #5a6268;                   /* ホバー時の色を少し濃いグレーに変更 */
-    text-decoration: underline;       /* ホバー時に下線を追加 */
+    color: #5a6268;       
+    text-decoration: underline;     
   }
 
   footer.footer .links a:first-child {
-    margin-left: 0; /* 最初のリンクの左マージンをゼロに */
+    margin-left: 0; 
   }
   
   footer.footer .links a:not(:last-child) {
-    margin-right: 10px; /* 最後のリンク以外に右マージンを設定 */
+    margin-right: 10px; 
   }
   
   footer.footer .copyright {
-    text-align: right; /* 右寄せにする */
-    font-size: 1px;                  /* 文字サイズを少し小さく */
-    color: #6c757d;                   /* グレーの色を指定 */
-  }
+    text-align: right; 
+    font-size: 1px;                
+    color: #6c757d;    
+  } 
   
-  
-  
-  
-  /* レスポンシブ対応 */
 @media (max-width: 768px) {
   footer.footer {
-    flex-direction: column;       /* フレックス方向を縦に変更 */
-    align-items: center;          /* 中央揃え */
-    text-align: center;           /* 中央揃え */
+    flex-direction: column;     
+    align-items: center;  
+    text-align: center;    
   }
 
   footer.footer .links {
-    margin-bottom: 10px;          /* 下部に余白を追加 */
-    justify-content: center;      /* リンクを中央揃え */
+    margin-bottom: 10px;      
+    justify-content: center;  
   }
 
   footer.footer .copyright {
-    text-align: center;           /* コピーライトも中央揃え */
-    font-size: 10px;              /* モバイル用にフォントサイズを調整 */
+    text-align: center;   
+    font-size: 10px;      
   }
 }
 

@@ -1,43 +1,35 @@
-/* 全体の横スクロール防止 */
 body {
   overflow-x: hidden;
 }
 
-/* ユーザーネーム */
 .user-info .user-name {
-    margin-left: 50px; /* ここで間隔を調整 */
+    margin-left: 50px; 
     margin-top: -80px;
     font-size: 1.5rem;
     font-weight: 300;
     
 }
-  
-/* 自己紹介 */
+
 .user-bio {
-    font-size: 1.1rem;  /* 少し小さめに調整 */
-    font-weight: 300;   /* 細めのフォント */
-    color: #333;        /* ダークグレーにして視認性を良く */
-    line-height: 1.8;   /* 少し広めの行間 */
+    font-size: 1.1rem;  
+    font-weight: 300;  
+    color: #333;       
+    line-height: 1.8; 
     position: relative;
-    top: -80px;         /* さらに上に移動 */
-    margin-left: -330px; /* 左に寄せる */
-
-    // border: 1px solid #a41717; /* 1pxの太さのグレーの枠 */
-    // border-radius: 5px; /* 角を丸くする */
+    top: -80px;   
+    margin-left: -330px; 
   }
-
-
 
 .edit-container {
     display: flex;
     justify-content: center;
-    min-height: 100vh;  /* 画面の高さを超えないように調整 */
+    min-height: 100vh; 
 }
 
   .edit-title {
-    text-align: center;   /* テキストを中央に寄せる */
-    font-weight: 300;     /* フォントを細くする */
-    font-size: 2rem;      /* フォントサイズを調整 */
+    text-align: center;  
+    font-weight: 300;    
+    font-size: 2rem;      
     margin-bottom: 50px;
   }
   
@@ -46,163 +38,144 @@ body {
     margin-left: -100px;
 }
   
-
-
   .edit-username {
     position: relative;
-    top: -50px;  /* 少し上に移動 */
-    font-weight: 300;  /* 文字を細く */
+    top: -50px;  
+    font-weight: 300;  
   }
   
   .edit-username .form-control {
     width: 400px;
-    padding: 10px;  /* 入力欄のパディング */
+    padding: 10px;  
 
   }
 
   .edit-bio {
     position: relative;
-    top: -90px;  /* 少し上に移動 */
-    margin-top: 20px;  /* 自己紹介文の入力欄の間隔を開ける */
+    top: -90px; 
+    margin-top: 20px; 
     right: -80px; 
-    font-weight: 300;  /* 文字を細く */
+    font-weight: 300;  
   }
   
   .edit-bio .form-control {
     width: 400px;
-    padding: 10px;  /* 入力欄のパディング */
+    padding: 10px;  
   }
 
   .edit-email {
     position: relative;
-    top: -110px;  /* 少し上に移動 */
-    margin-top: 30px;  /* 自己紹介文の入力欄の間隔を開ける */
-    font-weight: 300;  /* 文字を細く */
-    margin-bottom: -50px; /* メールアドレスとボタンの間隔を調整 */
+    top: -110px;  
+    margin-top: 30px;  
+    font-weight: 300;  
+    margin-bottom: -50px; 
   }
 
-  
-
-  
-  /* ボタンを配置するためのコンテナ */
 .button-container {
     display: flex;
 }
 
 .button-container .btn {
-    width: 45%;  /* 各ボタンの幅を指定（親要素に対する割合） */
-    margin: 0 30px;  /* ボタンの間隔を調整 */
+    width: 45%; 
+    margin: 0 30px;  
 }
 
-
-/* 更新するボタンの背景色を青色に */
 .update-btn {
-    background-color: #007bff;  /* 初期の青色 */
-    color: white;  /* テキストの色を白に */
-    border: none;  /* ボーダーなし */
+    background-color: #007bff; 
+    color: white;  
+    border: none;  
 }
 
-/* ホバー時に青色を濃くする */
 .update-btn:hover {
-    background-color: #0056b3;  /* 濃い青色 */
-    color: white;  /* テキスト色は白 */
+    background-color: #0056b3;  
+    color: white;  
 }
-
-
 
 .image-container2 {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 最小150pxで自動で列を作成 */
-    gap: 3px; /* 画像同士の余白を3pxに設定 */
-    max-width: 1200px; /* 最大幅を設定 */
-    margin: 0 auto; /* 中央寄せ */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+    gap: 3px; 
+    max-width: 1200px; 
+    margin: 0 auto; 
 }
   .image-item2 img {
-    width: 100%; /* 幅を親要素に合わせる */
-    height: auto; /* 高さは自動調整 */
-    max-height: 200px; /* 最大高さを設定 */
-    object-fit: contain; /* 縦横比を保ちながら収める */
+    width: 100%; 
+    height: auto; 
+    max-height: 200px; 
+    object-fit: contain; 
   }
 
-/* 小さな画面（スマートフォン）用のレスポンシブ対応 */
 @media (max-width: 768px) {
-  /* ユーザーネーム */
   .user-info .user-name {
-    margin-left: 0;  /* 左の余白をなくす */
-    margin-top: 0;   /* 上の余白をなくす */
-    font-size: 1.2rem; /* フォントサイズを小さく */
+    margin-left: 0;  
+    margin-top: 0;  
+    font-size: 1.2rem; 
   }
 
-  /* 自己紹介 */
   .user-bio {
-    font-size: 1rem; /* フォントサイズを小さく */
-    line-height: 1.6; /* 行間を少し縮める */
-    margin-left: 0;   /* 左の余白をなくす */
-    top: 0;           /* 上の移動を解除 */
+    font-size: 1rem; 
+    line-height: 1.6; 
+    margin-left: 0;   
+    top: 0;   
   }
 
-  /* 編集フォーム全体 */
   .edit-container {
-    flex-direction: column; /* 横並びから縦並びに変更 */
+    flex-direction: column; 
     padding: 20px;
   }
 
   .edit-title {
-    font-size: 1.5rem; /* タイトルのフォントサイズを小さく */
-    margin-bottom: 30px; /* 下の余白を縮める */
+    font-size: 1.5rem; 
+    margin-bottom: 30px; 
   }
 
   .edit_avatar {
-    margin-left: 0; /* プロフィール画像の左余白を解除 */
-    text-align: center; /* 画像を中央揃え */
+    margin-left: 0; 
+    text-align: center; 
   }
 
-  /* ユーザーネーム */
   .edit-username {
-    top: 0; /* 上の移動を解除 */
-    font-size: 1.2rem; /* フォントサイズを小さく */
+    top: 0; 
+    font-size: 1.2rem; 
   }
 
   .edit-username .form-control {
-    width: 100%;  /* 入力欄の幅を100%に変更 */
+    width: 100%;  
     padding: 10px;
   }
 
-  /* 自己紹介文 */
+
   .edit-bio {
-    top: 0; /* 上の移動を解除 */
+    top: 0; 
     margin-top: 10px;
   }
 
   .edit-bio .form-control {
-    width: 100%; /* 入力欄の幅を100%に変更 */
+    width: 100%; 
     padding: 10px;
   }
 
-  /* メールアドレス */
   .edit-email {
-    top: 0;  /* 上の移動を解除 */
-    margin-top: 20px; /* 少しスペースを開ける */
+    top: 0;  
+    margin-top: 20px; 
     margin-bottom: 20px;
   }
 
-  /* ボタンコンテナ */
   .button-container {
-    flex-direction: column; /* ボタンを縦に並べる */
+    flex-direction: column; 
     align-items: center;
   }
 
   .button-container .btn {
-    width: 100%; /* ボタンの幅を100%に変更 */
-    margin: 10px 0; /* ボタンの間に余白を加える */
+    width: 100%; 
+    margin: 10px 0; 
   }
 
   .update-btn {
-    width: 100%; /* 更新ボタンの幅を100%に変更 */
+    width: 100%; 
   }
 }
 
-/* 小さな画面（スマートフォン）用のレスポンシブ対応 */
 @media (max-width: 768px) {
   .user-info .user-name {
     font-size: 1.2rem;
@@ -213,7 +186,7 @@ body {
     line-height: 1.6;
     margin-left: 0;
     top: 40px;
-    text-align: center; /* 自己紹介を中央揃え */
+    text-align: center; 
   }
 
   .edit-container {
@@ -250,18 +223,16 @@ body {
   }
 
   .user-info .user-name {
-    margin-left: 20px; /* アバター画像との間隔を20pxにする */
+    margin-left: 20px; 
   }
 
   .user-info .user-bio {
     margin: -20px 0 90px 0 !important;
   }
 
-  
-
   .avatar_size {
-    width: 80px;  // お好きなサイズに変更
-    height: 80px; // お好きなサイズに変更
+    width: 80px;  
+    height: 80px; 
   }
 
 }
