@@ -8,7 +8,6 @@
       function onSuccess(googleUser) {
         var id_token = googleUser.credential;
 
-        // id_tokenをサーバーに送信
         fetch('/oauth/google', {
           method: 'POST',
           headers: {
@@ -21,15 +20,11 @@
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            // フラッシュメッセージをアラートで表示
             alert(data.message);
-            
-            // リダイレクト処理
             window.location.href = data.redirect_url;
           } else {
-            // エラーメッセージを表示
             console.error('Login failed:', data.message);
-            alert(data.message); // エラー表示
+            alert(data.message); 
           }
         })
         .catch(error => {

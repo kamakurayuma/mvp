@@ -19,7 +19,6 @@
 
 <script>
   (() => {
-    // Stimulusの機能を模倣する簡易実装
     document.addEventListener("DOMContentLoaded", () => {
       const input = document.querySelector('[data-autocomplete-target="input"]');
       const results = document.querySelector('[data-autocomplete-target="results"]');
@@ -33,11 +32,9 @@
           return;
         }
 
-        // Ajaxリクエストで候補を取得
         const response = await fetch(`/autocomplete?query=${encodeURIComponent(query)}`);
         const suggestions = await response.json();
 
-        // 結果の表示
         results.innerHTML = suggestions
           .map(item => `<div class="autocomplete-item">${item}</div>`)
           .join("");
@@ -45,7 +42,6 @@
         results.style.display = "block";
       });
 
-      // 結果をクリックした場合の処理
       results.addEventListener("click", (event) => {
         if (event.target.classList.contains("autocomplete-item")) {
           input.value = event.target.textContent;

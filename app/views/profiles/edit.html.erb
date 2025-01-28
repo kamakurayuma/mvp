@@ -9,7 +9,7 @@
         
         <div class="d-flex align-items-center" style="gap: 30px;">
           <div class="edit_avatar">
-            <!-- SimpleFileUploadによるアップロード -->
+
             <%= f.hidden_field :avatar_url, class: 'simple-file-upload' %>
             <div class="image-preview" onclick="document.querySelector('.simple-file-upload').click();"></div>
           </div>
@@ -41,7 +41,6 @@
 </div>
 
 <script>
-  // 画像プレビュー用のJavaScript
   function previewImage(event) {
     const file = event.target.files[0];
     if (file) {

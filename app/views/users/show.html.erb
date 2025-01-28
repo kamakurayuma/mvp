@@ -1,15 +1,15 @@
 <div class="container pt-3">
   <div class="row">
     <div class="col-md-10 offset-md-1">
-      <!-- ユーザー情報 -->
+
       <div class="user-info">
         <div class="d-flex align-items-center">
-          <!-- アバター画像 -->
+
           <%= image_tag(@user.avatar_url || asset_path('sample.png'), class: 'rounded-circle avatar_size', size: '120x120') %>
-          <!-- ユーザーネーム -->
+
           <h1 class="user-name">
             <%= @user.user_name %>
-            <!-- 編集リンク -->
+
             <% if @user == current_user %>  
               <%= link_to edit_profile_path do %>
                 <%= image_tag 'edit.png', alt: 'Edit', size: '20x20', class: 'ml-2' %>
@@ -17,13 +17,12 @@
             <% end %>
           </h1>
         </div>
-        <!-- 自己紹介文 -->
+
         <p class="user-bio mt-3 text-center" style="max-width: 600px; max-height: 200px; overflow: hidden; margin-left: auto; margin-right: auto;">
           <%= @user.bio %>
         </p>
       </div>
 
-      <!-- ユーザーの投稿した画像を並べる -->
       <div class="user-posts mt-5" style="padding-bottom: 50px;">
         <h2 style="line-height: 1; font-weight: 300; text-align: center; margin-bottom: 40px;">
           <%= "#{@user.user_name}さんの投稿一覧" %>

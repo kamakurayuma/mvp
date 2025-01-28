@@ -23,7 +23,6 @@
         </div>
         <div class="col-sm-8 col-md-8">
           <div class="row">
-            <!-- メーカー選択と機種入力を横並びに配置 -->
             <div class="col-sm-6">
               <%= f.select :camera_make, 
                 [["Canon", "Canon"], ["Nikon", "Nikon"], ["Sony", "Sony"], ["Panasonic", "Panasonic"], 
@@ -39,8 +38,7 @@
               <ul id="camera_model_suggestions" class="camera_model_suggestions"></ul>
             </div>
           </div>
-          
-          <!-- "その他" を選んだ場合の入力フィールド -->
+
           <div id="custom_make_input" class="col-sm-6" style="display: none; margin-top: 10px;">
             <%= f.text_field :custom_camera_make, placeholder: "メーカー名を入力してください", class: "form-control", id: "custom_camera_make" %>
           </div>
@@ -83,24 +81,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const cameraMakeSelect = document.getElementById('camera_make_select');
   const customMakeInput = document.getElementById('custom_make_input');
 
-  // "その他"が選択された場合に入力フィールドを表示
   cameraMakeSelect.addEventListener('change', function() {
     customMakeInput.style.display = cameraMakeSelect.value === 'その他' ? 'block' : 'none';
   });
 
-  // 初期状態をチェック
   if (cameraMakeSelect.value === 'その他') {
     customMakeInput.style.display = 'block';
   }
 
   // ファイル入力とプレビュー要素の取得
-  const fileInput = document.getElementById("board_image_url"); // 修正
+  const fileInput = document.getElementById("board_image_url"); 
   const previewContainer = document.getElementById("preview");
-  const maxResolution = 17000000; // 最大解像度 (1700万画素)
+  const maxResolution = 17000000; 
 
   fileInput.addEventListener("change", function (event) {
     const files = event.target.files;
-    previewContainer.innerHTML = ""; // 既存のプレビューをクリア
+    previewContainer.innerHTML = ""; 
 
     if (files.length > 0) {
       const file = files[0];
@@ -112,25 +108,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
         img.onload = function () {
           const resolution = img.width * img.height;
-          
-          // 解像度が基準を超えているか確認
+
           if (resolution > maxResolution) {
             alert("画像の解像度が1700万画素を超えています。別の画像を選択してください。");
-            fileInput.value = ""; // ファイル入力をリセット
-            previewContainer.innerHTML = ""; // プレビューを削除
+            fileInput.value = ""; 
+            previewContainer.innerHTML = ""; 
           } else {
-            // 解像度が問題なければプレビューを表示
             const previewElement = document.createElement("img");
             previewElement.src = fileUrl;
             previewElement.classList.add("img-fluid");
-            previewContainer.appendChild(previewElement); // プレビューを表示
+            previewContainer.appendChild(previewElement); 
           }
         };
 
         img.src = fileUrl;
       };
 
-      reader.readAsDataURL(file); // 画像を読み込む
+      reader.readAsDataURL(file); 
     }
   });
 
@@ -143,14 +137,13 @@ document.addEventListener("DOMContentLoaded", function () {
     'Coolpix P500', 'Cyber-shot DSC-H5'
   ];
 
-  // 五十音順に並べ替え
   const sortedCameraModels = cameraModels.sort();
 
   // 機種入力のオートコンプリート機能
   document.getElementById('camera_model_input').addEventListener('input', function(event) {
     const inputValue = event.target.value.toLowerCase();
     const suggestionsList = document.getElementById('camera_model_suggestions');
-    suggestionsList.innerHTML = ''; // 前回の候補をクリア
+    suggestionsList.innerHTML = ''; 
 
     if (inputValue) {
       // 入力内容と一致する候補をフィルタリング
@@ -163,12 +156,11 @@ document.addEventListener("DOMContentLoaded", function () {
         listItem.classList.add('suggestion-item');
         listItem.addEventListener('click', function() {
           document.getElementById('camera_model_input').value = model;
-          suggestionsList.innerHTML = ''; // クリックで候補を消す
+          suggestionsList.innerHTML = ''; 
         });
         suggestionsList.appendChild(listItem);
       });
 
-      // 「不明」の候補を一番下に追加
       const unknownOption = document.createElement('li');
       unknownOption.textContent = '不明';
       unknownOption.classList.add('suggestion-item');
@@ -179,13 +171,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // 機種入力がクリックされた場合に不明を一番下に表示
   document.getElementById('camera_model_input').addEventListener('focus', function() {
     const suggestionsList = document.getElementById('camera_model_suggestions');
     const unknownOption = document.createElement('li');
     unknownOption.textContent = '不明';
 
-    // 既に不明の候補がある場合は追加しない
     if (![...suggestionsList.children].some(child => child.textContent === '不明')) {
       unknownOption.classList.add('suggestion-item');
       unknownOption.addEventListener('click', function() {

@@ -9,7 +9,6 @@ class Camera < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    # Camera モデルが関連付けられている boards を検索可能にする
     ["boards"]
   end
 end

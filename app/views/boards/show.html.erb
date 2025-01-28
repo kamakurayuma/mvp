@@ -8,7 +8,6 @@
         <div class="card-body">
           <h2 class="board-title"><%= @board.title %></h2>
 
-          <!-- 編集・削除アイコン（投稿主だけが表示） -->
           <% if @board.user == current_user %>
             <div class="action-icons">
               <%= link_to edit_board_path(@board) do %>
@@ -25,7 +24,6 @@
           <% end %>
         </div>
 
-          <!-- 投稿情報 -->
           <div class="post-info2">
             <div class="camera-info d-flex align-items-center">
               <%= image_tag 'camera.png', alt: 'Camera', class: 'camera-icon' %>
@@ -45,7 +43,6 @@
             </div>
           </div>
 
-          <!-- 画像や動画 -->
           <div class="board-media">
           <% if @board.board_image_url.present? %>
             <% if @board.board_image_url.ends_with?('.jpg', '.jpeg', '.png', '.gif') %>
@@ -58,11 +55,9 @@
         
         <div class="button-container" style="display: flex; justify-content: space-between; align-items: center;">
           <div class="share-buttons" style="<%= 'margin-top: 5px;' if current_user.own?(@board) %>">
-            <!-- Twitterシェアボタン -->
             <a href="https://twitter.com/share?url=<%= request.original_url %>&text=<%= @board.title %>" target="_blank" class="twitter-share-button">Tweet</a>
           </div>
       
-          <!-- Twitterのシェアボタンを機能させるためのJavaScriptを追加 -->
           <%= javascript_include_tag "https://platform.twitter.com/widgets.js" %>
 
           <%# <!-- ブックマークボタンをコメントアウト --> %>
@@ -73,7 +68,6 @@
           <%# end %>
         </div>
 
-          <!-- 感想 -->
           <% if @board.body.present? %>
             <div class="board-body mt-4">
               <h4>感想</h4>
