@@ -3,7 +3,6 @@
     <div class="col-md-10 col-lg-8 mx-auto">
         <div class="d-flex justify-content-center align-items-center mb-5">
             <h1 class="text-center" style="font-size: 24px; font-weight: 300;">新 規 登 録</h1>
-            <%= link_to 'ログインページへ', login_path, class: 'btn2 ml-auto' %>
         </div>
       <%= form_with model: @user, data: { turbo: false } do |f| %>
 
@@ -50,6 +49,11 @@
             <%= f.submit "登録", class: "btn btn-primary" %>
           </div>
         </div>
+
+        <div class="text-center mb-3">
+        <%= link_to 'ログインページへ', login_path, style: 'text-decoration: none; color: #6fa8dc; transition: color 0.3s;' %>
+      </div>
+            
       <% end %>      
     </div>
   </div>
