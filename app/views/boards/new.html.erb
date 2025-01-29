@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
     customMakeInput.style.display = 'block';
   }
 
-  // ファイル入力とプレビュー要素の取得
   const fileInput = document.getElementById("board_image_url"); 
   const previewContainer = document.getElementById("preview");
   const maxResolution = 17000000; 
@@ -128,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // 機種入力のオートコンプリート処理
   const cameraModels = [
     'T4', 'DiMAGE X1', 'DiMAGE 7i', 'XA', 'GR1v', 'S95', 'P7000', 'DMC-LX100', 'Stylus 1', 'GR Digital IV',
     'EX-ZR1000', 'A620', 'DiMAGE Xt', 'DSC-T10', 'A590 IS', 'DSC-W70', 'DiMAGE 5', 'SD700 IS', 'DSC-T50',
@@ -139,17 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const sortedCameraModels = cameraModels.sort();
 
-  // 機種入力のオートコンプリート機能
   document.getElementById('camera_model_input').addEventListener('input', function(event) {
     const inputValue = event.target.value.toLowerCase();
     const suggestionsList = document.getElementById('camera_model_suggestions');
     suggestionsList.innerHTML = ''; 
 
     if (inputValue) {
-      // 入力内容と一致する候補をフィルタリング
       const filteredModels = sortedCameraModels.filter(model => model.toLowerCase().includes(inputValue));
 
-      // フィルタリングされた機種名をリストに追加
       filteredModels.forEach(model => {
         const listItem = document.createElement('li');
         listItem.textContent = model;

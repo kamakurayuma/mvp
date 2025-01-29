@@ -2,7 +2,9 @@
   <div id="error_explanation" class="alert alert-danger">
     <ul class="mb-0">
       <% object.errors.each do |error| %>
-        <li><%= error.message %></li> 
+        <% unless error.attribute.to_s == 'camera' %>
+          <li><%= error.message %></li>
+        <% end %>
       <% end %>
     </ul>
   </div>

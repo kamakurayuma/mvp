@@ -18,8 +18,8 @@ ja:
               blank: "カメラの機種を入力してください"
             custom_camera_make:
               blank: "カメラのメーカーを入力してください"
-            board_image:
-              blank: "写真か動画を選択してください"
+            board_image_url:
+              blank: "写真または動画を選択してください"
         user:
           attributes:
             password:
@@ -32,4 +32,3 @@ ja:
             email:
               blank: "メールアドレスを入力してください"
               taken: "そのメールアドレスはすでに使用されています"
-

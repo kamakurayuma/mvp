@@ -54,10 +54,6 @@
           <div class="col-sm-8">
             <%= f.file_field :board_image_url, class: "form-control", accept: 'image/*,video/*', id: "board_image_url_input" %>
             <div id="error-message" style="color: red;"></div>
-            <% if @board.errors[:board_image_url].any? %>
-              <div class="text-danger"><%= @board.errors[:board_image_url].join(", ") %></div>
-            <% end %>
-
             <% if @board.board_image_url.present? %>
               <div id="existing-preview">
                 <p>現在の画像:</p>
@@ -108,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const fileInput = document.getElementById("board_image_url");
   const previewContainer = document.getElementById("preview");
-  const maxResolution = 17000000; // 最大解像度 (1700万画素)
+  const maxResolution = 17000000; 
 
   fileInput.addEventListener("change", function (event) {
     const files = event.target.files;
