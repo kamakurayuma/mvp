@@ -38,33 +38,33 @@
 
 | ユーザー登録 / ログイン |
 | :---: | 
+| <p align="left">ユーザーは「ユーザーネーム」「メールアドレス」「パスワード」を入力して登録後、ログインしてすぐにサービスを利用できます。<br>また、Googleアカウントでもログイン可能です。</p> |
 ユーザー登録
 | [![Image from Gyazo](https://i.gyazo.com/7fd003b744905ee3eaab442d948a0c92.png)](https://gyazo.com/7fd003b744905ee3eaab442d948a0c92) |
 ログイン
 | [![Image from Gyazo](https://i.gyazo.com/3acc53174f360fc086044d9144836010.png)](https://gyazo.com/3acc53174f360fc086044d9144836010) |
-| <p align="left">ユーザーは「名前」「メールアドレス」「パスワード」を入力して登録後、ログインしてすぐにサービスを利用できます。<br>また、Googleアカウントでもログイン可能です。</p> |
 <br>
 
 | トップ画面の投稿一覧と検索機能 |
 | :---: | 
-| [![Image from Gyazo](https://i.gyazo.com/f6c39a8cd670fbb9853d30524907f7cd.jpg)](https://gyazo.com/f6c39a8cd670fbb9853d30524907f7cd) |
 | <p align="left">トップ画面にユーザーの投稿を一覧表示し、スムーズかつ直感的に楽しめるデザインにしました。思わず自分も投稿したくなるようなレイアウトを意識しています。<br>また、画面上部にはカメラのメーカーや機種を検索できる機能を実装しました。これにより、他のユーザーが**同じカメラで撮影した写真を検索**したり、気になっているカメラの **実際の写りをチェック**することができます。</p> |
+| [![Image from Gyazo](https://i.gyazo.com/f6c39a8cd670fbb9853d30524907f7cd.jpg)](https://gyazo.com/f6c39a8cd670fbb9853d30524907f7cd) |
+
 <br>
 
 | 写真・動画投稿機能 |
 | :---: | 
-| [![Image from Gyazo](https://i.gyazo.com/bf710475b816b3b514beb4ed110adf89.png)](https://gyazo.com/bf710475b816b3b514beb4ed110adf89) |
 | <p align="left">オールドコンデジで撮影した写真や動画をシンプルな項目で簡単にアップロードできます。</p> |
+| [![Image from Gyazo](https://i.gyazo.com/bf710475b816b3b514beb4ed110adf89.png)](https://gyazo.com/bf710475b816b3b514beb4ed110adf89) |
 <br>
 
 | マイページ機能 |
 | :---: | 
-自分の投稿した写真やプロフィールを確認・編集できます。
+| <p align="left">オールドコンデジで撮影した写真や動画をシンプルな項目で簡単にアップロードできます。</p> |
 | [![Image from Gyazo](https://i.gyazo.com/44aa4d285eefd66131e1e9c0c49bbbfa.jpg)](https://gyazo.com/44aa4d285eefd66131e1e9c0c49bbbfa) |
-
 | [![Image from Gyazo](https://i.gyazo.com/7a2bb11a1f532fe56bbbd613e780b922.png)](https://gyazo.com/7a2bb11a1f532fe56bbbd613e780b922) |
 <br>
-<br>
+
 
 # 🔧 技術構成について
 
