@@ -81,5 +81,5 @@
 
 ## 画面遷移図
 [画面遷移図-figma](https://www.figma.com/design/Mzy3EBJ1ed9Ws70iMQ7quR/OldCam1700?node-id=242-446&t=hhYpzClxZFVwvtoa-1)  
-[![Image from Gyazo](https://i.gyazo.com/51829a3c9a4249cabf91be0f49fd4eed.png)](https://gyazo.com/51829a3c9a4249cabf91be0f49fd4eed)
+[![Image from Gyazo](https://i.gyazo.com/3c16c886ba2d58d88564de9188956192.png)](https://gyazo.com/3c16c886ba2d58d88564de9188956192)
 
